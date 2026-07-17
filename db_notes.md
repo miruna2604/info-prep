@@ -35,7 +35,8 @@
 - id
 - chapter_id (FK)
 - title
-- content (video + pdf)
+- video_url
+- pdf_url
 - order
 
 ## 4. Problems
@@ -49,7 +50,15 @@
 - sample_input
 - sample_output
 
-## 5. Submissions
+## 5. Problem tests
+- id
+- problem_id (FK)
+- input
+- expected_output
+- is_hidden
+
+
+## 6. Submissions
 - id
 - user_id (FK)
 - problem_id (FK)
@@ -57,9 +66,3 @@
 - status
 - created_at
 
-## 6. Problem tests
-- id
-- problem_id (FK)
-- input
-- expected_output
-- is_hidden
