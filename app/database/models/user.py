@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import DateTime
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.database import Base
 
 class User(Base):
@@ -10,3 +10,4 @@ class User(Base):
     email: Mapped[str] = mapped_column(nullable=False)
     password_hash: Mapped[str] = mapped_column(nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    submissions: Mapped[list["Submission"]] = relationship(back_populates="user")

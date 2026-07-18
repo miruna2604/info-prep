@@ -7,3 +7,4 @@ class Chapter(Base):
     title: Mapped[str] = mapped_column(nullable=False)
     display_order: Mapped[int] = mapped_column(nullable=False)
     lessons: Mapped[list["Lesson"]] = relationship(back_populates="chapter")
+    problems: Mapped[list["Problem"]] = relationship(back_populates="chapter")

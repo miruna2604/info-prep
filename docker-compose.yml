@@ -1,6 +1,8 @@
 services:
   api:
     build: .
+    volumes:
+      - .:/code
     environment:
       JUDGE0_URL: http://server:2358
       LANGUAGE_ID: "54"

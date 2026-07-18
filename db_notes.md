@@ -1,19 +1,15 @@
 # Arhitectura
 ```text
-                users
-                   │
-                   │ 1:N
-                   ▼
-             submissions
-                   ▲
-                   │ N:1
-                problems
-                   ▲
-                   │ N:1
-                lessons
-                   ▲
-                   │ N:1
-               chapters
+                 Chapters
+                 /      \
+                /        \
+               ▼          ▼
+          Lessons      Problems
+                           │
+                           ▼
+                    ProblemTests
+
+Users ─────────────► Submissions ◄──────────── Problems
 ```
 
 ## 1. Users
@@ -42,7 +38,7 @@
 ## 4. Problems
 
 - id
-- lesson_id (FK)
+- chapter_id (FK)
 - title
 - statement
 - input_description
@@ -66,3 +62,12 @@
 - status
 - created_at
 
+
+
+## Intram in PostgreSQL
+```bash
+docker exec -it infooo-prep-db-1 bash
+```
+```bash
+psql -U judge0 -d judge0
+```
