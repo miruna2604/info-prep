@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from sqlalchemy import create_engine
+from typing import Generator
 
 load_dotenv()
 
@@ -12,3 +13,10 @@ SessionLocal = sessionmaker(bind=engine)
 
 class Base(DeclarativeBase):
     pass
+
+def get_db() -> Generator:
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

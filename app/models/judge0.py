@@ -17,4 +17,4 @@ class Judge0SubmissionResponse(BaseModel):
     time: str | None = None
     memory: int | None = None
     exit_code: int | None = None
-    status: Judge0Status
+    status: Judge0Status 

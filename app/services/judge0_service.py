@@ -1,10 +1,13 @@
-from app.models.submissions import SubmissionRequest, SubmissionResponse
-from app.models.judge0 import Judge0SubmissionRequest, Judge0SubmissionResponse
+from app.models.judge0 import (
+    Judge0SubmissionRequest,
+    Judge0SubmissionResponse,
+)
 from fastapi import HTTPException
+from pydantic import ValidationError
+
 import httpx
 import os
 import base64
-from pydantic import ValidationError
 
 LANGUAGE_ID = int(os.getenv("LANGUAGE_ID", "54"))
 JUDGE0_URL = os.getenv("JUDGE0_URL", "http://localhost:2358")
@@ -20,12 +23,19 @@ def decode_from_judge0(value: str | None) -> str | None:
         return None
     return base64.b64decode(value).decode("utf-8", errors="replace")
 
-def execute_submission(submission: SubmissionRequest):
-    payload = Judge0SubmissionRequest(
-        language_id = LANGUAGE_ID,
-        source_code = encode_for_judge0(submission.source_code),
-        stdin = encode_for_judge0(submission.stdin),
+def execute_submission(source_code: str, stdin: str | None = None,) -> Judge0SubmissionResponse:
+    submission = Judge0SubmissionRequest(
+        language_id=LANGUAGE_ID,
+        source_code=source_code,
+        stdin=stdin,
     )
+
+    payload = Judge0SubmissionRequest(
+        language_id=submission.language_id,
+        source_code=encode_for_judge0(submission.source_code),
+        stdin=encode_for_judge0(submission.stdin),
+    )
+
     try:
         with httpx.Client(timeout=REQUEST_TIMEOUT_SECONDS) as client:
             response = client.post(
@@ -33,19 +43,19 @@ def execute_submission(submission: SubmissionRequest):
                 params={"base64_encoded": "true", "wait": "true"},
                 json=payload.model_dump(exclude_none=True)
             )
-
             response.raise_for_status()
             judge0_result = Judge0SubmissionResponse.model_validate(response.json())
-            decoded_judge0_result = judge0_result.model_copy(
+            decoded_result = judge0_result.model_copy(
                 update={
                     "stdout": decode_from_judge0(judge0_result.stdout),
                     "stderr": decode_from_judge0(judge0_result.stderr),
-                    "compile_output": decode_from_judge0(judge0_result.compile_output),
+                    "compile_output": decode_from_judge0(
+                        judge0_result.compile_output
+                    ),
                     "message": decode_from_judge0(judge0_result.message),
                 }
             )
-            return SubmissionResponse.from_judge0(decoded_judge0_result)
-
+            return decoded_result
     except httpx.TimeoutException:
         raise HTTPException(status_code=504, detail="Judge0 did not respond in time.")
     except httpx.ConnectError:

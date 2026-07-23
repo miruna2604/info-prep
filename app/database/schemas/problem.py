@@ -14,4 +14,4 @@ class Problem(Base):
     sample_output: Mapped[str] = mapped_column(nullable=False)
     chapter: Mapped["Chapter"] = relationship(back_populates="problems")
     tests: Mapped[list["ProblemTest"]] = relationship(back_populates="problem")
-    submissions: Mapped[list["Submission"]] = relationship(back_populates="problem")
+    submissions: Mapped[list["UserSubmission"]] = relationship(back_populates="problem")

@@ -123,13 +123,13 @@ Exemplu:
 
 ```text
 ┌──────────────┐
-│ Submission 1 │
+│ UserSubmission 1 │
 ├──────────────┤
-│ Submission 2 │
+│ UserSubmission 2 │
 ├──────────────┤
-│ Submission 3 │
+│ UserSubmission 3 │
 ├──────────────┤
-│ Submission 4 │
+│ UserSubmission 4 │
 └──────────────┘
 ```
 
