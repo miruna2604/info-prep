@@ -4,6 +4,7 @@ from app.models.enums import Verdict
 
 
 class SubmissionRequest(BaseModel):
+    user_id: int
     source_code: str
 
 class SubmissionResponse(BaseModel):

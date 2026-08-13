@@ -13,7 +13,7 @@ router = APIRouter(
 def get_all_chapters(db: Session = Depends(get_db)):
     return chapter_service.get_all_chapters(db)
 
-@router.get("/{chapter_id}}")
+@router.get("/{chapter_id}")
 def get_chapter(chapter_id: int, db: Session = Depends(get_db)):
     return chapter_service.get_chapter_by_id(db, chapter_id)
 

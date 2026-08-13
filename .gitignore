@@ -47,3 +47,6 @@ data/
 # Future frontend dependencies and output
 node_modules/
 coverage/
+
+frontend.zip
+swagger_testing.txt

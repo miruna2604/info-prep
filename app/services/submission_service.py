@@ -1,5 +1,3 @@
-from weakref import finalize
-
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
@@ -35,16 +33,16 @@ def submit_solution(db: Session, problem_id: int, submission: SubmissionRequest,
 
         if verdict != Verdict.ACCEPTED:
             final_verdict = verdict
-            break;
+            break
 
         expected_output = test.expected_output.strip()
         actual_output = (result.stdout or "").strip()
 
         if actual_output != expected_output:
             final_verdict = Verdict.WRONG_ANSWER
-            break;
+            break
 
         passed_tests += 1
 
-    user_submission_service.save_submission(db=db, user_id=1, problem_id=problem.id, source_code=submission.source_code, verdict=final_verdict, passed_tests=passed_tests, total_tests=total_tests)
-    return SubmissionResponse(verdict=Verdict.ACCEPTED, passed_tests=passed_tests, total_tests=total_tests)
+    user_submission_service.save_submission(db=db, user_id=submission.user_id, problem_id=problem.id, source_code=submission.source_code, verdict=final_verdict, passed_tests=passed_tests, total_tests=total_tests)
+    return SubmissionResponse(verdict=final_verdict, passed_tests=passed_tests, total_tests=total_tests)
