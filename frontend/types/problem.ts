@@ -1,5 +1,5 @@
-export type ProblemDifficulty = "ușor" | "mediu" | "dificil";
-export type ProblemStatus = "nerezolvată" | "în progres" | "rezolvată";
+export type ProblemStatus = "nerezolvată" | "rezolvată";
+export type BacSubject = "Sub I" | "Sub II" | "Sub III";
 
 export type ProblemExample = {
   input: string;
@@ -19,8 +19,7 @@ export type ProblemContent = {
 export type Problem = {
   id: string;
   title: string;
-  topic: string;
-  difficulty: ProblemDifficulty;
+  subject: BacSubject;
   status: ProblemStatus;
   content?: ProblemContent;
 };

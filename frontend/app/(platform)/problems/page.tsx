@@ -24,9 +24,9 @@ export default function ProblemsPage() {
           </p>
         </div>
         <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
-          <p className="text-sm text-slate-400">În progres</p>
-          <p className="mt-2 text-2xl font-semibold text-amber-300">
-            {problems.filter((problem) => problem.status === "în progres").length}
+          <p className="text-sm text-slate-400">Nerezolvate</p>
+          <p className="mt-2 text-2xl font-semibold text-slate-200">
+            {problems.filter((problem) => problem.status === "nerezolvată").length}
           </p>
         </div>
       </div>

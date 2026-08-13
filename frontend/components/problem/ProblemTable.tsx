@@ -1,17 +1,10 @@
 import Link from "next/link";
-import type { Problem, ProblemDifficulty, ProblemStatus } from "../../types/problem";
+import type { Problem, ProblemStatus } from "../../types/problem";
 
 type ProblemTableProps = { problems: Problem[] };
 
-const difficultyStyles: Record<ProblemDifficulty, string> = {
-  ușor: "text-emerald-300",
-  mediu: "text-amber-300",
-  dificil: "text-rose-300",
-};
-
 const statusStyles: Record<ProblemStatus, string> = {
   rezolvată: "bg-emerald-400/15 text-emerald-300",
-  "în progres": "bg-amber-400/15 text-amber-300",
   nerezolvată: "bg-slate-800 text-slate-400",
 };
 
@@ -24,7 +17,6 @@ export function ProblemTable({ problems }: ProblemTableProps) {
             <th className="px-5 py-4 font-medium">Status</th>
             <th className="px-5 py-4 font-medium">Problemă</th>
             <th className="px-5 py-4 font-medium">Subiect</th>
-            <th className="px-5 py-4 font-medium">Dificultate</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-800">
@@ -44,10 +36,7 @@ export function ProblemTable({ problems }: ProblemTableProps) {
                   <span className="text-slate-100">{problem.title}</span>
                 )}
               </td>
-              <td className="px-5 py-4 text-slate-400">{problem.topic}</td>
-              <td className={`px-5 py-4 font-medium ${difficultyStyles[problem.difficulty]}`}>
-                {problem.difficulty}
-              </td>
+              <td className="px-5 py-4 text-slate-400">{problem.subject}</td>
             </tr>
           ))}
         </tbody>

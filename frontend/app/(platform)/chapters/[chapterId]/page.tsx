@@ -19,18 +19,23 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
       <p className="mt-3 max-w-2xl text-slate-400">{chapter.description}</p>
       <div className="mt-8 flex items-center justify-between border-b border-slate-800 pb-4">
         <h2 className="text-lg font-semibold text-white">Lecții</h2>
-        <span className="text-sm text-slate-400">{completedLessons} din {chapter.lessons.length} finalizate</span>
+        <span className="text-sm text-slate-400">
+          {chapter.lessons.length > 0
+            ? `${completedLessons} din ${chapter.lessons.length} finalizate`
+            : "Lecții în pregătire"}
+        </span>
       </div>
-      <div className="mt-4 space-y-3">
-        {chapter.lessons.map((lesson, index) => (
-          <LessonItem
-            key={lesson.id}
-            lesson={lesson}
-            position={index + 1}
-            chapterId={chapter.id}
-          />
-        ))}
-      </div>
+      {chapter.lessons.length > 0 ? (
+        <div className="mt-4 space-y-3">
+          {chapter.lessons.map((lesson, index) => (
+            <LessonItem key={lesson.id} lesson={lesson} position={index + 1} chapterId={chapter.id} />
+          ))}
+        </div>
+      ) : (
+        <p className="mt-4 rounded-xl border border-slate-800 bg-slate-900 p-4 text-sm text-slate-400">
+          Lecțiile acestui capitol sunt în curs de pregătire.
+        </p>
+      )}
     </section>
   );
 }
