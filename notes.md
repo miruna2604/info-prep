@@ -421,3 +421,90 @@ Primește răspunsul și afișează utilizatorului:
                  ▼
              Utilizator
 ```
+
+
+
+
+## 1. Intră în proiect
+
+```bash
+cd ~/Developer/infooo-prep
+```
+
+## 2. Activează mediul virtual Python
+
+```bash
+source .venv/bin/activate
+```
+
+## 3. Pornește backend-ul + Judge0 + bazele de date
+
+```bash
+docker compose up -d
+```
+
+## 4. Verifică containerele
+
+```bash
+docker compose ps
+```
+
+## 5. Testează backend-ul
+
+```text
+http://localhost:8000/docs
+```
+
+## 6. Rulează testele backend
+
+```bash
+docker compose exec api pytest -v
+```
+
+## 7. Intră în folderul frontend
+
+```bash
+cd frontend
+```
+
+## 8. Instalează dependențele frontend — doar dacă este necesar
+
+```bash
+npm install
+```
+
+## 9. Pornește frontend-ul
+
+```bash
+npm run dev
+```
+
+## 10. Deschide site-ul
+
+```text
+http://localhost:3000
+```
+
+## Oprirea proiectului
+
+Oprește frontend-ul:
+
+```bash
+Ctrl + C
+```
+
+Întoarce-te în proiect:
+
+```bash
+cd ..
+```
+
+Oprește containerele:
+
+```bash
+docker compose down
+```
+
+
+
+

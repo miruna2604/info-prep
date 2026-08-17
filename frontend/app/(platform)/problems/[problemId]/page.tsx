@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CodeEditor } from "../../../../components/editor/CodeEditor";
-import { Console } from "../../../../components/editor/Console";
-import { RunButtons } from "../../../../components/editor/RunButtons";
+import { ProblemWorkspace } from "../../../../components/problem/ProblemWorkspace";
 import { Constraints } from "../../../../components/problem/Constraints";
 import { ProblemExamples } from "../../../../components/problem/ProblemExamples";
 import { ProblemStatement } from "../../../../components/problem/ProblemStatement";
@@ -31,11 +29,10 @@ export default async function ProblemPage({ params }: ProblemPageProps) {
           <Constraints constraints={problem.content.constraints} />
         </article>
 
-        <div className="flex min-w-0 flex-col gap-4">
-          <CodeEditor code={problem.content.starterCode} />
-          <Console />
-          <RunButtons />
-        </div>
+        <ProblemWorkspace
+          starterCode={problem.content.starterCode}
+          initialInput={problem.content.examples[0]?.input ?? ""}
+        />
       </div>
     </section>
   );

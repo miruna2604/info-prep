@@ -3,6 +3,7 @@ from app.routers.problems import router as problems_router
 from app.routers.chapters import router as chapter_router
 from fastapi import FastAPI
 from app.database.database import Base, engine
+from fastapi.middleware.cors import CORSMiddleware
 
 # importăm modelele
 from app.database.schemas.user import User
@@ -13,6 +14,17 @@ from app.database.schemas.pb_test import ProblemTest
 from app.database.schemas.user_submission import UserSubmission
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 

@@ -58,6 +58,23 @@ services:
       - appdb:/var/lib/postgresql/data/
     restart: always
 
+  test_database:
+    image: postgres:16.2
+    profiles: ["test"]
+    environment:
+      POSTGRES_DB: app_database_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    ports:
+      - "5434:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user -d app_database_test"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
 
   redis:
     image: redis:7.2.4
