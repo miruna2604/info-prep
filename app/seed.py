@@ -5,6 +5,7 @@
 
 from app.database.database import SessionLocal
 from app.database.schemas.chapter import Chapter
+from app.database.schemas.lesson import Lesson
 from app.database.schemas.problem import Problem
 from app.database.schemas.pb_test import ProblemTest
 from app.database.schemas.user import User
@@ -68,7 +69,45 @@ def seed_database():
 
             db.add(chapter)
             db.flush()
+        # ==================================================
+        # LESSONS
+        # ==================================================
 
+        lessons_data = [
+            {
+                "title": "Variabile și tipuri de date",
+                "display_order": 1,
+            },
+            {
+                "title": "Citire și afișare",
+                "display_order": 2,
+            },
+            {
+                "title": "Instrucțiunea if / else",
+                "display_order": 3,
+            },
+        ]
+
+        for lesson_data in lessons_data:
+            lesson = (
+                db.query(Lesson)
+                .filter(
+                    Lesson.chapter_id == chapter.id,
+                    Lesson.title == lesson_data["title"],
+                )
+                .first()
+            )
+
+            if not lesson:
+                lesson = Lesson(
+                    chapter_id=chapter.id,
+                    title=lesson_data["title"],
+                    video_url=None,
+                    pdf_url=None,
+                    display_order=lesson_data["display_order"],
+                )
+
+                db.add(lesson)
         # ==================================================
         # PROBLEM 1
         # ==================================================
