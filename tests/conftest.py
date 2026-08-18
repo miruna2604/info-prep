@@ -22,6 +22,7 @@ from app.database.schemas.pb_test import ProblemTest  # noqa: E402
 from app.database.schemas.problem import Problem  # noqa: E402
 from app.database.schemas.user import User  # noqa: E402
 from app.database.schemas.user_submission import UserSubmission  # noqa: F401, E402
+from app.database.schemas.lesson import Lesson  # noqa: E402
 from app.main import app  # noqa: E402
 
 
@@ -33,6 +34,14 @@ def seed_test_data(db):
         password_hash="not-a-real-password",
     )
     chapter = Chapter(id=1, title="Test chapter", display_order=1)
+    lesson = Lesson(
+        id=1,
+        chapter_id=1,
+        title="Prima lecție",
+        video_url="https://example.com/video",
+        pdf_url="https://example.com/lesson.pdf",
+        display_order=1,
+    )
     problem = Problem(
         id=1,
         chapter_id=1,
@@ -54,7 +63,7 @@ def seed_test_data(db):
         ]
     ]
 
-    db.add_all([user, chapter, problem, *tests])
+    db.add_all([user, chapter, lesson, problem, *tests])
     db.commit()
 
 

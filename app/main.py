@@ -1,6 +1,7 @@
 from app.routers.submissions import router as submissions_router
 from app.routers.problems import router as problems_router
-from app.routers.chapters import router as chapter_router
+from app.routers.chapters import router as chapters_router
+from app.routers.lessons import router as lessons_router
 from fastapi import FastAPI
 from app.database.database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
@@ -30,5 +31,6 @@ Base.metadata.create_all(bind=engine)
 
 app.include_router(submissions_router)
 app.include_router(problems_router)
-app.include_router(chapter_router)
+app.include_router(chapters_router)
+app.include_router(lessons_router)
 

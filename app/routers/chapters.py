@@ -20,3 +20,7 @@ def get_chapter(chapter_id: int, db: Session = Depends(get_db)):
 @router.get("/{chapter_id}/problems")
 def get_problems_for_chapter(chapter_id: int, db: Session = Depends(get_db)):
     return chapter_service.get_problems_for_chapter(db, chapter_id)
+
+@router.get("/{chapter_id}/lessons")
+def get_lessons_for_chapter(chapter_id: int, db: Session = Depends(get_db)):
+    return chapter_service.get_lessons_for_chapter(db, chapter_id)
