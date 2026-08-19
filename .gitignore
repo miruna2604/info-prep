@@ -34,7 +34,7 @@ dist/
 # Local databases and application data
 *.sqlite3
 *.db
-data/
+/data/
 
 # Logs
 *.log
