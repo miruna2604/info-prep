@@ -44,6 +44,10 @@ dist/
 .vscode/
 .DS_Store
 
+# Personal development notes
+notes.md
+db_notes.md
+
 # Future frontend dependencies and output
 node_modules/
 coverage/

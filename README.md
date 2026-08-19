@@ -1,4 +1,4 @@
-# Infooo Prep
+# Info Prep
 
 Infooo Prep is a full-stack learning platform for Romanian high-school students preparing for the Computer Science Baccalaureate exam. It combines structured C++ lessons and practice problems with an in-browser code runner backed by Judge0.
 
