@@ -8,25 +8,25 @@ def test_get_all_chapters(client):
     assert "id" in first_chapter
     assert "title" in first_chapter
 
-def test_get_chapter_by_id(client):
-    response = client.get("/chapters/1")
+def test_get_chapter_by_slug(client):
+    response = client.get("/chapters/test-chapter")
     assert response.status_code == 200
     data = response.json()
     assert data["id"] == 1
     assert "title" in data
 
 def test_get_chapter_not_found(client):
-    response = client.get("/chapters/99999")
+    response = client.get("/chapters/does-not-exist")
     assert response.status_code == 404
 
 def test_get_problems_for_chapter(client):
-    response = client.get("/chapters/1/problems")
+    response = client.get("/chapters/test-chapter/problems")
     assert response.status_code == 200
     data = response.json()
     assert isinstance(data, list)
 
 def test_get_lessons_for_chapter(client):
-    response = client.get("/chapters/1/lessons")
+    response = client.get("/chapters/test-chapter/lessons")
     assert response.status_code == 200
     data = response.json()
     assert isinstance(data, list)
@@ -37,6 +37,6 @@ def test_get_lessons_for_chapter(client):
     assert data[0]["display_order"] == 1
 
 def test_get_lesson_for_nonexistent_chapter(client):
-    response = client.get("/chapters/9999/lessons")
+    response = client.get("/chapters/does-not-exist/lessons")
     assert response.status_code == 404
     assert response.json()["detail"] == "Chapter not found"

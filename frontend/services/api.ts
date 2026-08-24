@@ -8,6 +8,16 @@ type ApiErrorResponse = {
   detail?: string;
 };
 
+export class ApiError extends Error {
+  constructor(
+    public readonly status: number,
+    message: string,
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 export async function apiFetch<T>(
   path: string,
   options: RequestInit = {},
@@ -33,7 +43,7 @@ export async function apiFetch<T>(
       // Dacă răspunsul nu este JSON, păstrăm mesajul general.
     }
 
-    throw new Error(message);
+    throw new ApiError(response.status, message);
   }
 
   return response.json() as Promise<T>;

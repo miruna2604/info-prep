@@ -1,24 +1,24 @@
 export function Topbar() {
   return (
-    <header className="flex h-14 items-center justify-between border-b border-slate-800 bg-slate-950 px-4 lg:px-6">
-      <div className="flex items-center gap-3">
+    <header className="app-topbar flex h-16 items-center justify-between border-b border-slate-800/70 bg-[#06101d]/95 px-4 backdrop-blur lg:px-8">
+      <div className="flex items-center gap-3 md:hidden">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-400 font-mono text-sm font-bold text-slate-950">
           {"</>"}
         </div>
 
         <span className="font-semibold tracking-tight">InfoPrep</span>
-
-        <span className="hidden text-sm text-slate-500 sm:inline">
-          Informatică Bac
-        </span>
       </div>
 
-      <div className="flex items-center gap-3">
-        <span className="hidden text-sm text-slate-400 sm:inline">
-          Învață. Exersează. Evoluează.
-        </span>
-
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-violet-500 text-sm font-semibold">
+      <div className="ml-auto flex items-center gap-4">
+        <button
+          type="button"
+          aria-label="Notificări"
+          className="relative flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"
+        >
+          <span aria-hidden="true">♧</span>
+          <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-emerald-400" />
+        </button>
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-sm font-semibold text-white">
           M
         </div>
       </div>

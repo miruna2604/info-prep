@@ -1,0 +1,123 @@
+{
+  "questions": [
+    {
+      "text": "Care este rolul principal al liniei `using namespace std;`?",
+      "options": [
+        {
+          "text": "Permite programului să folosească automat toate bibliotecile standard din C++.",
+          "is_correct": false
+        },
+        {
+          "text": "Permite folosirea unor elemente precum `cout` și `cin` fără prefixul `std::`.",
+          "is_correct": true
+        },
+        {
+          "text": "Face ca funcția `main()` să poată accesa instrucțiunile din biblioteca `iostream`.",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "text": "Ce descrie cel mai corect funcția `main()` într-un program C++?",
+      "options": [
+        {
+          "text": "Este funcția în care începe execuția programului.",
+          "is_correct": true
+        },
+        {
+          "text": "Este funcția care trebuie să conțină toate instrucțiunile programului.",
+          "is_correct": false
+        },
+        {
+          "text": "Este funcția care afișează rezultatele programului pe ecran.",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "text": "Ce se întâmplă dacă uităm `;` după o instrucțiune precum `cout << \"Salut\"`?",
+      "options": [
+        {
+          "text": "Programul poate compila, dar instrucțiunea nu va fi executată.",
+          "is_correct": false
+        },
+        {
+          "text": "Programul va afișa textul, dar va ignora următoarea instrucțiune.",
+          "is_correct": false
+        },
+        {
+          "text": "În mod normal, programul va produce o eroare de compilare.",
+          "is_correct": true
+        }
+      ]
+    },
+    {
+      "text": "Ce se întâmplă în mod normal dacă un program încearcă să acceseze o zonă de memorie invalidă în timpul execuției?",
+      "options": [
+        {
+          "text": "Poate apărea o eroare de rulare, deoarece problema apare după ce programul a început să se execute.",
+          "is_correct": true
+        },
+        {
+          "text": "Apare obligatoriu o eroare de compilare, deoarece compilatorul verifică toate accesările de memorie.",
+          "is_correct": false
+        },
+        {
+          "text": "Programul este corect, deoarece orice problemă apărută după compilare este ignorată.",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "text": "Care este ordinea corectă a etapelor prin care trece, în mod simplificat, un program C++?",
+      "options": [
+        {
+          "text": "Scriem codul → rulăm programul → compilăm codul → obținem rezultatul.",
+          "is_correct": false
+        },
+        {
+          "text": "Scriem codul → compilăm codul → rulăm programul → obținem rezultatul.",
+          "is_correct": true
+        },
+        {
+          "text": "Compilăm codul → scriem programul → obținem rezultatul → rulăm programul.",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "text": "Ce tip de problemă există în următorul cod: `cout << \"Salut\"` dacă biblioteca necesară și restul programului sunt scrise corect, dar lipsește `;` la final?",
+      "options": [
+        {
+          "text": "Eroare de rulare, deoarece problema apare atunci când se încearcă afișarea textului.",
+          "is_correct": false
+        },
+        {
+          "text": "Eroare de compilare, deoarece instrucțiunea nu respectă sintaxa cerută de C++.",
+          "is_correct": true
+        },
+        {
+          "text": "Nu există nicio eroare, deoarece `;` este opțional după `cout`.",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "text": "Un program se compilează cu succes, dar în timpul execuției încearcă să acceseze un element aflat în afara unei zone de memorie valide și se oprește. Ce tip de eroare este aceasta?",
+      "options": [
+        {
+          "text": "Eroare de compilare, deoarece orice acces invalid este detectat înainte de rulare.",
+          "is_correct": false
+        },
+        {
+          "text": "Eroare de rulare, deoarece problema apare în timpul executării programului.",
+          "is_correct": true
+        },
+        {
+          "text": "Eroare de sintaxă fără legătură cu compilarea sau rularea.",
+          "is_correct": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "questions": [
+    {
+      "text": "Întrebarea 1",
+      "options": [
+        { "text": "Răspuns 1", "is_correct": true },
+        { "text": "Răspuns 2", "is_correct": false },
+        { "text": "Răspuns 3", "is_correct": false }
+      ]
+    },
+    {
+      "text": "Întrebarea 2",
+      "options": [
+        { "text": "Răspuns 1", "is_correct": true },
+        { "text": "Răspuns 2", "is_correct": false },
+        { "text": "Răspuns 3", "is_correct": false }
+      ]
+    },
+    {
+      "text": "Întrebarea 3",
+      "options": [
+        { "text": "Răspuns 1", "is_correct": true },
+        { "text": "Răspuns 2", "is_correct": false },
+        { "text": "Răspuns 3", "is_correct": false }
+      ]
+    }
+  ]
+}

@@ -20,6 +20,7 @@ from app.database.database import Base, SessionLocal, engine, get_db  # noqa: E4
 from app.database.schemas.chapter import Chapter  # noqa: E402
 from app.database.schemas.pb_test import ProblemTest  # noqa: E402
 from app.database.schemas.problem import Problem  # noqa: E402
+from app.database.schemas.quiz import Quiz, QuizOption, QuizQuestion  # noqa: E402
 from app.database.schemas.user import User  # noqa: E402
 from app.database.schemas.user_submission import UserSubmission  # noqa: F401, E402
 from app.database.schemas.lesson import Lesson  # noqa: E402
@@ -33,14 +34,25 @@ def seed_test_data(db):
         email="test@example.com",
         password_hash="not-a-real-password",
     )
-    chapter = Chapter(id=1, title="Test chapter", display_order=1)
+    chapter = Chapter(
+        id=1,
+        title="Test chapter",
+        slug="test-chapter",
+        description="Test chapter description",
+        display_order=1,
+        is_published=True,
+    )
     lesson = Lesson(
         id=1,
         chapter_id=1,
         title="Prima lecție",
+        slug="prima-lectie",
+        description="Descrierea primei lecții",
+        content="# Prima lecție\n\nConținut de test.",
         video_url="https://example.com/video",
         pdf_url="https://example.com/lesson.pdf",
         display_order=1,
+        is_published=True,
     )
     problem = Problem(
         id=1,
@@ -52,6 +64,28 @@ def seed_test_data(db):
         sample_input="2 3",
         sample_output="5",
     )
+    quiz = Quiz(
+        id=1,
+        lesson_id=1,
+        title="Quiz: Prima lecție",
+        is_published=True,
+    )
+    question = QuizQuestion(
+        id=1,
+        quiz_id=1,
+        text="Întrebarea 1",
+        display_order=1,
+    )
+    options = [
+        QuizOption(
+            id=option_id,
+            question_id=1,
+            text=f"Răspuns {option_id}",
+            display_order=option_id,
+            is_correct=option_id == 1,
+        )
+        for option_id in range(1, 4)
+    ]
     tests = [
         ProblemTest(problem_id=1, input=input_data, expected_output=output, is_hidden=hidden)
         for input_data, output, hidden in [
@@ -63,7 +97,7 @@ def seed_test_data(db):
         ]
     ]
 
-    db.add_all([user, chapter, lesson, problem, *tests])
+    db.add_all([user, chapter, lesson, problem, quiz, question, *options, *tests])
     db.commit()
 
 

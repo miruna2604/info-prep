@@ -3,12 +3,86 @@
 #2 probleme
 #testele fiecarei probleme
 
+import json
+from pathlib import Path
+
 from app.database.database import SessionLocal
 from app.database.schemas.chapter import Chapter
 from app.database.schemas.lesson import Lesson
 from app.database.schemas.problem import Problem
 from app.database.schemas.pb_test import ProblemTest
+from app.database.schemas.quiz import Quiz, QuizOption, QuizQuestion
 from app.database.schemas.user import User
+
+
+LESSON_CONTENT_DIRECTORY = (
+    Path(__file__).resolve().parent.parent / "content" / "lessons"
+)
+QUIZ_CONTENT_DIRECTORY = (
+    Path(__file__).resolve().parent.parent / "content" / "quizzes"
+)
+
+
+def load_lesson_content(chapter_slug: str, lesson_slug: str) -> str:
+    lesson_path = (
+        LESSON_CONTENT_DIRECTORY
+        / chapter_slug
+        / f"{lesson_slug}.md"
+    )
+
+    if not lesson_path.is_file():
+        return ""
+
+    return lesson_path.read_text(encoding="utf-8").strip()
+
+
+def load_quiz_content(chapter_slug: str, lesson_slug: str) -> dict | None:
+    quiz_path = (
+        QUIZ_CONTENT_DIRECTORY
+        / chapter_slug
+        / f"{lesson_slug}.json"
+    )
+
+    if not quiz_path.is_file():
+        return None
+
+    quiz_data = json.loads(quiz_path.read_text(encoding="utf-8"))
+    questions = quiz_data.get("questions")
+
+    if not isinstance(questions, list) or not questions:
+        raise ValueError(f"{quiz_path}: 'questions' must be a non-empty list")
+
+    for question_index, question in enumerate(questions, start=1):
+        if not isinstance(question.get("text"), str) or not question["text"].strip():
+            raise ValueError(f"{quiz_path}: question {question_index} needs text")
+
+        options = question.get("options")
+        if not isinstance(options, list) or len(options) != 3:
+            raise ValueError(
+                f"{quiz_path}: question {question_index} must have exactly 3 options"
+            )
+
+        correct_options = 0
+        for option_index, option in enumerate(options, start=1):
+            if not isinstance(option.get("text"), str) or not option["text"].strip():
+                raise ValueError(
+                    f"{quiz_path}: option {option_index} of question "
+                    f"{question_index} needs text"
+                )
+            if not isinstance(option.get("is_correct"), bool):
+                raise ValueError(
+                    f"{quiz_path}: option {option_index} of question "
+                    f"{question_index} needs a boolean 'is_correct'"
+                )
+            correct_options += option["is_correct"]
+
+        if correct_options != 1:
+            raise ValueError(
+                f"{quiz_path}: question {question_index} must have "
+                "exactly one correct option"
+            )
+
+    return quiz_data
 
 
 def seed_database():
@@ -55,45 +129,196 @@ def seed_database():
         # CHAPTER
         # ==================================================
 
-        chapter = (
+        chapters_data = [
+            {
+                "title": "Bazele programării în C++",
+                "slug": "bazele-programarii-in-cpp",
+                "description": "Sintaxă, variabile, operatori, citire, afișare și structuri de control.",
+            },
+            {
+                "title": "Algoritmi elementari",
+                "slug": "algoritmi-elementari",
+                "description": "Prelucrări pe cifre, divizibilitate și algoritmi fundamentali.",
+            },
+            {
+                "title": "Vectori",
+                "slug": "vectori",
+                "description": "Tablouri unidimensionale, parcurgeri și prelucrări uzuale.",
+            },
+            {
+                "title": "Matrici",
+                "slug": "matrici",
+                "description": "Tablouri bidimensionale, linii, coloane și diagonale.",
+            },
+            {
+                "title": "Șiruri de caractere",
+                "slug": "siruri-de-caractere",
+                "description": "Reprezentarea și prelucrarea textelor în C++.",
+            },
+            {
+                "title": "Subprograme",
+                "slug": "subprograme",
+                "description": "Funcții, parametri și organizarea programelor în componente reutilizabile.",
+            },
+            {
+                "title": "Recursivitate",
+                "slug": "recursivitate",
+                "description": "Rezolvarea problemelor prin apeluri recursive și cazuri de bază.",
+            },
+            {
+                "title": "Backtracking",
+                "slug": "backtracking",
+                "description": "Generarea și explorarea sistematică a soluțiilor posibile.",
+            },
+            {
+                "title": "Structuri de date (struct)",
+                "slug": "structuri-de-date-struct",
+                "description": "Gruparea datelor eterogene în tipuri definite de programator.",
+            },
+            {
+                "title": "Fișiere text",
+                "slug": "fisiere-text",
+                "description": "Citirea și scrierea datelor folosind fișiere text.",
+            },
+            {
+                "title": "Grafuri",
+                "slug": "grafuri",
+                "description": "Reprezentări, parcurgeri și proprietăți fundamentale ale grafurilor.",
+            },
+            {
+                "title": "Arbori",
+                "slug": "arbori",
+                "description": "Structuri arborescente și algoritmi de parcurgere.",
+            },
+            {
+                "title": "Algoritmi eficienți",
+                "slug": "algoritmi-eficienti",
+                "description": "Strategii de optimizare și analiza eficienței soluțiilor.",
+            },
+            {
+                "title": "Antrenament BAC",
+                "slug": "antrenament-bac",
+                "description": "Exerciții recapitulative și simulări pentru examenul de Bacalaureat.",
+            },
+        ]
+
+        legacy_chapter = (
             db.query(Chapter)
-            .filter(Chapter.title == "Introducere în C++")
+            .filter(
+                (Chapter.slug.in_(["introducere-in-cpp", "bazele-programarii-in-cpp"]))
+                | (Chapter.title.in_(["Introducere în C++", "Bazele programării în C++"]))
+            )
             .first()
         )
 
-        if not chapter:
-            chapter = Chapter(
-                title="Introducere în C++",
-                display_order=1
+        chapter = None
+
+        for display_order, chapter_data in enumerate(chapters_data, start=1):
+            current_chapter = legacy_chapter if display_order == 1 else (
+                db.query(Chapter)
+                .filter(Chapter.slug == chapter_data["slug"])
+                .first()
             )
 
-            db.add(chapter)
-            db.flush()
+            if current_chapter is None:
+                current_chapter = Chapter(
+                    title=chapter_data["title"],
+                    slug=chapter_data["slug"],
+                    description=chapter_data["description"],
+                    display_order=display_order,
+                    is_published=True,
+                )
+                db.add(current_chapter)
+                db.flush()
+            else:
+                current_chapter.title = chapter_data["title"]
+                current_chapter.slug = chapter_data["slug"]
+                current_chapter.description = chapter_data["description"]
+                current_chapter.display_order = display_order
+                current_chapter.is_published = True
+
+            if display_order == 1:
+                chapter = current_chapter
+
+        if chapter is None:
+            raise RuntimeError("The foundational C++ chapter could not be seeded")
         # ==================================================
         # LESSONS
         # ==================================================
 
         lessons_data = [
             {
-                "title": "Variabile și tipuri de date",
+                "title": "Structura unui program C++",
+                "slug": "structura-unui-program-cpp",
+                "description": "Descoperă componentele de bază ale unui program C++.",
                 "display_order": 1,
             },
             {
                 "title": "Citire și afișare",
+                "slug": "citire-si-afisare",
+                "description": "Folosește cin și cout pentru intrarea și ieșirea datelor.",
                 "display_order": 2,
             },
             {
-                "title": "Instrucțiunea if / else",
+                "title": "Variabile și constante",
+                "slug": "variabile-si-constante",
+                "description": "Declară și utilizează valori care se pot modifica sau rămân constante.",
                 "display_order": 3,
+            },
+            {
+                "title": "Tipuri de date",
+                "slug": "tipuri-de-date",
+                "description": "Alege tipul potrivit pentru valorile folosite în program.",
+                "display_order": 4,
+            },
+            {
+                "title": "Operatori aritmetici",
+                "slug": "operatori-aritmetici",
+                "description": "Construiește calcule folosind operatorii aritmetici din C++.",
+                "display_order": 5,
+            },
+            {
+                "title": "Operatori relaționali și logici",
+                "slug": "operatori-relationali-si-logici",
+                "description": "Compară valori și combină condiții logice.",
+                "display_order": 6,
+            },
+            {
+                "title": "Expresii",
+                "slug": "expresii",
+                "description": "Înțelege evaluarea expresiilor și ordinea operațiilor.",
+                "display_order": 7,
+            },
+            {
+                "title": "Instrucțiunea if",
+                "slug": "instructiunea-if",
+                "description": "Controlează execuția programului folosind condiții.",
+                "display_order": 8,
+            },
+            {
+                "title": "Instrucțiunea switch",
+                "slug": "instructiunea-switch",
+                "description": "Selectează una dintre mai multe ramuri de execuție.",
+                "display_order": 9,
+            },
+            {
+                "title": "Structuri repetitive: for, while, do while",
+                "slug": "structuri-repetitive-for-while-do-while",
+                "description": "Repetă instrucțiuni folosind cele trei structuri iterative principale.",
+                "display_order": 10,
             },
         ]
 
         for lesson_data in lessons_data:
+            lesson_content = load_lesson_content(
+                chapter.slug,
+                lesson_data["slug"],
+            )
             lesson = (
                 db.query(Lesson)
                 .filter(
                     Lesson.chapter_id == chapter.id,
-                    Lesson.title == lesson_data["title"],
+                    Lesson.display_order == lesson_data["display_order"],
                 )
                 .first()
             )
@@ -102,12 +327,115 @@ def seed_database():
                 lesson = Lesson(
                     chapter_id=chapter.id,
                     title=lesson_data["title"],
+                    slug=lesson_data["slug"],
+                    description=lesson_data["description"],
+                    content=lesson_content,
                     video_url=None,
                     pdf_url=None,
                     display_order=lesson_data["display_order"],
+                    is_published=True,
                 )
 
                 db.add(lesson)
+            else:
+                lesson.title = lesson_data["title"]
+                lesson.slug = lesson_data["slug"]
+                lesson.description = lesson_data["description"]
+                lesson.content = lesson_content
+                lesson.display_order = lesson_data["display_order"]
+                lesson.is_published = True
+
+        # ==================================================
+        # QUIZZES
+        # ==================================================
+
+        chapter_lessons = (
+            db.query(Lesson)
+            .filter(Lesson.chapter_id == chapter.id)
+            .order_by(Lesson.display_order)
+            .all()
+        )
+
+        for lesson in chapter_lessons:
+            quiz_data = load_quiz_content(chapter.slug, lesson.slug)
+            quiz = db.query(Quiz).filter(Quiz.lesson_id == lesson.id).first()
+
+            if quiz_data is None:
+                if quiz is not None:
+                    quiz.is_published = False
+                continue
+
+            if quiz is None:
+                quiz = Quiz(
+                    lesson_id=lesson.id,
+                    title=quiz_data.get("title") or f"Quiz: {lesson.title}",
+                    is_published=True,
+                )
+                db.add(quiz)
+                db.flush()
+            else:
+                quiz.title = quiz_data.get("title") or f"Quiz: {lesson.title}"
+                quiz.is_published = True
+
+            for question_order, question_data in enumerate(
+                quiz_data["questions"],
+                start=1,
+            ):
+                question = (
+                    db.query(QuizQuestion)
+                    .filter(
+                        QuizQuestion.quiz_id == quiz.id,
+                        QuizQuestion.display_order == question_order,
+                    )
+                    .first()
+                )
+
+                if question is None:
+                    question = QuizQuestion(
+                        quiz_id=quiz.id,
+                        text=question_data["text"],
+                        display_order=question_order,
+                    )
+                    db.add(question)
+                    db.flush()
+                else:
+                    question.text = question_data["text"]
+
+                for option_order, option_data in enumerate(
+                    question_data["options"],
+                    start=1,
+                ):
+                    option = (
+                        db.query(QuizOption)
+                        .filter(
+                            QuizOption.question_id == question.id,
+                            QuizOption.display_order == option_order,
+                        )
+                        .first()
+                    )
+
+                    if option is None:
+                        option = QuizOption(
+                            question_id=question.id,
+                            text=option_data["text"],
+                            display_order=option_order,
+                            is_correct=option_data["is_correct"],
+                        )
+                        db.add(option)
+                    else:
+                        option.text = option_data["text"]
+                        option.is_correct = option_data["is_correct"]
+
+            stale_questions = (
+                db.query(QuizQuestion)
+                .filter(
+                    QuizQuestion.quiz_id == quiz.id,
+                    QuizQuestion.display_order > len(quiz_data["questions"]),
+                )
+                .all()
+            )
+            for stale_question in stale_questions:
+                db.delete(stale_question)
         # ==================================================
         # PROBLEM 1
         # ==================================================
@@ -244,5 +572,3 @@ def seed_database():
 
 if __name__ == "__main__":
     seed_database()
-
-

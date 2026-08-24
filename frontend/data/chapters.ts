@@ -1,6 +1,4 @@
-import type { Chapter } from "../types/chapter";
-
-export const chapters: Chapter[] = [
+export const chapters = [
   {
     id: "bazele-cpp",
     title: "Bazele C++",

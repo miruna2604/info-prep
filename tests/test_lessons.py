@@ -13,3 +13,14 @@ def test_get_lesson_not_found(client):
     response = client.get("/lessons/99999")
     assert response.status_code == 404
     assert response.json()["detail"] == "Lesson not found"
+
+def test_get_lesson_by_chapter_and_lesson_slugs(client):
+    response = client.get("/chapters/test-chapter/lessons/prima-lectie")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["chapter_id"] == 1
+    assert data["slug"] == "prima-lectie"
+
+def test_get_lesson_for_wrong_chapter_slug(client):
+    response = client.get("/chapters/wrong-chapter/lessons/prima-lectie")
+    assert response.status_code == 404

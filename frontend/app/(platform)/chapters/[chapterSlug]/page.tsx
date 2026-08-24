@@ -1,14 +1,45 @@
 import { notFound } from "next/navigation";
 import { LessonItem } from "../../../../components/chapter/LessonItem";
-import { chapters } from "../../../../data/chapters";
+import { getChapter, getChapterLessons } from "../../../../services/chapterService";
+import { ApiError } from "../../../../services/api";
 
-type ChapterPageProps = { params: Promise<{ chapterId: string }> };
+type ChapterPageProps = { params: Promise<{ chapterSlug: string }> };
+
+async function loadChapterPageData(chapterSlug: string) {
+    try {
+        return await Promise.all([
+          getChapter(chapterSlug),
+          getChapterLessons(chapterSlug),
+        ]);
+    } catch (error) {
+        if (error instanceof ApiError && error.status == 404) {
+            notFound();
+        }
+        throw error;
+    }
+}
 
 export default async function ChapterPage({ params }: ChapterPageProps) {
-  const { chapterId } = await params;
-  const chapter = chapters.find((item) => item.id === chapterId);
+  const { chapterSlug } = await params;
 
-  if (!chapter) notFound();
+  if (!chapterSlug) {
+    notFound();
+  }
+
+  const [chapterResponse, lessonResponses] = await loadChapterPageData(chapterSlug);
+
+  const chapter = {
+      id: chapterResponse.slug,
+      title: chapterResponse.title,
+      description: chapterResponse.description,
+      lessons: lessonResponses.map((lesson) => ({
+        id: lesson.slug,
+        title: lesson.title,
+        description: lesson.description,
+        completed: false,
+        content: lesson.content || undefined,
+      })),
+  };
 
   const completedLessons = chapter.lessons.filter((lesson) => lesson.completed).length;
 
@@ -28,7 +59,7 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
       {chapter.lessons.length > 0 ? (
         <div className="mt-4 space-y-3">
           {chapter.lessons.map((lesson, index) => (
-            <LessonItem key={lesson.id} lesson={lesson} position={index + 1} chapterId={chapter.id} />
+            <LessonItem key={lesson.id} lesson={lesson} position={index + 1} chapterSlug={chapter.id} />
           ))}
         </div>
       ) : (
