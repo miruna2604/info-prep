@@ -8,6 +8,8 @@ services:
           JUDGE0_URL: http://server:2358
           LANGUAGE_ID: "54"
           DATABASE_URL: postgresql+psycopg2://${APP_DB_USER}:${APP_DB_PASSWORD}@api_database:5432/${APP_DB_NAME}
+          AUTH_SECRET_KEY: ${AUTH_SECRET_KEY}
+          AUTH_TOKEN_EXPIRE_MINUTES: ${AUTH_TOKEN_EXPIRE_MINUTES:-30}
     ports:
       - "8000:8000"
     depends_on:
