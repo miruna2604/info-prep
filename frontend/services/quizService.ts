@@ -14,6 +14,7 @@ export type QuizOption = {
 };
 
 export type QuizQuestion = {
+  source?: string | null;
   id: number;
   text: string;
   display_order: number;

@@ -15,6 +15,7 @@ class QuizOptionResponse(BaseModel):
 
 
 class QuizQuestionResponse(BaseModel):
+    source: str | None = None
     id: int
     text: str
     display_order: int

@@ -1,0 +1,16 @@
+{
+  "algorithm": "numarul-de-cifre",
+  "number": 4729,
+  "brand": "InfoPrep",
+  "titleLine1": "Cum calculăm",
+  "titleLine2": "numărul de cifre?",
+  "subtitle": "Urmărește execuția codului C++ pas cu pas.",
+  "closingLine1": "Înțelege informatica.",
+  "closingLine2": "Rezolvă cu încredere.",
+  "secondsPerStep": 1.6,
+  "introSeconds": 2.5,
+  "outroSeconds": 3,
+  "backgroundLogoOpacity": 0.11,
+  "cornerLogoOpacity": 0.9,
+  "outputFile": "numarul-de-cifre-4729.mp4"
+}

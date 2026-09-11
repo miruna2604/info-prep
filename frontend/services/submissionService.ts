@@ -25,10 +25,7 @@ type RunCodeApiResponse = {
   memory: number | null;
 };
 
-export async function runCode({
-  sourceCode,
-  stdin,
-}: RunCodeInput): Promise<RunCodeResult> {
+export async function runCode({sourceCode,stdin}: RunCodeInput): Promise<RunCodeResult> {
   const response = await apiFetch<RunCodeApiResponse>("/submission/run", {
     method: "POST",
     body: JSON.stringify({

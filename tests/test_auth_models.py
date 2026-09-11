@@ -42,3 +42,11 @@ def test_user_response_exposes_only_public_fields():
         "created_at": created_at,
     }
     assert "password_hash" not in response_data
+
+def test_register_request_strips_username_whitespace():
+    request = RegisterRequest(username="   nume     ", email="nume@example.com", password="parola123")
+    assert request.username == "nume"
+
+def test_register_request_rejects_whitespace_only_username():
+    with pytest.raises(ValidationError):
+        RegisterRequest(username="  ", email="nume@example.com", password="parola123")

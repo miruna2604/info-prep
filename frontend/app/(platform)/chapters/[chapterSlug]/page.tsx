@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { LessonItem } from "../../../../components/chapter/LessonItem";
+import { ElementaryAlgorithmSections } from "../../../../components/chapter/ElementaryAlgorithmSections";
 import { getChapter, getChapterLessons } from "../../../../services/chapterService";
 import { ApiError } from "../../../../services/api";
 
@@ -44,7 +45,7 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
   const completedLessons = chapter.lessons.filter((lesson) => lesson.completed).length;
 
   return (
-    <section className="mx-auto max-w-4xl">
+    <section className={`mx-auto ${chapter.id === "algoritmi-elementari" ? "max-w-5xl" : "max-w-4xl"}`}>
       <p className="text-sm font-medium text-emerald-400">Capitol</p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight text-white">{chapter.title}</h1>
       <p className="mt-3 max-w-2xl text-slate-400">{chapter.description}</p>
@@ -56,7 +57,9 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
             : "Lecții în pregătire"}
         </span>
       </div>
-      {chapter.lessons.length > 0 ? (
+      {chapter.lessons.length > 0 && chapter.id === "algoritmi-elementari" ? (
+        <ElementaryAlgorithmSections chapterSlug={chapter.id} lessons={chapter.lessons} />
+      ) : chapter.lessons.length > 0 ? (
         <div className="mt-4 space-y-3">
           {chapter.lessons.map((lesson, index) => (
             <LessonItem key={lesson.id} lesson={lesson} position={index + 1} chapterSlug={chapter.id} />

@@ -1,7 +1,8 @@
 import { ProblemTable } from "../../../components/problem/ProblemTable";
-import { problems } from "../../../data/problems";
+import { getProblems } from "../../../services/problemService"
 
-export default function ProblemsPage() {
+export default async function ProblemsPage() {
+    const problems = await getProblems();
   return (
     <section className="mx-auto max-w-5xl">
       <p className="text-sm font-medium text-emerald-400">Exersare</p>
@@ -17,17 +18,27 @@ export default function ProblemsPage() {
           <p className="text-sm text-slate-400">Total probleme</p>
           <p className="mt-2 text-2xl font-semibold text-white">{problems.length}</p>
         </div>
+
         <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
-          <p className="text-sm text-slate-400">Rezolvate</p>
-          <p className="mt-2 text-2xl font-semibold text-emerald-300">
-            {problems.filter((problem) => problem.status === "rezolvată").length}
-          </p>
+            <p className="text-sm text-slate-400">Subiectul I</p>
+            <p className="mt-2 text-2xl font-semibold text-emerald-300">
+              {
+                problems.filter(
+                  (problem) => problem.subject === "Sub I",
+                ).length
+              }
+            </p>
         </div>
+
         <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
-          <p className="text-sm text-slate-400">Nerezolvate</p>
-          <p className="mt-2 text-2xl font-semibold text-slate-200">
-            {problems.filter((problem) => problem.status === "nerezolvată").length}
-          </p>
+            <p className="text-sm text-slate-400">Subiectele II și III</p>
+            <p className="mt-2 text-2xl font-semibold text-slate-200">
+              {
+                problems.filter(
+                  (problem) => problem.subject !== "Sub I",
+                ).length
+              }
+            </p>
         </div>
       </div>
 

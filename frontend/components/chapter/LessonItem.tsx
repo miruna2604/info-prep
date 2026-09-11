@@ -20,13 +20,9 @@ export function LessonItem({ lesson, position, chapterSlug }: LessonItemProps) {
     </>
   );
 
-  if (lesson.content) {
-    return (
-      <Link href={`/chapters/${chapterSlug}/lessons/${lesson.id}`} className={`${className} hover:border-slate-700`}>
-        {lessonDetails}
-      </Link>
-    );
-  }
-
-  return <article className={className}>{lessonDetails}</article>;
+  return (
+    <Link href={`/chapters/${chapterSlug}/lessons/${lesson.id}`} className={`${className} hover:border-slate-700`}>
+      {lessonDetails}
+    </Link>
+  );
 }

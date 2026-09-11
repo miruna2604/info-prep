@@ -1,11 +1,17 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, EmailStr, Field, SecretStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, SecretStr, field_validator
 
 #username, email, passoword
 class RegisterRequest(BaseModel):
     username: str = Field(min_length=3, max_length=50)
     email: EmailStr
     password: SecretStr = Field(min_length=8, max_length=128)
+    @field_validator("username", mode="before")
+    @classmethod
+    def strip_username(cls, value: object) -> object:
+        if isinstance(value, str):
+            return value.strip()
+        return value
 
 class LoginRequest(BaseModel):
     email: EmailStr

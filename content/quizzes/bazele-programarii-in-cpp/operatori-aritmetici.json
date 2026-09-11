@@ -1,27 +1,69 @@
 {
   "questions": [
     {
-      "text": "Întrebarea 1",
+      "text": "Indicați valoarea expresiei C/C++ alăturate: `20/25*20/2`.",
+      "source": "model 2026",
       "options": [
-        { "text": "Răspuns 1", "is_correct": true },
-        { "text": "Răspuns 2", "is_correct": false },
-        { "text": "Răspuns 3", "is_correct": false }
+        {
+          "text": "0",
+          "is_correct": true
+        },
+        {
+          "text": "0.02",
+          "is_correct": false
+        },
+        {
+          "text": "0.08",
+          "is_correct": false
+        },
+        {
+          "text": "8",
+          "is_correct": false
+        }
       ]
     },
     {
-      "text": "Întrebarea 2",
+      "text": "Indicați expresia C/C++ a cărei valoare este egală cu `26`.",
+      "source": "sesiunea speciala 2026",
       "options": [
-        { "text": "Răspuns 1", "is_correct": true },
-        { "text": "Răspuns 2", "is_correct": false },
-        { "text": "Răspuns 3", "is_correct": false }
+        {
+          "text": "(2026-26)/100",
+          "is_correct": false
+        },
+        {
+          "text": "2026/100",
+          "is_correct": false
+        },
+        {
+          "text": "(2026-26)%100",
+          "is_correct": false
+        },
+        {
+          "text": "2026%100",
+          "is_correct": true
+        }
       ]
     },
     {
-      "text": "Întrebarea 3",
+      "text": "Indicați valoarea expresiei C/C++ alăturate: `20.25/2.5*100`.",
+      "source": "simulare 2025",
       "options": [
-        { "text": "Răspuns 1", "is_correct": true },
-        { "text": "Răspuns 2", "is_correct": false },
-        { "text": "Răspuns 3", "is_correct": false }
+        {
+          "text": "0",
+          "is_correct": true
+        },
+        {
+          "text": "0.081",
+          "is_correct": false
+        },
+        {
+          "text": "0.08",
+          "is_correct": false
+        },
+        {
+          "text": "8",
+          "is_correct": false
+        }
       ]
     }
   ]

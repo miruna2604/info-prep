@@ -1,25 +1,23 @@
-export type ProblemStatus = "nerezolvată" | "rezolvată";
-export type BacSubject = "Sub I" | "Sub II" | "Sub III";
+export type ProblemSubject = "Sub I" | "Sub II" | "Sub III";
 
 export type ProblemExample = {
   input: string;
   output: string;
-  explanation?: string;
+  explanation: string | null;
 };
 
-export type ProblemContent = {
+export type ProblemSummary = {
+    id: number;
+    slug: string;
+    title: string;
+    subject: ProblemSubject;
+};
+
+export type ProblemDetail = ProblemSummary & {
   statement: string;
-  inputFormat: string;
-  outputFormat: string;
+  inputDescription: string;
+  outputDescription: string;
   constraints: string[];
   examples: ProblemExample[];
   starterCode: string;
-};
-
-export type Problem = {
-  id: string;
-  title: string;
-  subject: BacSubject;
-  status: ProblemStatus;
-  content?: ProblemContent;
 };

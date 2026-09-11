@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 const navigationItems = [
   { label: "Prezentare generală", href: "/", icon: "⌂" },
   { label: "Capitole", href: "/chapters", icon: "▣" },
+  { label: "Harta materiei", href: "/harta-materiei", icon: "⑂" },
   { label: "Quizuri", href: "/quizzes", icon: "?" },
   { label: "Probleme", href: "/problems", icon: "</>" },
   { label: "Compilator", href: "/compiler", icon: ">_" },

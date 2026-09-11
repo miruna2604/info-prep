@@ -71,6 +71,12 @@ export function QuizPlayer({ quiz }: QuizPlayerProps) {
               {questionIndex + 1}. <InlineMarkdown>{question.text}</InlineMarkdown>
             </legend>
 
+            {question.source && (
+              <p className="mt-2 text-xs text-slate-400">
+                Sursă: {question.source}
+              </p>
+            )}
+
             <div className="mt-4 space-y-3">
               {question.options.map((option) => {
                 const isSelected = answers[question.id] === option.id;

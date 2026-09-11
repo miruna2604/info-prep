@@ -25,14 +25,14 @@ from app.database.schemas.user import User  # noqa: E402
 from app.database.schemas.user_submission import UserSubmission  # noqa: F401, E402
 from app.database.schemas.lesson import Lesson  # noqa: E402
 from app.main import app  # noqa: E402
+from app.services.auth_service import hash_password
 
 
 def seed_test_data(db):
     user = User(
-        id=1,
         username="test-user",
         email="test@example.com",
-        password_hash="not-a-real-password",
+        password_hash=hash_password("test-password"),
     )
     chapter = Chapter(
         id=1,
@@ -57,10 +57,23 @@ def seed_test_data(db):
     problem = Problem(
         id=1,
         chapter_id=1,
+        slug="suma-a-doua-numere",
         title="Suma a doua numere",
+        subject="Sub I",
         statement="Calculeaza suma.",
         input_description="Doua numere intregi.",
         output_description="Suma numerelor.",
+        constraints=[
+            "-2.000.000.000 ≤ a, b ≤ 2.000.000.000"
+        ],
+        starter_code=(
+            "#include <iostream>\n"
+            "using namespace std;\n"
+            "\n"
+            "int main() {\n"
+            "    return 0;\n"
+            "}\n"
+        ),
         sample_input="2 3",
         sample_output="5",
     )
@@ -102,17 +115,19 @@ def seed_test_data(db):
 
 
 @pytest.fixture
-def client():
-    # Every test starts with a fresh schema and only the data it needs.
+def db_session():
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
 
     with SessionLocal() as db:
         seed_test_data(db)
+        yield db
 
+
+@pytest.fixture
+def client(db_session):
     def override_get_db():
-        with SessionLocal() as db:
-            yield db
+        yield db_session
 
     app.dependency_overrides[get_db] = override_get_db
 

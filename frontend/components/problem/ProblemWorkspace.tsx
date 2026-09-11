@@ -15,10 +15,7 @@ type ProblemWorkspaceProps = {
   initialInput: string;
 };
 
-export function ProblemWorkspace({
-  starterCode,
-  initialInput,
-}: ProblemWorkspaceProps) {
+export function ProblemWorkspace({starterCode, initialInput,}: ProblemWorkspaceProps) {
   const [sourceCode, setSourceCode] = useState(starterCode);
   const [standardInput, setStandardInput] = useState(initialInput);
   const [result, setResult] = useState<RunCodeResult | null>(null);

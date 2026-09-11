@@ -1,0 +1,69 @@
+.page { max-width: 1400px; margin-inline: auto; color: #cbd5e1; }
+.header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 0 28px; }
+.eyebrow { color: #34d399; font-size: 10px; font-weight: 600; letter-spacing: .14em; }
+.header h1 { margin-top: 10px; color: #f8fafc; font-size: clamp(28px, 4vw, 36px); font-weight: 600; letter-spacing: -.04em; }
+.header p:last-child { margin-top: 10px; color: #94a3b8; font-size: 13px; line-height: 1.7; }
+.badge { flex-shrink: 0; padding: 7px 12px; border: 1px solid #243247; border-radius: 20px; font-size: 11px; color: #94a3b8; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 310px; gap: 20px; align-items: start; }
+.mapPanel { min-width: 0; overflow: hidden; border: 1px solid #202e40; border-radius: 16px; background: #081321; }
+.mapCaption { display: flex; justify-content: space-between; gap: 12px; padding: 18px 20px; border-bottom: 1px solid #1c293a; font-size: 10px; color: #94a3b8; }
+.mapCaption > span:first-child { display: flex; align-items: center; gap: 8px; }
+.mapCaption i { width: 5px; height: 5px; border-radius: 50%; background: #34d399; }
+.mapScroll { overflow-x: auto; background-image: radial-gradient(#24324785 .7px, transparent .7px); background-size: 20px 20px; }
+.canvas { position: relative; width: 100%; min-width: 580px; aspect-ratio: 900 / 800; margin-block: 24px 8px; }
+.connections { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.connections path { stroke: #35465a; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.connections .activeEdge { stroke: #34d399; opacity: .7; }
+.mapNode { position: absolute; transform: translate(-50%, -50%); width: 27%; min-height: 64px; padding: 10px 12px; display: grid; grid-template-columns: 20px 1fr; gap: 5px 7px; text-align: left; border: 1px solid #344459; border-radius: 9px; background: #0d1b2b; cursor: pointer; box-shadow: 0 4px 12px #0002; transition: border-color .15s, background .15s; }
+.mapNode::before, .mapNode::after { content: ""; position: absolute; left: calc(50% - 2px); width: 4px; height: 4px; border-radius: 50%; background: #53657b; }
+.mapNode::before { top: -3px; } .mapNode::after { bottom: -3px; }
+.mapNode:hover { border-color: #6b8c9b; background: #122437; }
+.mapNode.selected { border-color: #34d399; background: #102c2c; box-shadow: 0 0 0 3px #34d3990b; }
+.selected::before, .selected::after { background: #34d399; }
+.nodeNumber { padding-top: 2px; color: #71869f; font: 10px ui-monospace, monospace; }
+.selected .nodeNumber { color: #6ee7b7; }
+.mapNode strong { font-size: 12px; line-height: 1.4; font-weight: 500; color: #e2e8f0; }
+.nodeCount { grid-column: 2; display: flex; justify-content: space-between; font-size: 10px; color: #8fa3ba; }
+.selected .nodeCount { color: #86b8ab; }
+.mapNote { padding: 15px 20px; border-top: 1px solid #1c293a; color: #8597ad; font-size: 11px; line-height: 1.7; }
+.details { position: sticky; top: 20px; border: 1px solid #243447; background: #0a1523; border-radius: 14px; overflow: hidden; }
+.detailHeader { padding: 22px 20px 18px; border-bottom: 1px solid #202e40; }
+.detailHeader h2 { margin-top: 10px; color: #f1f5f9; font-size: 19px; font-weight: 500; letter-spacing: -.025em; }
+.detailHeader > p:last-child { margin-top: 7px; color: #94a3b8; font-size: 11px; }
+.detailBody { padding: 18px 18px 22px; max-height: 65vh; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #344459 transparent; }
+.branches { list-style: none; padding-left: 18px; }
+.branches > li { position: relative; padding: 5px 0; }
+.branches > li::before { content: ""; position: absolute; left: -13px; top: 0; bottom: 0; border-left: 1px solid #2b3a4d; }
+.branches > li:last-child::before { bottom: auto; height: 15px; }
+.branches > li::after { content: ""; position: absolute; left: -13px; top: 15px; width: 8px; border-top: 1px solid #2b3a4d; }
+.branchLabel, .leafLabel { font-size: 12px; line-height: 20px; overflow-wrap: anywhere; }
+.branchLabel { color: #d3dce8; } .leafLabel { color: #94a3b8; }
+.branches .branches { margin-top: 3px; }
+.topicLink { text-decoration: underline; text-decoration-color: #34d39950; text-underline-offset: 4px; }
+.topicLink:hover { color: #6ee7b7; }
+.chapterNav { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-top: 1px solid #202e40; font-size: 11px; }
+.chapterNav span { color: #71869f; }
+.chapterNav button { cursor: pointer; color: #b6c6d7; padding: 5px 0; }
+.chapterNav button:hover { color: #6ee7b7; }
+.chapterNav button:disabled { opacity: .3; cursor: default; }
+.page a:focus-visible, .page button:focus-visible, .mapScroll:focus-visible { outline: 2px solid #6ee7b7; outline-offset: 4px; }
+@media (min-width: 1600px) { .mapNode { min-height: 74px; } .mapNode strong { font-size: 14px; } }
+@media (max-width: 1200px) { .layout { grid-template-columns: minmax(0, 1fr); } .details { position: static; } .detailBody { max-height: none; } .canvas { max-width: 900px; margin-inline: auto; } }
+@media (max-width: 600px) { .badge { display: none; } .header { padding-top: 4px; } .mapCaption { padding-inline: 14px; } .mapCaption > span:last-child { font-size: 0; } .mapCaption > span:last-child::after { content: "Derulează harta ↔"; font-size: 10px; } .mapNote { padding-inline: 14px; } }
+@media (prefers-reduced-motion: reduce) { .mapNode { transition: none; } }
+
+/* Quiet grouping makes the chapter outline easier to scan. */
+.detailHeader { background: linear-gradient(120deg, #34d3990b, transparent 75%); border-top: 2px solid #34d39980; }
+.detailHeader > p:last-child { display: inline-block; margin-top: 12px; padding: 4px 9px; border: 1px solid #304638; border-radius: 6px; background: #34d39906; color: #9cb9b0; }
+.detailBody { padding: 10px 18px 18px; }
+.detailBody > .branches { padding-left: 0; }
+.detailBody > .branches > li { padding: 14px 0; border-bottom: 1px solid #23324690; }
+.detailBody > .branches > li:last-child { padding-bottom: 0; border-bottom: 0; }
+.detailBody > .branches > li::before, .detailBody > .branches > li::after { display: none; }
+.detailBody > .branches > li > div { display: flex; align-items: baseline; gap: 9px; color: #e2e8f0; font-size: 13px; font-weight: 500; }
+.detailBody > .branches > li > div::before { content: ""; flex: 0 0 5px; width: 5px; height: 5px; border: 1px solid #5ca58e; border-radius: 2px; transform: translateY(-1px); }
+.detailBody > .branches > li > .branches { margin: 8px 0 0 8px; }
+.detailBody .leafLabel { color: #9aabc0; }
+.chapterNav { background: #081321; }
+.chapterNav button { padding: 6px 8px; border-radius: 6px; }
+.chapterNav button:hover:not(:disabled) { background: #132538; }

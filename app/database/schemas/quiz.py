@@ -39,6 +39,8 @@ class QuizQuestion(Base):
     text: Mapped[str] = mapped_column(Text, nullable=False)
     display_order: Mapped[int] = mapped_column(nullable=False)
 
+    source: Mapped[str | None] = mapped_column(Text, nullable=True)
+
     quiz: Mapped["Quiz"] = relationship(back_populates="questions")
     options: Mapped[list["QuizOption"]] = relationship(
         back_populates="question",

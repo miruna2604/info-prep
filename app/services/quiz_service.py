@@ -87,6 +87,7 @@ def get_quiz(db: Session, chapter_slug: str, lesson_slug: str) -> QuizResponse:
             QuizQuestionResponse(
                 id=question.id,
                 text=question.text,
+                source=question.source,
                 display_order=question.display_order,
                 options=[
                     QuizOptionResponse(
