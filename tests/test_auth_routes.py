@@ -47,3 +47,50 @@ def test_register_rejects_short_password(client):
     response_data = response.json()
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
     assert response_data["detail"] is not None
+
+def test_login_returns_user_and_sets_access_token_cookie(client):
+    response = client.post("/auth/login", json={"email": "TEST@EXAMPLE.COM", "password": "test-password"})
+    response_data = response.json()
+    access_token = client.cookies.get("access_token")
+    assert response.status_code == status.HTTP_200_OK
+    assert response_data["username"] == "test-user"
+    assert response_data["email"] == "test@example.com"
+    assert "password" not in response_data
+    assert "password_hash" not in response_data
+    assert access_token is not None
+
+def test_login_rejects_incorrect_credentials(client):
+    response = client.post("/auth/login", json={"email": "test@example.COM", "password": "wrong-password"})
+    response_data = response.json()
+    access_token = client.cookies.get("access_token")
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response_data["detail"] == "Incorrect email or password"
+    assert access_token is None
+
+def test_get_me_returns_authenticated_user(client):
+    login_response = client.post("/auth/login", json={"email": "test@example.COM", "password": "test-password"})
+    me_response = client.get("/auth/me")
+    response_data = me_response.json()
+    assert login_response.status_code == status.HTTP_200_OK
+    assert me_response.status_code == status.HTTP_200_OK
+    assert response_data["username"] == "test-user"
+    assert response_data["email"] == "test@example.com"
+    assert "password" not in response_data
+    assert "password_hash" not in response_data
+
+def test_get_me_rejects_unauthenticated_user(client):
+    response = client.get("/auth/me")
+    response_data = response.json()
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response_data["detail"] == "Not authenticated"
+
+def test_logout_deletes_access_token_cookie(client):
+    login_response = client.post("/auth/login", json={"email": "test@example.com", "password": "test-password"})
+    assert login_response.status_code == status.HTTP_200_OK
+    assert client.cookies.get("access_token") is not None
+    logout_response = client.post("/auth/logout")
+    assert logout_response.status_code == status.HTTP_204_NO_CONTENT
+    assert logout_response.content == b""
+    assert client.cookies.get("access_token") is None
+    me_response = client.get("/auth/me")
+    assert me_response.status_code == status.HTTP_401_UNAUTHORIZED
