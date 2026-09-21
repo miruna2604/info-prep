@@ -20,6 +20,11 @@ export type RegisterInput = {
   password: string;
 };
 
+export type LoginInput = {
+  email: string;
+  password: string;
+};
+
 function mapAuthUser(response: UserApiResponse): AuthUser {
   return {
     id: response.id,
@@ -43,4 +48,33 @@ export async function registerUser(input: RegisterInput): Promise<AuthUser> {
   );
 
   return mapAuthUser(response);
+}
+
+export async function loginUser(input: LoginInput): Promise<AuthUser> {
+  const response = await apiFetch<UserApiResponse>(
+    "/auth/login",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        email: input.email,
+        password: input.password,
+      }),
+    },
+  );
+
+  return mapAuthUser(response);
+}
+
+export async function getCurrentUser(): Promise<AuthUser> {
+  const response = await apiFetch<UserApiResponse>("/auth/me");
+  return mapAuthUser(response);
+}
+
+export async function logoutUser(): Promise<void> {
+  await apiFetch<void>(
+    "/auth/logout",
+    {
+      method: "POST",
+    },
+  );
 }

@@ -128,3 +128,10 @@ def test_authenticate_user_rejects_wrong_email(db_session):
 def test_authenticate_user_rejects_wrong_password(db_session):
     user = authenticate_user(db_session, email="test@example.com", password="wrong-password")
     assert user is None
+
+def test_verify_password_rejects_unknown_hash_format():
+    is_valid = verify_password(
+        "parola123",
+        "not-a-real-password-hash",
+    )
+    assert is_valid is False

@@ -10,6 +10,8 @@ from sqlalchemy.orm import Session
 from app.database.schemas.user import User
 from app.models.auth import RegisterRequest
 
+from pwdlib.exceptions import UnknownHashError
+
 from app.config import (
     AUTH_ALGORITHM,
     AUTH_SECRET_KEY,
@@ -22,7 +24,10 @@ def hash_password(plain_password: str) -> str:
     return password_hasher.hash(plain_password)
 
 def verify_password(plain_password: str, password_hash: str) -> bool:
-    return password_hasher.verify(plain_password, password_hash)
+    try:
+        return password_hasher.verify(plain_password, password_hash)
+    except UnknownHashError:
+        return False
 
 def create_access_token(user_id: int, expires_delta: timedelta | None = None) -> str:
     issued_at = datetime.now(timezone.utc)
