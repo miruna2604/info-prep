@@ -1,26 +1,35 @@
 "use client";
 
 import { useState } from "react";
+import { ApiError } from "../../services/api";
 import {
   runCode,
+  submitSolution,
   type RunCodeResult,
+  type SubmitSolutionResult,
 } from "../../services/submissionService";
 import { CodeEditor } from "../editor/CodeEditor";
 import { Console } from "../editor/Console";
 import { RunButtons } from "../editor/RunButtons";
 import { StandardInput } from "../editor/StandardInput";
+import { SubmitResult } from "./SubmitResult";
 
 type ProblemWorkspaceProps = {
+  problemId: number;
   starterCode: string;
   initialInput: string;
 };
 
-export function ProblemWorkspace({starterCode, initialInput,}: ProblemWorkspaceProps) {
+export function ProblemWorkspace({problemId, starterCode, initialInput,}: ProblemWorkspaceProps) {
   const [sourceCode, setSourceCode] = useState(starterCode);
   const [standardInput, setStandardInput] = useState(initialInput);
   const [result, setResult] = useState<RunCodeResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isRunning, setIsRunning] = useState(false);
+  const [submitResult, setSubmitResult] = useState<SubmitSolutionResult | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [requiresLogin, setRequiresLogin] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleRun() {
     setIsRunning(true);
@@ -43,6 +52,29 @@ export function ProblemWorkspace({starterCode, initialInput,}: ProblemWorkspaceP
       setError(message);
     } finally {
       setIsRunning(false);
+    }
+  }
+
+  async function handleSubmit() {
+    setIsSubmitting(true);
+    setSubmitResult(null);
+    setSubmitError(null);
+    setRequiresLogin(false);
+
+    try {
+      const result = await submitSolution(problemId, sourceCode);
+      setSubmitResult(result);
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 401) {
+        setRequiresLogin(true);
+        setSubmitError("Intră în cont pentru a trimite soluția.");
+      } else {
+        setSubmitError(
+          error instanceof Error ? error.message : "Nu am putut trimite soluția.",
+        );
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -70,7 +102,14 @@ export function ProblemWorkspace({starterCode, initialInput,}: ProblemWorkspaceP
       <RunButtons
         showSubmit
         onRun={handleRun}
+        onSubmit={handleSubmit}
         isRunning={isRunning}
+        isSubmitting={isSubmitting}
+      />
+      <SubmitResult
+        result={submitResult}
+        error={submitError}
+        requiresLogin={requiresLogin}
       />
     </div>
   );

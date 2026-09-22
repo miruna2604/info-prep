@@ -135,3 +135,10 @@ def client(db_session):
         yield test_client
 
     app.dependency_overrides.clear()
+
+@pytest.fixture
+def authenticated_client(client):
+    login_response = client.post("/auth/login", json={"email": "test@example.com", "password": "test-password"})
+    assert login_response.status_code == 200
+    assert client.cookies.get("access_token") is not None
+    return client

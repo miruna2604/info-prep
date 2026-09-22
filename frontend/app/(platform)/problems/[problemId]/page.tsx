@@ -41,6 +41,7 @@ export default async function ProblemPage({ params }: ProblemPageProps) {
         </article>
 
         <ProblemWorkspace
+          problemId={problem.id}
           starterCode={problem.starterCode}
           initialInput={problem.examples[0]?.input ?? ""}
         />

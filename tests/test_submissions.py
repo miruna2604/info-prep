@@ -1,35 +1,28 @@
 from types import SimpleNamespace
-
-from app.database.database import SessionLocal
 from app.services import judge0_service
 from app.database.schemas import UserSubmission
 
 
+def test_submit_requires_authentication(client):
+    response = client.post("/submission/problems/1/submit", json={"source_code": "int main() { return 0; }"})
+    assert response.status_code == 401
+    assert response.json()["detail"] == "Not authenticated"
 
-def test_submit_for_nonexistent_problem(client):
+def test_submit_for_nonexistent_problem(authenticated_client):
     submission_data = {
-        "user_id": 1,
         "source_code": "int main() { return 0; }"
     }
-
-    response = client.post("/submission/problems/99999/submit", json=submission_data)
-
+    response = authenticated_client.post("/submission/problems/99999/submit", json=submission_data)
     assert response.status_code == 404
-
     assert response.json()["detail"] == "Problem not found"
 
 
-def test_submit_without_source_code(client):
-    submission_data = {
-        "user_id": 1
-    }
-
-    response = client.post("/submission/problems/1/submit", json=submission_data)
-
+def test_submit_without_source_code(authenticated_client):
+    response = authenticated_client.post("/submission/problems/1/submit", json={})
     assert response.status_code == 422
 
 
-def test_correct_answer(client, monkeypatch):
+def test_correct_answer(authenticated_client, monkeypatch):
     def fake_correct_answer(source_code, stdin):
         expected_outputs = {
             "2 3": "5",
@@ -49,26 +42,19 @@ def test_correct_answer(client, monkeypatch):
         fake_correct_answer
     )
 
-    submission_data = {
-        "user_id": 1,
-        "source_code": "cod corect"
-    }
-
-    response = client.post(
+    response = authenticated_client.post(
         "/submission/problems/1/submit",
-        json=submission_data
+        json={"source_code": "cod corect"}
     )
 
     assert response.status_code == 200
-
-    data = response.json()
-
-    assert data["verdict"] == "Accepted"
-    assert data["passed_tests"] == 5
-    assert data["total_tests"] == 5
+    response_data = response.json()
+    assert response_data["verdict"] == "Accepted"
+    assert response_data["passed_tests"] == 5
+    assert response_data["total_tests"] == 5
 
 
-def test_submit_wrong_answer(client, monkeypatch):
+def test_submit_wrong_answer(authenticated_client, monkeypatch):
     def fake_wrong_answer(source_code, stdin):
         return SimpleNamespace(
             status=SimpleNamespace(description="Accepted"),
@@ -81,26 +67,19 @@ def test_submit_wrong_answer(client, monkeypatch):
         fake_wrong_answer
     )
 
-    submission_data = {
-        "user_id": 1,
-        "source_code": "cod gresit"
-    }
-
-    response = client.post(
+    response = authenticated_client.post(
         "/submission/problems/1/submit",
-        json=submission_data
+        json={"source_code": "cod gresit"}
     )
 
     assert response.status_code == 200
-
-    data = response.json()
-
-    assert data["verdict"] == "Wrong Answer"
-    assert data["passed_tests"] == 0
-    assert data["total_tests"] == 5
+    response_data = response.json()
+    assert response_data["verdict"] == "Wrong Answer"
+    assert response_data["passed_tests"] == 0
+    assert response_data["total_tests"] == 5
 
 
-def test_submit_compilation_error(client, monkeypatch):
+def test_submit_compilation_error(authenticated_client, monkeypatch):
     def fake_compilation_error(source_code, stdin):
         return SimpleNamespace(
             status=SimpleNamespace(description="Compilation Error"),
@@ -113,26 +92,19 @@ def test_submit_compilation_error(client, monkeypatch):
         fake_compilation_error
     )
 
-    submission_data = {
-        "user_id": 1,
-        "source_code": "int main( {"
-    }
-
-    response = client.post(
+    response = authenticated_client.post(
         "/submission/problems/1/submit",
-        json=submission_data
+        json={"source_code": "int main({"}
     )
 
     assert response.status_code == 200
-
-    data = response.json()
-
-    assert data["verdict"] == "Compilation Error"
-    assert data["passed_tests"] == 0
-    assert data["total_tests"] == 5
+    response_data = response.json()
+    assert response_data["verdict"] == "Compilation Error"
+    assert response_data["passed_tests"] == 0
+    assert response_data["total_tests"] == 5
 
 
-def test_submission_is_saved_in_database(client, monkeypatch):
+def test_submission_is_saved_in_database(authenticated_client, db_session, monkeypatch):
     def fake_correct_answer(source_code, stdin):
         expected_outputs = {
             "2 3": "5",
@@ -152,36 +124,40 @@ def test_submission_is_saved_in_database(client, monkeypatch):
         fake_correct_answer
     )
 
-    submission_data = {
-        "user_id": 1,
-        "source_code": "cod pentru testarea salvarii"
-    }
+    source_code = "cod pentru testarea salvarii"
 
-    response = client.post(
+    response = authenticated_client.post(
         "/submission/problems/1/submit",
-        json=submission_data
+        json={"source_code": source_code}
     )
 
     assert response.status_code == 200
 
-    with SessionLocal() as db:
-        saved_submission = (
-            db.query(UserSubmission)
-            .filter(UserSubmission.user_id == 1, UserSubmission.problem_id == 1, UserSubmission.source_code == submission_data["source_code"])
-            .order_by(UserSubmission.id.desc()).first()
+    saved_submission = (
+        db_session.query(UserSubmission)
+        .filter(
+            UserSubmission.user_id == 1,
+            UserSubmission.problem_id == 1,
+            UserSubmission.source_code == source_code
         )
-
+        .order_by(UserSubmission.id.desc())
+        .first()
+    )
     assert saved_submission is not None
     assert saved_submission.user_id == 1
     assert saved_submission.problem_id == 1
-    assert saved_submission.source_code == submission_data["source_code"]
+    assert saved_submission.source_code == source_code
     assert saved_submission.verdict == "Accepted"
     assert saved_submission.passed_tests == 5
     assert saved_submission.total_tests == 5
 
+def test_submit_rejects_client_provided_user_id(authenticated_client):
+    response = authenticated_client.post("/submission/problems/1/submit", json={"source_code": "cod", "user_id": 999999})
+    assert response.status_code == 422
+
 #integrare reala
 
-def test_real_judge0_integration(client):
+def test_real_judge0_integration(authenticated_client):
     source_code = """
     #include <iostream>
     using namespace std;
@@ -195,12 +171,11 @@ def test_real_judge0_integration(client):
     """
 
     submission_data = {
-        "user_id": 1,
         "source_code": source_code
     }
 
-    response = client.post(
-        "submission/problems/1/submit",
+    response = authenticated_client.post(
+        "/submission/problems/1/submit",
         json=submission_data
     )
 
@@ -212,7 +187,7 @@ def test_real_judge0_integration(client):
     assert data["passed_tests"] == 5
     assert data["total_tests"] == 5
 
-def test_real_judge0_compilation_error(client):
+def test_real_judge0_compilation_error(authenticated_client):
     source_code = """
     int main() {
         int a = 5
@@ -221,12 +196,11 @@ def test_real_judge0_compilation_error(client):
     """
 
     submission_data = {
-        "user_id": 1,
         "source_code": source_code
     }
 
-    response = client.post(
-        "submission/problems/1/submit",
+    response = authenticated_client.post(
+        "/submission/problems/1/submit",
         json=submission_data
     )
 
@@ -239,7 +213,7 @@ def test_real_judge0_compilation_error(client):
     assert data["total_tests"] == 5
 
 
-def test_real_judge0_runtime_error(client):
+def test_real_judge0_runtime_error(authenticated_client):
     source_code = """
     #include <iostream>
     using namespace std;
@@ -252,11 +226,10 @@ def test_real_judge0_runtime_error(client):
     """
 
     submission_data = {
-        "user_id": 1,
         "source_code": source_code
     }
 
-    response = client.post(
+    response = authenticated_client.post(
         "/submission/problems/1/submit",
         json=submission_data
     )

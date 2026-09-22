@@ -3,15 +3,20 @@
 type RunButtonsProps = {
   showSubmit?: boolean;
   onRun?: () => void;
+  onSubmit?: () => void;
   isRunning?: boolean;
+  isSubmitting?: boolean;
 };
 
 export function RunButtons({
   showSubmit = true,
   onRun,
+  onSubmit,
   isRunning = false,
+  isSubmitting = false,
 }: RunButtonsProps) {
-  const isRunDisabled = !onRun || isRunning;
+  const isRunDisabled = !onRun || isRunning || isSubmitting;
+  const isSubmitDisabled = !onSubmit || isRunning || isSubmitting;
 
   return (
     <div className="flex justify-end gap-3">
@@ -31,10 +36,15 @@ export function RunButtons({
       {showSubmit && (
         <button
           type="button"
-          disabled
-          className="rounded-lg bg-emerald-500/40 px-4 py-2 text-sm font-medium text-emerald-100/60"
+          onClick={onSubmit}
+          disabled={isSubmitDisabled}
+          className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+            isSubmitDisabled
+              ? "bg-emerald-500/40 text-emerald-100/60"
+              : "bg-blue-600 text-white hover:bg-blue-500"
+          }`}
         >
-          Trimite
+          {isSubmitting ? "Se trimite..." : "Trimite"}
         </button>
       )}
     </div>

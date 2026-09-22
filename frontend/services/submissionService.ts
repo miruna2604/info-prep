@@ -15,6 +15,18 @@ export type RunCodeResult = {
   memory: number | null;
 };
 
+export type SubmitSolutionResult = {
+  verdict: string;
+  passedTests: number;
+  totalTests: number;
+};
+
+type SubmitSolutionApiResponse = {
+  verdict: string;
+  passed_tests: number;
+  total_tests: number;
+};
+
 type RunCodeApiResponse = {
   status: string;
   stdout: string | null;
@@ -42,5 +54,24 @@ export async function runCode({sourceCode,stdin}: RunCodeInput): Promise<RunCode
     message: response.message,
     time: response.time,
     memory: response.memory,
+  };
+}
+
+export async function submitSolution(
+  problemId: number,
+  sourceCode: string,
+): Promise<SubmitSolutionResult> {
+  const response = await apiFetch<SubmitSolutionApiResponse>(
+    `/submission/problems/${problemId}/submit`,
+    {
+      method: "POST",
+      body: JSON.stringify({ source_code: sourceCode }),
+    },
+  );
+
+  return {
+    verdict: response.verdict,
+    passedTests: response.passed_tests,
+    totalTests: response.total_tests,
   };
 }

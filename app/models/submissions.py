@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from app.models.enums import Verdict
 
 
 class SubmissionRequest(BaseModel):
-    user_id: int
+    model_config = ConfigDict(extra="forbid")
     source_code: str
 
 class SubmissionResponse(BaseModel):

@@ -1,5 +1,3 @@
-from sys import stdin
-
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
@@ -12,7 +10,7 @@ from app.services import judge0_service, user_submission_service
 from app.services.verdict_mapare import map_judge0_status
 
 
-def submit_solution(db: Session, problem_id: int, submission: SubmissionRequest,) -> SubmissionResponse:
+def submit_solution(db: Session, problem_id: int, user_id: int, submission: SubmissionRequest) -> SubmissionResponse:
 
     # Cautăm problema
     problem = db.get(Problem, problem_id)
@@ -46,7 +44,7 @@ def submit_solution(db: Session, problem_id: int, submission: SubmissionRequest,
 
         passed_tests += 1
 
-    user_submission_service.save_submission(db=db, user_id=submission.user_id, problem_id=problem.id, source_code=submission.source_code, verdict=final_verdict, passed_tests=passed_tests, total_tests=total_tests)
+    user_submission_service.save_submission(db=db, user_id=user_id, problem_id=problem.id, source_code=submission.source_code, verdict=final_verdict, passed_tests=passed_tests, total_tests=total_tests)
     return SubmissionResponse(verdict=final_verdict, passed_tests=passed_tests, total_tests=total_tests)
 
 def run_code(run_request: RunRequest) -> RunResponse:
