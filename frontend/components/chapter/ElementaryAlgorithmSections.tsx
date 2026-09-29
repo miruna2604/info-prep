@@ -24,7 +24,6 @@ const accentStyles: Record<ElementaryCategoryAccent, {
   rose: { border: "border-rose-400/20", glow: "from-rose-400/10", icon: "border-rose-400/30 bg-rose-400/10 text-rose-300", label: "text-rose-300", number: "bg-rose-400/10 text-rose-200" },
   blue: { border: "border-blue-400/20", glow: "from-blue-400/10", icon: "border-blue-400/30 bg-blue-400/10 text-blue-300", label: "text-blue-300", number: "bg-blue-400/10 text-blue-200" },
   orange: { border: "border-orange-400/20", glow: "from-orange-400/10", icon: "border-orange-400/30 bg-orange-400/10 text-orange-300", label: "text-orange-300", number: "bg-orange-400/10 text-orange-200" },
-  fuchsia: { border: "border-fuchsia-400/20", glow: "from-fuchsia-400/10", icon: "border-fuchsia-400/30 bg-fuchsia-400/10 text-fuchsia-300", label: "text-fuchsia-300", number: "bg-fuchsia-400/10 text-fuchsia-200" },
   lime: { border: "border-lime-400/20", glow: "from-lime-400/10", icon: "border-lime-400/30 bg-lime-400/10 text-lime-300", label: "text-lime-300", number: "bg-lime-400/10 text-lime-200" },
 };
 

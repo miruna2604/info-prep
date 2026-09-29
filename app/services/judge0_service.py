@@ -23,7 +23,7 @@ def decode_from_judge0(value: str | None) -> str | None:
         return None
     return base64.b64decode(value).decode("utf-8", errors="replace")
 
-def execute_submission(source_code: str, stdin: str | None = None,) -> Judge0SubmissionResponse:
+def execute_submission(source_code: str, stdin: str | None = None, *, limits: dict | None = None) -> Judge0SubmissionResponse:
     submission = Judge0SubmissionRequest(
         language_id=LANGUAGE_ID,
         source_code=source_code,
@@ -34,6 +34,7 @@ def execute_submission(source_code: str, stdin: str | None = None,) -> Judge0Sub
         language_id=submission.language_id,
         source_code=encode_for_judge0(submission.source_code),
         stdin=encode_for_judge0(submission.stdin),
+        **(limits or {}),
     )
 
     try:

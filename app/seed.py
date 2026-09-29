@@ -7,23 +7,22 @@
 #  docker compose stop test_database
 #docker compose start test_database
 
-import json
 from pathlib import Path
+from sqlalchemy import text
 
 from app.database.database import SessionLocal
 from app.database.schemas.chapter import Chapter
 from app.database.schemas.lesson import Lesson
 from app.database.schemas.problem import Problem
 from app.database.schemas.pb_test import ProblemTest
-from app.database.schemas.quiz import Quiz, QuizOption, QuizQuestion
 from app.database.schemas.user import User
+from app.database.schemas.user_profile import UserProfile
+from app.database.schemas.assessment import Assessment, AssessmentQuestion
+from app.services.assessment_seed import seed_initial_assessment
 
 
 LESSON_CONTENT_DIRECTORY = (
     Path(__file__).resolve().parent.parent / "content" / "lessons"
-)
-QUIZ_CONTENT_DIRECTORY = (
-    Path(__file__).resolve().parent.parent / "content" / "quizzes"
 )
 
 
@@ -40,98 +39,63 @@ def load_lesson_content(chapter_slug: str, lesson_slug: str) -> str:
     return lesson_path.read_text(encoding="utf-8").strip()
 
 
-def load_quiz_content(chapter_slug: str, lesson_slug: str) -> dict | None:
-    quiz_path = (
-        QUIZ_CONTENT_DIRECTORY
-        / chapter_slug
-        / f"{lesson_slug}.json"
-    )
-
-    if not quiz_path.is_file():
-        return None
-
-    quiz_data = json.loads(quiz_path.read_text(encoding="utf-8"))
-    questions = quiz_data.get("questions")
-
-    if not isinstance(questions, list) or not questions:
-        raise ValueError(f"{quiz_path}: 'questions' must be a non-empty list")
-
-    for question_index, question in enumerate(questions, start=1):
-        if not isinstance(question.get("text"), str) or not question["text"].strip():
-            raise ValueError(f"{quiz_path}: question {question_index} needs text")
-
-        source = question.get("source")
-        if source is not None and (not isinstance(source, str) or not source.strip()):
-            raise ValueError(f"{quiz_path}: question {question_index} needs a non-empty source")
-
-        options = question.get("options")
-        if not isinstance(options, list) or len(options) not in (3, 4):
-            raise ValueError(
-                f"{quiz_path}: question {question_index} must have 3 or 4 options"
-            )
-
-        correct_options = 0
-        for option_index, option in enumerate(options, start=1):
-            if not isinstance(option.get("text"), str) or not option["text"].strip():
-                raise ValueError(
-                    f"{quiz_path}: option {option_index} of question "
-                    f"{question_index} needs text"
-                )
-            if not isinstance(option.get("is_correct"), bool):
-                raise ValueError(
-                    f"{quiz_path}: option {option_index} of question "
-                    f"{question_index} needs a boolean 'is_correct'"
-                )
-            correct_options += option["is_correct"]
-
-        if correct_options != 1:
-            raise ValueError(
-                f"{quiz_path}: question {question_index} must have "
-                "exactly one correct option"
-            )
-
-    return quiz_data
-
-
-def seed_database():
+def seed_database(learning_content_only: bool = False, assessment_only: bool = False):
     db = SessionLocal()
 
     try:
+        if assessment_only:
+            seed_initial_assessment(db)
+            db.commit()
+            print("Initial assessment seeded successfully.")
+            return
+
+        # Explicit IDs from imports or fixtures can leave sequences behind.
+        # Full seeds also insert users, problems and problem tests.
+        sequence_tables = ["chapters", "lessons"]
+        if not learning_content_only:
+            sequence_tables.extend(["users", "problems", "problem_tests"])
+        for table in sequence_tables:
+            db.execute(text(
+                f"SELECT setval(pg_get_serial_sequence('{table}', 'id'), "
+                f"GREATEST((SELECT COALESCE(MAX(id), 0) FROM {table}) + 1, 1), false)"
+            ))
+
         # ==================================================
         # USERS
         # ==================================================
 
-        user_demo = (
-            db.query(User)
-            .filter(User.email == "demo@test.com")
-            .first()
-        )
-
-        if not user_demo:
-            user_demo = User(
-                username="demo",
-                email="demo@test.com",
-                password_hash="parola_hash"
+        if not learning_content_only:
+            user_demo = (
+                db.query(User)
+                .filter(User.email == "demo@test.com")
+                .first()
             )
 
-            db.add(user_demo)
-            db.flush()
+            if not user_demo:
+                user_demo = User(
+                    username="demo",
+                    email="demo@test.com",
+                    password_hash="parola_hash"
+                )
 
-        user_miruna = (
-            db.query(User)
-            .filter(User.email == "miruna@test.com")
-            .first()
-        )
+                db.add(user_demo)
+                db.flush()
 
-        if not user_miruna:
-            user_miruna = User(
-                username="miruna",
-                email="miruna@test.com",
-                password_hash="parola_hash"
+            user_miruna = (
+                db.query(User)
+                .filter(User.email == "miruna@test.com")
+                .first()
             )
 
-            db.add(user_miruna)
-            db.flush()
+            if not user_miruna:
+                user_miruna = User(
+                    username="miruna",
+                    email="miruna@test.com",
+                    password_hash="parola_hash"
+                )
+
+                db.add(user_miruna)
+                db.flush()
 
         # ==================================================
         # CHAPTER
@@ -355,8 +319,6 @@ def seed_database():
         ).all()
         for legacy_lesson in legacy_lessons:
             legacy_lesson.is_published = False
-            if legacy_lesson.quiz is not None:
-                legacy_lesson.quiz.is_published = False
 
         for lesson_data in lessons_data:
             lesson_content = load_lesson_content(
@@ -450,11 +412,8 @@ def seed_database():
             {"title": "Cea mai lungă secvență de numere pozitive", "slug": "cea-mai-lunga-secventa-pozitiva", "description": "Urmărește secvența pozitivă curentă și recordul maxim.", "display_order": 23},
             {"title": "Cea mai lungă secvență de numere egale", "slug": "cea-mai-lunga-secventa-de-numere-egale", "description": "Compară fiecare element cu anteriorul și măsoară grupurile egale.", "display_order": 24},
             {"title": "Cea mai lungă secvență strict crescătoare", "slug": "cea-mai-lunga-secventa-strict-crescatoare", "description": "Măsoară cea mai lungă porțiune consecutivă strict crescătoare.", "display_order": 25},
-            {"title": "Bubble Sort", "slug": "bubble-sort", "description": "Sortează prin comparații între vecini și urmărește elementele care ajung la final.", "display_order": 26},
-            {"title": "Selection Sort", "slug": "selection-sort", "description": "Caută minimul din zona nesortată și îl așază pe poziția corectă.", "display_order": 27},
-            {"title": "Insertion Sort", "slug": "insertion-sort", "description": "Inserează fiecare element în poziția potrivită din partea deja sortată.", "display_order": 28},
-            {"title": "Căutare binară", "slug": "cautare-binara", "description": "Găsește o valoare eliminând la fiecare pas jumătate din zona de căutare.", "display_order": 29},
-            {"title": "Interclasarea a doi vectori sortați", "slug": "interclasarea-a-doi-vectori-sortati", "description": "Construiește un singur vector sortat folosind doi pointeri de citire.", "display_order": 30},
+            {"title": "Căutare binară", "slug": "cautare-binara", "description": "Găsește o valoare eliminând la fiecare pas jumătate din zona de căutare.", "display_order": 26},
+            {"title": "Interclasarea a doi vectori sortați", "slug": "interclasarea-a-doi-vectori-sortati", "description": "Construiește un singur vector sortat folosind doi pointeri de citire.", "display_order": 27},
         ]
 
         for lesson_data in elementary_lessons_data:
@@ -491,104 +450,180 @@ def seed_database():
                 lesson.display_order = lesson_data["display_order"]
                 lesson.is_published = True
 
-        # ==================================================
-        # QUIZZES
-        # ==================================================
-
-        chapter_lessons = (
+        legacy_sorting_slugs = ["bubble-sort", "selection-sort", "insertion-sort"]
+        (
             db.query(Lesson)
-            .filter(Lesson.chapter_id == chapter.id)
-            .order_by(Lesson.display_order)
-            .all()
+            .filter(
+                Lesson.chapter_id == elementary_algorithms_chapter.id,
+                Lesson.slug.in_(legacy_sorting_slugs),
+            )
+            .update({Lesson.is_published: False}, synchronize_session=False)
         )
 
-        for lesson in chapter_lessons:
-            quiz_data = load_quiz_content(chapter.slug, lesson.slug)
-            quiz = db.query(Quiz).filter(Quiz.lesson_id == lesson.id).first()
+        # ==================================================
+        # LECȚII VECTORI
+        # ==================================================
 
-            if not lesson.is_published or quiz_data is None:
-                if quiz is not None:
-                    quiz.is_published = False
-                continue
+        vectors_chapter = (
+            db.query(Chapter)
+            .filter(Chapter.slug == "vectori")
+            .one()
+        )
 
-            if quiz is None:
-                quiz = Quiz(
-                    lesson_id=lesson.id,
-                    title=quiz_data.get("title") or f"Quiz: {lesson.title}",
+        vectors_lessons_data = [
+            {
+                "title": "Noțiuni de bază despre vectori",
+                "slug": "notiuni-de-baza",
+                "description": "Declararea unui vector și accesarea elementelor.",
+                "display_order": 1,
+            },
+            {
+                "title": "Parcurgerea vectorilor",
+                "slug": "parcurgerea-vectorilor",
+                "description": "Citirea, afișarea și prelucrarea elementelor unui vector.",
+                "display_order": 2,
+            },
+            {
+                "title": "Inserarea și ștergerea elementelor",
+                "slug": "inserare-stergere",
+                "description": "Inserarea și ștergerea elementelor prin deplasări în vector.",
+                "display_order": 3,
+            },
+            {
+                "title": "Metode de sortare",
+                "slug": "sortarea-vectorilor",
+                "description": "Sortarea vectorilor folosind Bubble Sort, Selection Sort și Insertion Sort.",
+                "display_order": 4,
+            },
+            {
+                "title": "Căutarea într-un vector",
+                "slug": "cautare-element",
+                "description": "Căutarea secvențială și căutarea binară într-un vector.",
+                "display_order": 5,
+            },
+            {
+                "title": "Vectorul de frecvență",
+                "slug": "vector-frecventa",
+                "description": "Numărarea eficientă a aparițiilor valorilor folosind un vector de frecvență.",
+                "display_order": 6,
+            },
+            {
+                "title": "Secvențe în vector",
+                "slug": "secvente-vector",
+                "description": "Identificarea și prelucrarea secvențelor de elemente consecutive.",
+                "display_order": 7,
+            },
+            {
+                "title": "Interclasarea",
+                "slug": "interclasare",
+                "description": "Combinarea a doi vectori sortați într-un singur vector sortat.",
+                "display_order": 8,
+            },
+        ]
+
+        for lesson_data in vectors_lessons_data:
+            lesson_content = load_lesson_content(
+                vectors_chapter.slug,
+                lesson_data["slug"],
+            )
+
+            lesson = (
+                db.query(Lesson)
+                .filter(
+                    Lesson.chapter_id == vectors_chapter.id,
+                    Lesson.slug == lesson_data["slug"],
+                )
+                .first()
+            )
+
+            if lesson is None:
+                lesson = Lesson(
+                    chapter_id=vectors_chapter.id,
+                    title=lesson_data["title"],
+                    slug=lesson_data["slug"],
+                    description=lesson_data["description"],
+                    content=lesson_content,
+                    video_url=None,
+                    pdf_url=None,
+                    display_order=lesson_data["display_order"],
                     is_published=True,
                 )
-                db.add(quiz)
-                db.flush()
+                db.add(lesson)
             else:
-                quiz.title = quiz_data.get("title") or f"Quiz: {lesson.title}"
-                quiz.is_published = True
+                lesson.title = lesson_data["title"]
+                lesson.description = lesson_data["description"]
+                lesson.content = lesson_content
+                lesson.display_order = lesson_data["display_order"]
+                lesson.is_published = True
 
-            for question_order, question_data in enumerate(
-                quiz_data["questions"],
-                start=1,
-            ):
-                question = (
-                    db.query(QuizQuestion)
-                    .filter(
-                        QuizQuestion.quiz_id == quiz.id,
-                        QuizQuestion.display_order == question_order,
-                    )
-                    .first()
-                )
+        # ==================================================
+        # LECȚII STRUCT
+        # ==================================================
 
-                if question is None:
-                    question = QuizQuestion(
-                        quiz_id=quiz.id,
-                        text=question_data["text"],
-                        source=question_data.get("source"),
-                        display_order=question_order,
-                    )
-                    db.add(question)
-                    db.flush()
-                else:
-                    question.text = question_data["text"]
-                    question.source = question_data.get("source")
+        struct_chapter = (
+            db.query(Chapter)
+            .filter(Chapter.slug == "structuri-de-date-struct")
+            .one()
+        )
 
-                for option_order, option_data in enumerate(
-                    question_data["options"],
-                    start=1,
-                ):
-                    option = (
-                        db.query(QuizOption)
-                        .filter(
-                            QuizOption.question_id == question.id,
-                            QuizOption.display_order == option_order,
-                        )
-                        .first()
-                    )
+        struct_lessons_data = [
+            {
+                "title": "Noțiuni de bază despre structuri (struct)",
+                "slug": "notiuni-de-baza-struct",
+                "description": "Grupează informații de tipuri diferite prin declararea și utilizarea unei structuri.",
+                "display_order": 1,
+            },
+            {
+                "title": "Accesarea și modificarea câmpurilor",
+                "slug": "campuri",
+                "description": "Accesează și modifică datele unei structuri folosind operatorul punct.",
+                "display_order": 2,
+            },
+            {
+                "title": "Vectori de structuri",
+                "slug": "vectori-de-structuri",
+                "description": "Declară și parcurge vectori de structuri pentru a prelucra mai multe înregistrări.",
+                "display_order": 3,
+            },
+        ]
 
-                    if option is None:
-                        option = QuizOption(
-                            question_id=question.id,
-                            text=option_data["text"],
-                            display_order=option_order,
-                            is_correct=option_data["is_correct"],
-                        )
-                        db.add(option)
-                    else:
-                        option.text = option_data["text"]
-                        option.is_correct = option_data["is_correct"]
-
-                db.query(QuizOption).filter(
-                    QuizOption.question_id == question.id,
-                    QuizOption.display_order > len(question_data["options"]),
-                ).delete(synchronize_session=False)
-
-            stale_questions = (
-                db.query(QuizQuestion)
+        for lesson_data in struct_lessons_data:
+            # The content folder is named "struct"; keep the existing chapter URL.
+            lesson_content = load_lesson_content("struct", lesson_data["slug"])
+            lesson = (
+                db.query(Lesson)
                 .filter(
-                    QuizQuestion.quiz_id == quiz.id,
-                    QuizQuestion.display_order > len(quiz_data["questions"]),
+                    Lesson.chapter_id == struct_chapter.id,
+                    Lesson.slug == lesson_data["slug"],
                 )
-                .all()
+                .first()
             )
-            for stale_question in stale_questions:
-                db.delete(stale_question)
+
+            if lesson is None:
+                lesson = Lesson(
+                    chapter_id=struct_chapter.id,
+                    title=lesson_data["title"],
+                    slug=lesson_data["slug"],
+                    description=lesson_data["description"],
+                    content=lesson_content,
+                    video_url=None,
+                    pdf_url=None,
+                    display_order=lesson_data["display_order"],
+                    is_published=True,
+                )
+                db.add(lesson)
+            else:
+                lesson.title = lesson_data["title"]
+                lesson.description = lesson_data["description"]
+                lesson.content = lesson_content
+                lesson.display_order = lesson_data["display_order"]
+                lesson.is_published = True
+
+        if learning_content_only:
+            db.commit()
+            print("Chapters and lessons seeded successfully.")
+            return
+
         # ==================================================
         # PROBLEM 1
         # ==================================================
@@ -746,6 +781,7 @@ def seed_database():
             for field, value in maximum_problem_data.items():
                 setattr(maximum_problem, field, value)
 
+        seed_initial_assessment(db)
         db.commit()
 
         print("Database seeded successfully.")
@@ -763,4 +799,9 @@ def seed_database():
 
 
 if __name__ == "__main__":
-    seed_database()
+    import sys
+
+    seed_database(
+        learning_content_only="--learning-content-only" in sys.argv,
+        assessment_only="--assessment-only" in sys.argv,
+    )

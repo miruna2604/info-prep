@@ -23,3 +23,4 @@ class UserResponse(BaseModel):
     username: str
     email: EmailStr
     created_at: datetime
+    onboarding_completed: bool = False

@@ -1,359 +1,358 @@
 # Citirea și afișarea datelor în C++
 
-Un program are nevoie adesea să **primească date** de la utilizator și să **afișeze rezultate** pe ecran.
+Un program are nevoie adesea să **primească date**, să le prelucreze și să **afișeze un rezultat**.
 
-În C++, pentru operațiile de bază folosim:
+În C++ folosim:
 
-* **`cin`** pentru citirea datelor
-* **`cout`** pentru afișarea datelor
+```text id="nkvqza"
+cin  → citire
+cout → afișare
+```
 
-Pentru a putea folosi `cin` și `cout`, includem biblioteca:
+Pentru a le putea folosi avem nevoie de:
 
-```cpp
+```cpp id="b8plr9"
 #include <iostream>
 ```
 
+Biblioteca `iostream` a fost prezentată deja când am studiat structura unui program C++.
+
 ---
 
-## Afișarea datelor cu `cout`
+# Afișarea cu `cout`
 
-`cout` este folosit pentru a **afișa informații pe ecran**.
+`cout` este folosit pentru a afișa informații pe ecran.
 
-Operatorul folosit pentru afișare este:
+Pentru afișare folosim:
 
-```text
+```text id="dz0dxo"
 <<
 ```
 
-### Afișarea unui text
+De exemplu:
 
-```cpp
+```cpp id="8v91ke"
 cout << "Salut!";
 ```
 
-Programul va afișa:
+afișează:
 
-```text
+```text id="4dphlo"
 Salut!
 ```
 
-Textul pe care vrem să îl afișăm se scrie între ghilimele `" "`.
+Textul se scrie între ghilimele:
+
+```cpp id="7dw0fc"
+"Salut!"
+```
 
 ---
 
-## Afișarea valorii unei variabile
+## Afișarea unei variabile
 
-Putem folosi `cout` și pentru a afișa valoarea unei variabile.
+Putem afișa și valoarea unei variabile:
 
-```cpp
+```cpp id="3ul5qp"
 int x = 10;
 
 cout << x;
 ```
 
-Rezultatul va fi:
+Rezultatul este:
 
-```text
+```text id="a6efgh"
 10
 ```
 
-Observă diferența:
+Atenție la diferență:
 
-```cpp
+```cpp id="i7w55q"
 cout << "x";
 ```
 
 afișează:
 
-```text
+```text id="k2ffhe"
 x
 ```
 
 în timp ce:
 
-```cpp
+```cpp id="4j4ucb"
 cout << x;
 ```
 
 afișează **valoarea variabilei `x`**.
 
-> **De reținut:** Textul se scrie între ghilimele, iar variabilele se scriu fără ghilimele.
+> **De reținut:** textul se scrie între ghilimele, variabilele nu.
 
 ---
 
 ## Afișarea mai multor valori
 
-Putem afișa mai multe lucruri folosind mai mulți operatori `<<`.
+Putem lega mai multe elemente folosind `<<`.
 
-```cpp
+```cpp id="yzrx17"
 int varsta = 17;
 
 cout << "Am " << varsta << " ani.";
 ```
 
-Rezultatul va fi:
+Rezultatul:
 
-```text
+```text id="bbr2kp"
 Am 17 ani.
 ```
 
-Putem combina astfel **texte, variabile și valori** în aceeași instrucțiune.
+Putem combina astfel texte, valori și variabile în aceeași instrucțiune.
 
 ---
 
-## Spațiile la afișare
+## Spațiile nu apar automat
 
-`cout` nu adaugă automat spații între valorile afișate.
+Să avem:
 
-De exemplu:
-
-```cpp
+```cpp id="ol07hx"
 int a = 10;
 int b = 20;
 
 cout << a << b;
 ```
 
-va afișa:
+Rezultatul este:
 
-```text
+```text id="0j4s7d"
 1020
 ```
 
-Dacă vrem un spațiu între ele, trebuie să îl adăugăm:
+Dacă vrem spațiu între valori, trebuie să îl afișăm:
 
-```cpp
+```cpp id="2o9k36"
 cout << a << " " << b;
 ```
 
-Rezultatul:
+Rezultat:
 
-```text
+```text id="z94xox"
 10 20
 ```
 
 ---
 
-# Trecerea la o linie nouă
+# Trecerea la linia următoare
 
-Pentru a continua afișarea pe următoarea linie putem folosi `endl` sau `\n`.
+Pentru a continua afișarea pe o linie nouă putem folosi:
 
-## Folosind `endl`
+```cpp id="2gz76r"
+endl
+```
 
-```cpp
+De exemplu:
+
+```cpp id="l72r6c"
 cout << "Prima linie" << endl;
 cout << "A doua linie";
 ```
 
 Rezultatul:
 
-```text
+```text id="jbf5kb"
 Prima linie
 A doua linie
 ```
 
-`endl` încheie linia curentă, astfel încât următoarea afișare începe pe o linie nouă.
+Putem folosi și:
 
----
-
-## Folosind `\n`
-
-Putem obține același efect folosind caracterul special:
-
-```text
+```text id="6f82jd"
 \n
 ```
 
-Exemplu:
+De exemplu:
 
-```cpp
+```cpp id="6k4mln"
 cout << "Prima linie\n";
 cout << "A doua linie";
 ```
 
-Rezultatul:
+obține același rezultat.
 
-```text
-Prima linie
-A doua linie
-```
+`\n` poate apărea direct într-un text:
 
-Putem folosi `\n` și în interiorul unui text:
-
-```cpp
+```cpp id="rb41l3"
 cout << "Ana\nMaria\nAlex";
 ```
 
-Rezultatul:
+Rezultat:
 
-```text
+```text id="e9kkjg"
 Ana
 Maria
 Alex
 ```
 
-> **De reținut:** Atât `endl`, cât și `\n` pot fi folosite pentru a continua afișarea pe o linie nouă.
+Pentru moment este suficient să reții:
+
+```text id="9yg5ct"
+endl → linie nouă
+\n   → linie nouă
+```
 
 ---
 
-# Citirea datelor cu `cin`
+# Citirea cu `cin`
 
-`cin` este folosit pentru a **citi date introduse de utilizator**.
+`cin` este folosit pentru a citi o valoare și a o memora într-o variabilă.
 
-Operatorul folosit pentru citire este:
+Pentru citire folosim:
 
-```text
+```text id="a8yg0h"
 >>
 ```
 
-Pentru a citi o valoare avem nevoie de o variabilă în care aceasta să fie memorată.
+De exemplu:
 
-```cpp
+```cpp id="29drc3"
 int x;
 
 cin >> x;
 ```
 
-Dacă utilizatorul introduce:
+Dacă valoarea citită este:
 
-```text
+```text id="pk5ukx"
 25
 ```
 
-variabila `x` va primi valoarea `25`.
+atunci variabila `x` va conține:
 
-Putem vedea acest lucru afișând apoi variabila:
-
-```cpp
-int x;
-
-cin >> x;
-
-cout << x;
+```text id="13umvl"
+x = 25
 ```
 
-Dacă introducem:
+Putem privi operația astfel:
 
-```text
+```text id="j71ftg"
 25
-```
-
-programul va afișa:
-
-```text
-25
+ ↓
+cin >> x
+       ↓
+     x = 25
 ```
 
 ---
 
 # Citirea mai multor valori
 
-Putem citi mai multe valori într-o singură instrucțiune.
+Putem citi mai multe valori în aceeași instrucțiune:
 
-```cpp
+```cpp id="vkwqhk"
 int a, b;
 
 cin >> a >> b;
 ```
 
-Dacă utilizatorul introduce:
+Dacă datele de intrare sunt:
 
-```text
+```text id="1i2obg"
 10 20
 ```
 
 atunci:
 
-```text
+```text id="dl52we"
 a = 10
 b = 20
 ```
 
-Valorile sunt atribuite variabilelor **în ordinea în care acestea apar în instrucțiunea `cin`**.
+Valorile sunt memorate în variabile **în ordinea în care apar în instrucțiunea `cin`**.
 
-Putem scrie și:
+Valorile pot fi și pe linii diferite:
 
-```text
+```text id="bfz84w"
 10
 20
 ```
 
-iar rezultatul va fi același.
+Pentru:
 
-Pentru citirea cu `cin >>`, spațiile și trecerile la linie separă valorile introduse.
+```cpp id="87bvt9"
+cin >> a >> b;
+```
+
+rezultatul este același:
+
+```text id="a45rv3"
+a = 10
+b = 20
+```
 
 ---
 
-## Exemplu complet
+# Tipul variabilei contează
 
-Să citim două numere și să afișăm suma lor.
+Valoarea citită trebuie să fie potrivită pentru tipul variabilei.
 
-```cpp
-#include <iostream>
-using namespace std;
+Pentru un număr întreg:
 
-int main() {
-    int a, b;
-
-    cin >> a >> b;
-
-    cout << a + b;
-
-    return 0;
-}
+```cpp id="kr4hqt"
+int n;
+cin >> n;
 ```
 
-Dacă introducem:
+Pentru un număr real:
 
-```text
-7 5
+```cpp id="q3p4pd"
+double x;
+cin >> x;
 ```
 
-programul va afișa:
+Pentru un caracter:
 
-```text
-12
+```cpp id="s2b9vl"
+char c;
+cin >> c;
 ```
 
-Procesul este:
-
-```text
-7 5
- ↓ ↓
- a b
-
-a + b = 12
-```
-
-Mai întâi valorile sunt **citite**, apoi programul le **prelucrează**, iar rezultatul este **afișat**.
+Tipurile de date au fost explicate în lecția anterioară. Aici este important să alegem variabila potrivită pentru datele pe care trebuie să le citim.
 
 ---
 
 # Citire → Prelucrare → Afișare
 
-Foarte multe programe pe care le vom scrie urmează aceeași structură:
+Foarte multe programe pot fi privite în trei pași simpli:
 
-**1. Citim datele**
+```text id="adkk0m"
+CITIRE
+   ↓
+PRELUCRARE
+   ↓
+AFIȘARE
+```
 
-```cpp
+Să presupunem că vrem să citim două numere și să afișăm suma lor.
+
+### 1. Citim
+
+```cpp id="i1qzba"
 cin >> a >> b;
 ```
 
-**2. Prelucrăm datele**
+### 2. Prelucrăm
 
-```cpp
-int suma = a + b;
+```cpp id="clhq8c"
+suma = a + b;
 ```
 
-**3. Afișăm rezultatul**
+### 3. Afișăm
 
-```cpp
+```cpp id="s05vzb"
 cout << suma;
 ```
 
 Programul complet:
 
-```cpp
+```cpp id="hh0u4i"
 #include <iostream>
 using namespace std;
 
@@ -371,304 +370,98 @@ int main() {
 }
 ```
 
-> **De reținut:** În foarte multe probleme, programul poate fi privit simplu ca: **Citire → Prelucrare → Afișare**.
+Pentru datele de intrare:
+
+```text id="un8gnb"
+7 5
+```
+
+programul afișează:
+
+```text id="znrbf5"
+12
+```
+
+Putem urmări programul astfel:
+
+```text id="6j5qqd"
+7 5
+ ↓ ↓
+ a b
+ ↓
+a + b
+ ↓
+ 12
+```
+
+> **De reținut:** În multe probleme vom urma modelul **Citire → Prelucrare → Afișare**.
 
 ---
 
-# `cin` și tipul variabilei
+# Afișează exact ce se cere
 
-Valoarea citită trebuie să fie potrivită pentru tipul variabilei.
+Într-un program obișnuit am putea afișa un mesaj precum:
 
-De exemplu:
-
-```cpp
-int varsta;
-cin >> varsta;
+```cpp id="l5d1hf"
+cout << "Introdu numarul: ";
+cin >> n;
 ```
 
-este potrivit pentru un număr întreg:
+Dar în problemele cu format de intrare și ieșire stabilit, trebuie să respectăm **exact cerința**.
 
-```text
-18
+Dacă trebuie doar să citim un număr și să afișăm dublul său, vom scrie:
+
+```cpp id="zwx0xj"
+int n;
+
+cin >> n;
+
+cout << n * 2;
 ```
 
-Pentru un număr real putem folosi:
+Nu este nevoie să afișăm:
 
-```cpp
-double medie;
-cin >> medie;
+```text id="cyrf86"
+Introdu numarul:
+Rezultatul este:
 ```
 
-De exemplu:
+dacă aceste texte nu sunt cerute.
 
-```text
-9.75
-```
-
-Pentru un singur caracter:
-
-```cpp
-char litera;
-cin >> litera;
-```
-
-De exemplu:
-
-```text
-A
-```
-
-Tipul variabilei stabilește **ce fel de informație poate fi memorată în ea**.
+Programul trebuie să producă exact rezultatul solicitat.
 
 ---
 
-# Citirea unui cuvânt
+# `cin >>` și `cout <<`
 
-Putem folosi `cin` și pentru a citi un cuvânt.
+Cei doi operatori sunt ușor de diferențiat dacă urmărim direcția datelor.
 
-```cpp
-string nume;
+### Citire
 
-cin >> nume;
-```
-
-Dacă introducem:
-
-```text
-Andrei
-```
-
-variabila `nume` va conține `"Andrei"`.
-
-Pentru folosirea tipului `string` putem include:
-
-```cpp
-#include <string>
-```
-
-Exemplu:
-
-```cpp
-#include <iostream>
-#include <string>
-using namespace std;
-
-int main() {
-    string nume;
-
-    cin >> nume;
-
-    cout << "Salut, " << nume << "!";
-
-    return 0;
-}
-```
-
-Dacă introducem:
-
-```text
-Andrei
-```
-
-programul va afișa:
-
-```text
-Salut, Andrei!
-```
-
----
-
-# Atenție la textele care conțin spații
-
-Instrucțiunea:
-
-```cpp
-cin >> nume;
-```
-
-citește în mod obișnuit până la primul spațiu.
-
-Dacă avem:
-
-```cpp
-string nume;
-
-cin >> nume;
-```
-
-și introducem:
-
-```text
-Ana Maria
-```
-
-în `nume` va fi citit doar:
-
-```text
-Ana
-```
-
-Pentru a citi o linie întreagă, inclusiv spațiile, putem folosi `getline()`:
-
-```cpp
-string nume;
-
-getline(cin, nume);
-```
-
-Acum:
-
-```text
-Ana Maria
-```
-
-poate fi citit în întregime.
-
-> **Important:** Pentru început, reține diferența simplă: `cin >>` este potrivit pentru citirea valorilor și a cuvintelor, iar `getline()` poate citi o linie întreagă care conține și spații.
-
----
-
-# `cin` și `cout` împreună
-
-Un exemplu simplu:
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int varsta;
-
-    cout << "Introdu varsta: ";
-    cin >> varsta;
-
-    cout << "Ai " << varsta << " ani.";
-
-    return 0;
-}
-```
-
-Dacă utilizatorul introduce `17`, programul va afișa:
-
-```text
-Introdu varsta: 17
-Ai 17 ani.
-```
-
-Aici:
-
-```cpp
-cout << "Introdu varsta: ";
-```
-
-afișează un mesaj pentru utilizator,
-
-```cpp
-cin >> varsta;
-```
-
-citește valoarea,
-
-iar:
-
-```cpp
-cout << "Ai " << varsta << " ani.";
-```
-
-afișează rezultatul.
-
----
-
-# `<<` și `>>`
-
-Este important să nu confundăm cei doi operatori.
-
-Pentru **afișare**:
-
-```cpp
-cout << x;
-```
-
-Pentru **citire**:
-
-```cpp
+```cpp id="th2nt5"
 cin >> x;
 ```
 
-O metodă simplă de a le reține este să urmărești direcția datelor:
+Valoarea citită ajunge în `x`:
 
-```text
-cout << x
-      datele merg spre afișare
-
-cin >> x
-       datele merg spre variabila x
+```text id="rdwzsm"
+date → x
 ```
 
----
+### Afișare
 
-# Exemplu final
-
-Programul citește lungimea și lățimea unui dreptunghi și afișează aria.
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int lungime, latime;
-    int aria;
-
-    cin >> lungime >> latime;
-
-    aria = lungime * latime;
-
-    cout << "Aria este " << aria;
-
-    return 0;
-}
+```cpp id="rx6gvx"
+cout << x;
 ```
 
-Pentru:
+Valoarea lui `x` este trimisă spre afișare:
 
-```text
-5 3
+```text id="69fsnu"
+x → ecran
 ```
 
-obținem:
+Așadar:
 
-```text
-Aria este 15
+```text id="l3eohg"
+cin  >> variabilă
 ```
-
-Avem din nou cele trei etape:
-
-```text
-CITIRE
-5 3
-↓ ↓
-lungime latime
-
-PRELUCRARE
-aria = lungime * latime
-
-AFIȘARE
-Aria este 15
-```
-
----
-
-# Recapitulare
-
-* **`#include <iostream>`** - ne permite să folosim operațiile standard de intrare și ieșire.
-* **`cout`** - este folosit pentru afișarea datelor.
-* **`<<`** - este operatorul folosit cu `cout`.
-* **`cin`** - este folosit pentru citirea datelor.
-* **`>>`** - este operatorul folosit cu `cin`.
-* **`endl`** - continuă afișarea pe o linie nouă.
-* **`\n`** - poate fi folosit pentru trecerea la o linie nouă.
-* **`cin >> a >> b;`** - permite citirea mai multor valori.
-* **`cout << a << " " << b;`** - permite afișarea mai multor valori.
-* **`getline()`** - poate fi folosit pentru citirea unei linii de text care conține spații.
-
-> **Reține:** Pentru foarte multe programe C++, gândește-te la structura **Citire → Prelucrare → Afișare**.

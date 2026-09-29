@@ -82,17 +82,8 @@ export const elementaryAlgorithmCategories = [
     ],
   },
   {
-    id: "sortari-elementare",
-    eyebrow: "07 · Sortări",
-    title: "Sortări elementare",
-    description: "Compară trei moduri vizuale de a pune elementele unui vector în ordine.",
-    accent: "fuchsia",
-    icon: "↕↕",
-    lessons: ["bubble-sort", "selection-sort", "insertion-sort"],
-  },
-  {
     id: "cautare-interclasare",
-    eyebrow: "08 · Vectori sortați",
+    eyebrow: "07 · Vectori sortați",
     title: "Căutare și interclasare",
     description: "Profită de ordinea elementelor pentru a căuta rapid sau pentru a combina vectori.",
     accent: "lime",
@@ -101,7 +92,7 @@ export const elementaryAlgorithmCategories = [
   },
   {
     id: "secvente-consecutive",
-    eyebrow: "09 · Secvențe",
+    eyebrow: "08 · Secvențe",
     title: "Secvențe consecutive",
     description: "Urmărește o secvență curentă și recordul ei în timp ce valorile sunt citite.",
     accent: "orange",

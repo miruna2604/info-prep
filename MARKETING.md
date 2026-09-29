@@ -6,7 +6,7 @@ Preferință confirmată de utilizator la 7 septembrie 2026: aplică această st
 
 - Brand cu o persoană recognoscibilă, energie și comunitate; fondatorul apare și explică natural.
 - Public inițial propus: elevul care înțelege o rezolvare citită, dar se blochează când trebuie să rezolve singur.
-- Promisiunea de demonstrat: înțelegi, verifici prin quiz și aplici singur într-o problemă.
+- Promisiunea de demonstrat: înțelegi și aplici singur într-o problemă.
 - Ambiția de a construi cea mai bună platformă poate fi exprimată ca obiectiv, nu ca superioritate deja dovedită. Fără rezultate, testimoniale sau garanții inventate.
 
 ## Inspirații cerute de utilizator

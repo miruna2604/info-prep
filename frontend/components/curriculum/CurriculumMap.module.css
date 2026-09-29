@@ -1,4 +1,4 @@
-.page { max-width: 1400px; margin-inline: auto; color: #cbd5e1; }
+.page { width: 100%; margin-inline: auto; color: #cbd5e1; }
 .header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 0 28px; }
 .eyebrow { color: #34d399; font-size: 10px; font-weight: 600; letter-spacing: .14em; }
 .header h1 { margin-top: 10px; color: #f8fafc; font-size: clamp(28px, 4vw, 36px); font-weight: 600; letter-spacing: -.04em; }
@@ -10,11 +10,11 @@
 .mapCaption > span:first-child { display: flex; align-items: center; gap: 8px; }
 .mapCaption i { width: 5px; height: 5px; border-radius: 50%; background: #34d399; }
 .mapScroll { overflow-x: auto; background-image: radial-gradient(#24324785 .7px, transparent .7px); background-size: 20px 20px; }
-.canvas { position: relative; width: 100%; min-width: 580px; aspect-ratio: 900 / 800; margin-block: 24px 8px; }
+.canvas { position: relative; width: 100%; min-width: 1000px; aspect-ratio: 1100 / 780; margin-block: 24px 8px; }
 .connections { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .connections path { stroke: #35465a; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
 .connections .activeEdge { stroke: #34d399; opacity: .7; }
-.mapNode { position: absolute; transform: translate(-50%, -50%); width: 27%; min-height: 64px; padding: 10px 12px; display: grid; grid-template-columns: 20px 1fr; gap: 5px 7px; text-align: left; border: 1px solid #344459; border-radius: 9px; background: #0d1b2b; cursor: pointer; box-shadow: 0 4px 12px #0002; transition: border-color .15s, background .15s; }
+.mapNode { position: absolute; transform: translate(-50%, -50%); width: 18%; min-height: 70px; padding: 10px 12px; display: grid; grid-template-columns: 20px 1fr; gap: 5px 7px; text-align: left; border: 1px solid #344459; border-radius: 9px; background: #0d1b2b; cursor: pointer; box-shadow: 0 4px 12px #0002; transition: border-color .15s, background .15s; }
 .mapNode::before, .mapNode::after { content: ""; position: absolute; left: calc(50% - 2px); width: 4px; height: 4px; border-radius: 50%; background: #53657b; }
 .mapNode::before { top: -3px; } .mapNode::after { bottom: -3px; }
 .mapNode:hover { border-color: #6b8c9b; background: #122437; }
@@ -48,7 +48,7 @@
 .chapterNav button:disabled { opacity: .3; cursor: default; }
 .page a:focus-visible, .page button:focus-visible, .mapScroll:focus-visible { outline: 2px solid #6ee7b7; outline-offset: 4px; }
 @media (min-width: 1600px) { .mapNode { min-height: 74px; } .mapNode strong { font-size: 14px; } }
-@media (max-width: 1200px) { .layout { grid-template-columns: minmax(0, 1fr); } .details { position: static; } .detailBody { max-height: none; } .canvas { max-width: 900px; margin-inline: auto; } }
+@media (max-width: 1200px) { .layout { grid-template-columns: minmax(0, 1fr); } .details { position: static; } .detailBody { max-height: none; } .canvas { max-width: 1100px; margin-inline: auto; } }
 @media (max-width: 600px) { .badge { display: none; } .header { padding-top: 4px; } .mapCaption { padding-inline: 14px; } .mapCaption > span:last-child { font-size: 0; } .mapCaption > span:last-child::after { content: "Derulează harta ↔"; font-size: 10px; } .mapNote { padding-inline: 14px; } }
 @media (prefers-reduced-motion: reduce) { .mapNode { transition: none; } }
 
@@ -67,3 +67,10 @@
 .chapterNav { background: #081321; }
 .chapterNav button { padding: 6px 8px; border-radius: 6px; }
 .chapterNav button:hover:not(:disabled) { background: #132538; }
+
+/* Expand controls are separate from lesson links, only in the C++ basics outline. */
+.detailBody .branches > li > .dropdownRow { display: flex; align-items: center; gap: 8px; }
+.dropdownLabel { flex: 1; min-width: 0; }
+.dropdownToggle { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 32px; width: 32px; height: 32px; border: 1px solid #2b3a4d; border-radius: 6px; color: #9cb9b0; background: #102030; cursor: pointer; }
+.dropdownToggle:hover { border-color: #5ca58e; color: #6ee7b7; background: #132c31; }
+.dropdownToggle[aria-expanded="true"] svg { transform: rotate(180deg); }

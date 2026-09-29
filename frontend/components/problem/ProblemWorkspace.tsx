@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ApiError } from "../../services/api";
 import {
   runCode,
@@ -21,6 +21,7 @@ type ProblemWorkspaceProps = {
 };
 
 export function ProblemWorkspace({problemId, starterCode, initialInput,}: ProblemWorkspaceProps) {
+  const submitFeedbackRef = useRef<HTMLDivElement>(null);
   const [sourceCode, setSourceCode] = useState(starterCode);
   const [standardInput, setStandardInput] = useState(initialInput);
   const [result, setResult] = useState<RunCodeResult | null>(null);
@@ -30,6 +31,25 @@ export function ProblemWorkspace({problemId, starterCode, initialInput,}: Proble
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [requiresLogin, setRequiresLogin] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!submitResult && !submitError) return;
+
+    const frame = requestAnimationFrame(() => {
+      const feedback = submitFeedbackRef.current;
+      if (!feedback) return;
+
+      feedback.focus({ preventScroll: true });
+      feedback.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+        block: "start",
+      });
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [submitResult, submitError]);
 
   async function handleRun() {
     setIsRunning(true);
@@ -106,11 +126,20 @@ export function ProblemWorkspace({problemId, starterCode, initialInput,}: Proble
         isRunning={isRunning}
         isSubmitting={isSubmitting}
       />
-      <SubmitResult
-        result={submitResult}
-        error={submitError}
-        requiresLogin={requiresLogin}
-      />
+      {(submitResult || submitError) && (
+        <div
+          ref={submitFeedbackRef}
+          tabIndex={-1}
+          aria-label="Rezultatul trimiterii"
+          className="scroll-mt-6 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+        >
+          <SubmitResult
+            result={submitResult}
+            error={submitError}
+            requiresLogin={requiresLogin}
+          />
+        </div>
+      )}
     </div>
   );
 }

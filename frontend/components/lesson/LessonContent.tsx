@@ -1,3 +1,4 @@
+import { Children, isValidElement, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
@@ -5,6 +6,22 @@ import remarkGfm from "remark-gfm";
 type LessonContentProps = {
   content: string;
 };
+
+function getNodeText(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (isValidElement<{ children?: ReactNode }>(node)) return getNodeText(node.props.children);
+
+  return Children.toArray(node).map(getNodeText).join("");
+}
+
+function getHeadingId(children: ReactNode): string {
+  return getNodeText(children)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
 
 export function LessonContent({ content }: LessonContentProps) {
   return (
@@ -14,17 +31,17 @@ export function LessonContent({ content }: LessonContentProps) {
         rehypePlugins={[[rehypeHighlight, { detect: false }]]}
         components={{
           h1: ({ children }) => (
-            <h1 className="mt-10 text-3xl font-bold tracking-tight text-white">
+            <h1 id={getHeadingId(children)} className="scroll-mt-8 mt-10 text-3xl font-bold tracking-tight text-white">
               {children}
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="mt-8 text-2xl font-semibold text-white">
+            <h2 id={getHeadingId(children)} className="scroll-mt-8 mt-8 text-2xl font-semibold text-white">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="mt-6 text-xl font-semibold text-slate-100">
+            <h3 id={getHeadingId(children)} className="scroll-mt-8 mt-6 text-xl font-semibold text-slate-100">
               {children}
             </h3>
           ),

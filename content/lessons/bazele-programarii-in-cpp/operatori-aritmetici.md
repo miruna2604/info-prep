@@ -1,6 +1,6 @@
 # Operatori aritmetici în C++
 
-Operatorii aritmetici sunt folosiți pentru a efectua **calcule matematice** asupra valorilor și variabilelor.
+Operatorii aritmetici sunt folosiți pentru a efectua **calcule** cu valori și variabile.
 
 De exemplu:
 
@@ -17,100 +17,53 @@ int suma = a + b;
 a + b
 ```
 
-* `a` și `b` sunt **operanzi**
-* `+` este **operatorul**
+avem:
+
+* `a` și `b` → **operanzi**
+* `+` → **operator**
 
 ---
 
 # Operatorii aritmetici principali
 
-În C++, cei mai importanți operatori aritmetici sunt:
+În C++, operatorii aritmetici de bază sunt:
 
-| Operator | Operație          | Exemplu |
-| -------- | ----------------- | ------- |
-| `+`      | adunare           | `a + b` |
-| `-`      | scădere           | `a - b` |
-| `*`      | înmulțire         | `a * b` |
-| `/`      | împărțire         | `a / b` |
-| `%`      | restul împărțirii | `a % b` |
+| Operator | Operație          |
+| -------- | ----------------- |
+| `+`      | adunare           |
+| `-`      | scădere           |
+| `*`      | înmulțire         |
+| `/`      | împărțire         |
+| `%`      | restul împărțirii |
 
-Vom întâlni foarte des și:
-
-| Operator | Operație             |
-| -------- | -------------------- |
-| `++`     | crește valoarea cu 1 |
-| `--`     | scade valoarea cu 1  |
-
----
-
-# Adunarea `+`
-
-Operatorul `+` calculează suma a două valori.
+De exemplu, pentru:
 
 ```cpp
-int a = 7;
+int a = 10;
 int b = 3;
-
-cout << a + b;
 ```
 
-Rezultatul este:
+avem:
 
 ```text
-10
+a + b → 13
+a - b → 7
+a * b → 30
+a / b → 3
+a % b → 1
 ```
 
-Putem memora rezultatul într-o variabilă:
+Primele trei operații sunt exact cele cunoscute din matematică.
 
-```cpp
-int suma = a + b;
-```
-
----
-
-# Scăderea `-`
-
-Operatorul `-` calculează diferența dintre două valori.
-
-```cpp
-int a = 7;
-int b = 3;
-
-cout << a - b;
-```
-
-Rezultatul:
-
-```text
-4
-```
-
----
-
-# Înmulțirea `*`
-
-Operatorul `*` este folosit pentru înmulțire.
-
-```cpp
-int a = 7;
-int b = 3;
-
-cout << a * b;
-```
-
-Rezultatul:
-
-```text
-21
-```
-
-În C++ folosim:
+În C++, pentru înmulțire folosim:
 
 ```text
 *
 ```
 
-și nu simbolul matematic `×`.
+nu simbolul `×`.
+
+Operatorii `/` și `%` necesită însă puțin mai multă atenție.
 
 ---
 
@@ -119,139 +72,120 @@ Rezultatul:
 Operatorul `/` este folosit pentru împărțire.
 
 ```cpp
-cout << 10 / 2;
+10 / 2
 ```
 
-Rezultatul este:
+produce:
 
 ```text
 5
 ```
 
-Trebuie însă să fim foarte atenți la **tipurile valorilor împărțite**.
+Rezultatul devine mai interesant atunci când împărțirea nu este exactă.
 
----
+## Împărțirea între numere întregi
 
-# Împărțirea între numere întregi
-
-Dacă ambii operanzi sunt întregi, C++ efectuează o **împărțire întreagă**.
+Dacă ambii operanzi sunt întregi:
 
 ```cpp
 int a = 10;
 int b = 3;
-
-cout << a / b;
 ```
 
-Rezultatul este:
+atunci:
+
+```cpp
+a / b
+```
+
+produce:
 
 ```text
 3
 ```
 
-nu:
-
-```text
-3.333...
-```
-
-Putem privi împărțirea astfel:
+Putem privi operația astfel:
 
 ```text
 10 : 3 = 3 rest 1
          ↑
-        a / b
+        10 / 3
 ```
 
-Operatorul `/` ne oferă câtul:
-
-```cpp
-10 / 3
-```
-
-rezultat:
+Când ambii operanzi sunt întregi, `/` ne oferă **câtul întreg**.
 
 ```text
-3
+17 / 5 = 3
+20 / 6 = 3
+8 / 2  = 4
 ```
 
-> **Important pentru BAC:** Dacă ambii operanzi sunt întregi, `/` produce o împărțire întreagă.
+> **De reținut:** `int / int` produce o împărțire întreagă.
+
+În lecția despre tipurile de date am văzut și că, dacă cel puțin unul dintre operanzi este `double`, împărțirea devine reală.
+
+Nu reluăm aici conversiile de tip; important este să recunoaștem diferența.
 
 ---
 
-# Împărțirea reală
+## Exercițiu tip BAC
 
-Dacă vrem un rezultat real, cel puțin unul dintre operanzi trebuie să fie real.
-
-De exemplu:
+**Indicați valoarea expresiei C/C++ alăturate.**
 
 ```cpp
-cout << 10.0 / 3;
+6.3 / 20 + 24
 ```
 
-rezultatul este aproximativ:
+**Variante de răspuns:**
 
 ```text
-3.33333
+a. 0
+b. 24
+c. 24.315
+d. 24.9
 ```
 
-Putem face și o conversie:
+### Rezolvare
 
-```cpp
-int a = 10;
-int b = 3;
+```text
+6.3 / 20 + 24
 
-cout << (double)a / b;
+= 0.315 + 24
+
+= 24.315
 ```
 
-Astfel obținem o împărțire reală.
+Observăm că `6.3` este o valoare reală, deci împărțirea:
+
+```text
+6.3 / 20
+```
+
+este o **împărțire reală**.
+
+```text
+✓ Răspuns corect: c. 24.315
+```
 
 ---
 
-# Operatorul `%` - restul împărțirii
+# Operatorul `%` — restul împărțirii
 
-Operatorul `%` calculează **restul împărțirii a două numere întregi**.
+Operatorul `%` ne oferă **restul împărțirii a două valori întregi**.
 
 De exemplu:
-
-```cpp
-cout << 10 % 3;
-```
-
-rezultatul este:
-
-```text
-1
-```
-
-pentru că:
-
-```text
-10 : 3 = 3 rest 1
-                   ↑
-                 10 % 3
-```
-
-Putem reține foarte simplu:
-
-```text
-/ → câtul împărțirii
-% → restul împărțirii
-```
-
-Exemplu:
 
 ```text
 17 : 5 = 3 rest 2
 ```
 
-deci:
+În C++:
 
 ```cpp
 17 / 5
 ```
 
-este:
+produce:
 
 ```text
 3
@@ -263,101 +197,88 @@ iar:
 17 % 5
 ```
 
-este:
+produce:
 
 ```text
 2
 ```
 
-> **De reținut:** Operatorul `%` se folosește cu valori întregi.
+Putem reține foarte simplu:
 
----
+```text
+/ → câtul întreg
 
-# `/` și `%` împreună
-
-Pentru două numere naturale `a` și `b`, cu `b != 0`, putem interpreta:
-
-```cpp
-a / b
+% → restul
 ```
 
-ca **partea întreagă a câtului**, iar:
-
-```cpp
-a % b
-```
-
-ca **restul împărțirii**.
-
-De exemplu:
+Un alt exemplu:
 
 ```text
 23 : 5 = 4 rest 3
 ```
 
-În C++:
-
-```cpp
-cout << 23 / 5;
-```
-
-afișează:
+deci:
 
 ```text
-4
+23 / 5 = 4
+23 % 5 = 3
 ```
 
-iar:
-
-```cpp
-cout << 23 % 5;
-```
-
-afișează:
-
-```text
-3
-```
+> Operatorul `%` se folosește cu valori întregi.
 
 ---
 
-# `%` este foarte important la BAC
+# Unde folosim `%`?
 
-Operatorul `%` apare în foarte mulți algoritmi.
+Operatorul `%` este foarte important deoarece restul unei împărțiri ne poate spune multe despre un număr.
 
-## Verificarea parității
+## Paritatea
 
-Un număr este par dacă restul împărțirii sale la `2` este `0`.
-
-```cpp
-if (n % 2 == 0)
-    cout << "PAR";
-```
-
-Pentru un număr impar:
-
-```cpp
-if (n % 2 != 0)
-    cout << "IMPAR";
-```
-
-Putem reține:
+Un număr este **par** dacă restul împărțirii sale la `2` este `0`.
 
 ```text
 n % 2 == 0 → n este par
+```
 
+De exemplu:
+
+```text
+14 % 2 = 0
+```
+
+deci `14` este par.
+
+Pentru un număr impar:
+
+```text
 n % 2 != 0 → n este impar
+```
+
+De exemplu:
+
+```text
+15 % 2 = 1
+```
+
+deci `15` este impar.
+
+Operatorii `==` și `!=` vor fi explicați în lecția despre operatorii relaționali. Pentru moment, citește:
+
+```text
+== → este egal cu
+!= → este diferit de
 ```
 
 ---
 
-# Verificarea divizibilității
+## Divizibilitatea
 
-Un număr `a` este divizibil cu `b` dacă restul împărțirii este `0`.
+Un număr `a` este divizibil cu `b` dacă împărțirea se face fără rest.
 
-```cpp
-if (a % b == 0)
-    cout << "DIVIZIBIL";
+Adică:
+
+```text
+a % b == 0
 ```
 
 De exemplu:
@@ -366,7 +287,11 @@ De exemplu:
 20 % 5 = 0
 ```
 
-deci `20` este divizibil cu `5`.
+deci:
+
+```text
+20 este divizibil cu 5
+```
 
 În schimb:
 
@@ -376,50 +301,36 @@ deci `20` este divizibil cu `5`.
 
 deci `22` nu este divizibil cu `5`.
 
-> **Șablon important pentru BAC:**
-
-```cpp
-a % b == 0
-```
-
-înseamnă:
-
-```text
-a este divizibil cu b
-```
+> **De reținut:** `a % b == 0` înseamnă că `a` este divizibil cu `b`.
 
 ---
 
 # Ultima cifră a unui număr
 
-Una dintre cele mai importante utilizări ale operatorului `%` este prelucrarea cifrelor.
+Operatorii `/` și `%` sunt foarte utili și atunci când lucrăm cu cifrele unui număr.
 
-Pentru un număr natural `n`, ultima cifră se obține cu:
+Să avem:
+
+```text
+n = 5387
+```
+
+Ultima cifră se obține cu:
 
 ```cpp
 n % 10
 ```
 
-De exemplu:
-
-```cpp
-int n = 5387;
-
-cout << n % 10;
-```
-
-Rezultatul:
-
-```text
-7
-```
-
-Putem reține:
+Pentru că:
 
 ```text
 5387 % 10 = 7
-              ↑
-         ultima cifră
+```
+
+deci:
+
+```text
+n % 10 → ultima cifră
 ```
 
 ---
@@ -428,17 +339,25 @@ Putem reține:
 
 Pentru a elimina ultima cifră folosim împărțirea întreagă la `10`.
 
-```cpp
-n / 10
+Pentru:
+
+```text
+n = 5387
 ```
 
-De exemplu:
+avem:
 
 ```text
 5387 / 10 = 538
 ```
 
-Astfel:
+deci:
+
+```text
+n / 10 → numărul fără ultima cifră
+```
+
+Cele două operații formează un șablon foarte important:
 
 ```text
 n % 10 → extrage ultima cifră
@@ -446,41 +365,7 @@ n % 10 → extrage ultima cifră
 n / 10 → elimină ultima cifră
 ```
 
-Acesta este unul dintre cele mai importante șabloane pentru problemele de BAC.
-
----
-
-## Exemplu
-
-```cpp
-int n = 5387;
-
-int cifra = n % 10;
-n = n / 10;
-```
-
-După prima instrucțiune:
-
-```text
-cifra = 7
-```
-
-iar după a doua:
-
-```text
-n = 538
-```
-
-Putem repeta procesul:
-
-```text
-5387 → cifra 7 → rămâne 538
- 538 → cifra 8 → rămâne 53
-  53 → cifra 3 → rămâne 5
-   5 → cifra 5 → rămâne 0
-```
-
-De aici pornesc foarte mulți algoritmi pentru **prelucrarea cifrelor unui număr**.
+Vom folosi repetat aceste două idei când vom studia algoritmii pentru prelucrarea cifrelor.
 
 ---
 
@@ -500,7 +385,7 @@ După executare:
 x = 6
 ```
 
-Instrucțiunile:
+Așadar:
 
 ```cpp
 x = x + 1;
@@ -514,17 +399,7 @@ x++;
 
 au același efect asupra valorii lui `x`.
 
-`++` apare foarte des la contoare și în structuri repetitive.
-
-De exemplu:
-
-```cpp
-nr++;
-```
-
-înseamnă:
-
-> crește valoarea lui `nr` cu 1.
+Operatorul `++` va apărea foarte des atunci când vom lucra cu contoare și structuri repetitive.
 
 ---
 
@@ -544,7 +419,7 @@ După executare:
 x = 4
 ```
 
-Instrucțiunile:
+Așadar:
 
 ```cpp
 x = x - 1;
@@ -560,7 +435,7 @@ au același efect asupra valorii lui `x`.
 
 ---
 
-# `x++` și `++x`
+# `x++` vs. `++x`
 
 Operatorul `++` poate fi scris în două moduri:
 
@@ -574,35 +449,17 @@ sau:
 ++x;
 ```
 
-Dacă instrucțiunea este singură:
+Dacă apar singure ca instrucțiuni, efectul final este același:
 
-```cpp
-x++;
+```text
+x crește cu 1
 ```
 
-sau:
+Diferența apare atunci când sunt folosite într-o expresie.
 
-```cpp
-++x;
-```
+## `x++` — folosește, apoi crește
 
-efectul final este același: `x` crește cu `1`.
-
-Diferența apare atunci când operatorul face parte dintr-o expresie.
-
----
-
-# Post-incrementare `x++`
-
-La:
-
-```cpp
-x++
-```
-
-este folosită mai întâi **valoarea veche**, apoi `x` este incrementat.
-
-Exemplu:
+Să avem:
 
 ```cpp
 int x = 5;
@@ -611,13 +468,13 @@ int y;
 y = x++;
 ```
 
-Mai întâi:
+Mai întâi este folosită valoarea actuală a lui `x`:
 
 ```text
 y = 5
 ```
 
-apoi:
+apoi `x` crește:
 
 ```text
 x = 6
@@ -638,17 +495,9 @@ x++ → folosește, apoi crește
 
 ---
 
-# Pre-incrementare `++x`
+## `++x` — crește, apoi folosește
 
-La:
-
-```cpp
-++x
-```
-
-variabila este mai întâi incrementată, apoi este folosită noua valoare.
-
-Exemplu:
+Acum:
 
 ```cpp
 int x = 5;
@@ -657,13 +506,13 @@ int y;
 y = ++x;
 ```
 
-Mai întâi:
+Mai întâi crește `x`:
 
 ```text
 x = 6
 ```
 
-apoi:
+apoi este folosită noua valoare:
 
 ```text
 y = 6
@@ -676,7 +525,7 @@ x = 6
 y = 6
 ```
 
-Putem reține:
+Așadar:
 
 ```text
 x++ → folosește, apoi crește
@@ -693,9 +542,11 @@ x--
 
 ---
 
-# Operatorul minus ca semn
+# Minusul aplicat unei valori
 
-Simbolul `-` poate fi folosit și pentru a schimba semnul unei valori.
+Simbolul `-` nu este folosit doar pentru scădere.
+
+De exemplu:
 
 ```cpp
 int x = 5;
@@ -703,33 +554,33 @@ int x = 5;
 cout << -x;
 ```
 
-Rezultatul este:
+afișează:
 
 ```text
 -5
 ```
 
-Aici `-` nu realizează o scădere între două valori, ci este aplicat unei singure valori.
+În acest caz, `-` schimbă semnul valorii lui `x`.
 
 ---
 
 # Ordinea operațiilor
 
-La fel ca în matematică, operațiile nu sunt executate întotdeauna pur și simplu de la stânga la dreapta.
+La fel ca în matematică, operațiile au o anumită prioritate.
 
-De exemplu:
+Să analizăm:
 
 ```cpp
 int x = 2 + 3 * 4;
 ```
 
-Mai întâi se efectuează înmulțirea:
+Înmulțirea se efectuează prima:
 
 ```text
 3 * 4 = 12
 ```
 
-apoi adunarea:
+apoi:
 
 ```text
 2 + 12 = 14
@@ -743,9 +594,9 @@ x = 14
 
 ---
 
-# Prioritatea operatorilor aritmetici
+## Prioritatea operatorilor aritmetici
 
-Pentru expresiile aritmetice de bază putem reține:
+Pentru expresiile pe care le folosim acum este suficient să reții:
 
 ```text
 1. ( )
@@ -755,12 +606,12 @@ Pentru expresiile aritmetice de bază putem reține:
 3. +   -
 ```
 
-Operatorii `*`, `/` și `%` au prioritate mai mare decât `+` și `-`.
+Operatorii `*`, `/` și `%` au aceeași prioritate și se execută înaintea operatorilor `+` și `-`.
 
 De exemplu:
 
 ```cpp
-cout << 10 + 6 / 2;
+10 + 6 / 2
 ```
 
 Mai întâi:
@@ -775,22 +626,14 @@ apoi:
 10 + 3 = 13
 ```
 
-Rezultatul este:
-
-```text
-13
-```
-
 ---
 
-# Folosirea parantezelor
-
-Parantezele ne permit să stabilim clar ordinea operațiilor.
+# Parantezele schimbă ordinea
 
 Compară:
 
 ```cpp
-int x = 2 + 3 * 4;
+2 + 3 * 4
 ```
 
 Rezultat:
@@ -802,7 +645,7 @@ Rezultat:
 cu:
 
 ```cpp
-int x = (2 + 3) * 4;
+(2 + 3) * 4
 ```
 
 Rezultat:
@@ -811,18 +654,79 @@ Rezultat:
 20
 ```
 
-> **Recomandare:** Dacă o expresie este mai complicată, folosește paranteze pentru a face ordinea calculelor cât mai clară.
+Parantezele ne permit să stabilim ce operație trebuie efectuată prima.
+
+> Dacă o expresie este mai complicată, parantezele o pot face mai clară și mai ușor de urmărit.
 
 ---
 
-# Operații cu aceeași prioritate
+## Exercițiu tip BAC
 
-Pentru operatorii aritmetici binari de aceeași prioritate, evaluarea se grupează în mod obișnuit de la stânga la dreapta.
+**Indicați expresia C/C++ cu valoarea `2022`.**
+
+```text
+a. 4044 / 4 / 2
+b. 4044 / (4 * 2)
+c. 1011 * 1 + 1
+d. 1011 * (1 + 1)
+```
+
+### Rezolvare
+
+Calculăm fiecare expresie respectând ordinea operațiilor:
+
+```text
+a. 4044 / 4 / 2
+   = 1011 / 2
+   = 505
+```
+
+Împărțirea este între numere întregi, deci:
+
+```text
+1011 / 2 = 505
+```
+
+---
+
+```text
+b. 4044 / (4 * 2)
+   = 4044 / 8
+   = 505
+```
+
+---
+
+```text
+c. 1011 * 1 + 1
+   = 1011 + 1
+   = 1012
+```
+
+---
+
+```text
+d. 1011 * (1 + 1)
+   = 1011 * 2
+   = 2022
+```
+
+Prin urmare:
+
+```text
+✓ Răspuns corect: d. 1011 * (1 + 1)
+```
+
+---
+
+# Operatori cu aceeași prioritate
+
+Pentru operatorii aritmetici binari de aceeași prioritate, operațiile se grupează de la stânga la dreapta.
 
 De exemplu:
 
 ```cpp
-cout << 20 / 5 * 2;
+20 / 5 * 2
 ```
 
 calculăm:
@@ -832,16 +736,16 @@ calculăm:
 4 * 2 = 8
 ```
 
-Rezultatul:
+Rezultatul este:
 
 ```text
 8
 ```
 
-Un exemplu foarte important:
+Atenție însă la împărțirea întreagă:
 
 ```cpp
-cout << 20 / 3 * 3;
+20 / 3 * 3
 ```
 
 Mai întâi:
@@ -850,9 +754,7 @@ Mai întâi:
 20 / 3 = 6
 ```
 
-deoarece avem împărțire întreagă.
-
-Apoi:
+apoi:
 
 ```text
 6 * 3 = 18
@@ -870,7 +772,7 @@ nu `20`.
 
 # Împărțirea la zero
 
-Nu putem împărți la zero.
+Împărțitorul nu poate fi `0`.
 
 De exemplu:
 
@@ -881,13 +783,13 @@ int b = 0;
 cout << a / b;
 ```
 
-este problematic deoarece încearcă să calculeze:
+încearcă să calculeze:
 
 ```text
 10 / 0
 ```
 
-Împărțirea la zero nu este definită.
+iar împărțirea la zero nu este definită.
 
 Același lucru trebuie evitat și pentru:
 
@@ -895,131 +797,13 @@ Același lucru trebuie evitat și pentru:
 a % 0
 ```
 
-> **Important:** Înainte de `/` sau `%`, trebuie să fim siguri că împărțitorul nu este `0`.
-
----
-
-# Exemple importante pentru BAC
-
-### Exemplul 1
-
-```cpp
-cout << 17 / 5;
-```
-
-Rezultat:
-
-```text
-3
-```
-
----
-
-### Exemplul 2
-
-```cpp
-cout << 17 % 5;
-```
-
-Rezultat:
-
-```text
-2
-```
-
----
-
-### Exemplul 3
-
-```cpp
-cout << 1234 % 10;
-```
-
-Rezultat:
-
-```text
-4
-```
-
----
-
-### Exemplul 4
-
-```cpp
-cout << 1234 / 10;
-```
-
-Rezultat:
-
-```text
-123
-```
-
----
-
-### Exemplul 5
-
-```cpp
-cout << 2 + 3 * 4;
-```
-
-Rezultat:
-
-```text
-14
-```
-
----
-
-### Exemplul 6
-
-```cpp
-cout << (2 + 3) * 4;
-```
-
-Rezultat:
-
-```text
-20
-```
-
----
-
-### Exemplul 7
-
-```cpp
-int x = 5;
-int y = x++;
-```
-
-La final:
-
-```text
-x = 6
-y = 5
-```
-
----
-
-### Exemplul 8
-
-```cpp
-int x = 5;
-int y = ++x;
-```
-
-La final:
-
-```text
-x = 6
-y = 6
-```
+> **De reținut:** înainte de `/` sau `%`, împărțitorul trebuie să fie diferit de `0`.
 
 ---
 
 # Recapitulare
 
-Operatorii aritmetici principali sunt:
+Operatorii aritmetici de bază sunt:
 
 ```text
 + → adunare
@@ -1029,13 +813,6 @@ Operatorii aritmetici principali sunt:
 % → restul împărțirii
 ```
 
-Operatorii:
-
-```text
-++ → crește valoarea cu 1
--- → scade valoarea cu 1
-```
-
 Pentru numere întregi:
 
 ```text
@@ -1043,30 +820,30 @@ Pentru numere întregi:
 17 % 5 = 2
 ```
 
-Pentru prelucrarea cifrelor:
+Operatorul `%` ne permite să recunoaștem rapid situații importante:
+
+```text
+n % 2 == 0 → n este par
+
+a % b == 0 → a este divizibil cu b
+```
+
+Pentru cifrele unui număr natural:
 
 ```text
 n % 10 → ultima cifră
-n / 10 → eliminarea ultimei cifre
+
+n / 10 → elimină ultima cifră
 ```
 
-Pentru divizibilitate:
+Pentru incrementare și decrementare:
 
-```cpp
-a % b == 0
+```text
+x++ → x crește cu 1
+x-- → x scade cu 1
 ```
 
-înseamnă că `a` este divizibil cu `b`.
-
-Pentru paritate:
-
-```cpp
-n % 2 == 0
-```
-
-înseamnă că `n` este par.
-
-Diferența dintre incrementări:
+Când incrementarea face parte dintr-o expresie:
 
 ```text
 x++ → folosește valoarea, apoi crește
@@ -1074,7 +851,7 @@ x++ → folosește valoarea, apoi crește
 ++x → crește valoarea, apoi o folosește
 ```
 
-Prioritatea operațiilor aritmetice de bază:
+Prioritatea operațiilor aritmetice de bază este:
 
 ```text
 ( )
@@ -1084,4 +861,4 @@ Prioritatea operațiilor aritmetice de bază:
 +  -
 ```
 
-> **Reține:** Pentru BAC, acordă o atenție deosebită operatorilor `/` și `%`. Ei apar constant în probleme cu cifre, divizibilitate, paritate și în exercițiile în care trebuie să urmărești valoarea unei expresii.
+> **Pentru bacul la info:** acordă atenție în special împărțirii întregi, operatorului `%`, expresiilor cu `++` și ordinii operațiilor. Aceste idei sunt folosite ulterior în prelucrarea cifrelor, divizibilitate, structuri repetitive și în exercițiile în care trebuie urmărită valoarea unei expresii.

@@ -57,3 +57,12 @@ export async function getChapterLessons(
   // Keep the remaining lessons in their existing API order.
   return [...lessons].sort((a, b) => rank(a.slug) - rank(b.slug));
 }
+
+export async function logoutUser(): Promise<void> {
+  await apiFetch<void>(
+    "/auth/logout",
+    {
+      method: "POST",
+    },
+  );
+}

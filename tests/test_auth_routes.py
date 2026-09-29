@@ -13,6 +13,8 @@ def test_register_returns_created_user(client):
     assert "created_at" in response_data
     assert "password" not in response_data
     assert "password_hash" not in response_data
+    assert response_data["onboarding_completed"] is False
+    assert client.cookies.get("access_token") is not None
 
 def test_register_saves_user_with_hashed_password(client, db_session):
     response = client.post("/auth/register", json={"username": "database-user", "email": "database.user@example.COM", "password": "parola123"})

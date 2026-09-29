@@ -14,8 +14,10 @@ router = APIRouter(
 )
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-def register(registration: RegisterRequest, db: Session = Depends(get_db)) -> UserResponse:
+def register(registration: RegisterRequest, response: Response, db: Session = Depends(get_db)) -> UserResponse:
     user = register_user(db=db, registration=registration)
+    access_token = create_access_token(user_id=user.id)
+    response.set_cookie(key="access_token", value=access_token, httponly=True, secure=False, samesite="lax", max_age=AUTH_TOKEN_EXPIRE_MINUTES*60, path="/")
     return UserResponse.model_validate(user)
 
 @router.post("/login", response_model=UserResponse)

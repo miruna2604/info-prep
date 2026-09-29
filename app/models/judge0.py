@@ -4,6 +4,11 @@ class Judge0SubmissionRequest(BaseModel):
     language_id: int
     source_code: str
     stdin: str | None = None
+    cpu_time_limit: float | None = None
+    wall_time_limit: float | None = None
+    memory_limit: int | None = None
+    max_file_size: int | None = None
+    enable_network: bool | None = None
 
 class Judge0Status(BaseModel):
     id: int

@@ -52,6 +52,21 @@ def test_correct_answer(authenticated_client, monkeypatch):
     assert response_data["verdict"] == "Accepted"
     assert response_data["passed_tests"] == 5
     assert response_data["total_tests"] == 5
+    assert len(response_data["tests"]) == 5
+    assert [test["status"] for test in response_data["tests"]] == ["passed"] * 5
+    assert response_data["tests"][0] == {
+        "number": 1,
+        "is_hidden": False,
+        "status": "passed",
+        "verdict": "Accepted",
+        "input": "2 3",
+        "expected_output": "5",
+        "actual_output": "5",
+    }
+    assert response_data["tests"][1]["is_hidden"] is True
+    assert response_data["tests"][1]["input"] is None
+    assert response_data["tests"][1]["expected_output"] is None
+    assert response_data["tests"][1]["actual_output"] is None
 
 
 def test_submit_wrong_answer(authenticated_client, monkeypatch):
@@ -77,6 +92,9 @@ def test_submit_wrong_answer(authenticated_client, monkeypatch):
     assert response_data["verdict"] == "Wrong Answer"
     assert response_data["passed_tests"] == 0
     assert response_data["total_tests"] == 5
+    assert [test["status"] for test in response_data["tests"]] == ["failed"] * 5
+    assert response_data["tests"][0]["actual_output"] == "raspuns gresit"
+    assert response_data["tests"][1]["actual_output"] is None
 
 
 def test_submit_compilation_error(authenticated_client, monkeypatch):
@@ -102,6 +120,48 @@ def test_submit_compilation_error(authenticated_client, monkeypatch):
     assert response_data["verdict"] == "Compilation Error"
     assert response_data["passed_tests"] == 0
     assert response_data["total_tests"] == 5
+    assert [test["status"] for test in response_data["tests"]] == [
+        "failed", "not_run", "not_run", "not_run", "not_run"
+    ]
+
+
+def test_submit_reports_mixed_results_without_revealing_hidden_data(
+    authenticated_client, monkeypatch
+):
+    outputs = {
+        "2 3": "5",
+        "10 20": "30",
+        "-5 8": "0",
+        "100 200": "300",
+        "0 0": "1",
+    }
+
+    def fake_mixed_answer(source_code, stdin):
+        return SimpleNamespace(
+            status=SimpleNamespace(description="Accepted"),
+            stdout=outputs[stdin],
+        )
+
+    monkeypatch.setattr(judge0_service, "execute_submission", fake_mixed_answer)
+
+    response = authenticated_client.post(
+        "/submission/problems/1/submit",
+        json={"source_code": "cod parțial corect"},
+    )
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["verdict"] == "Wrong Answer"
+    assert data["passed_tests"] == 3
+    assert data["total_tests"] == 5
+    assert [test["status"] for test in data["tests"]] == [
+        "passed", "passed", "failed", "passed", "failed"
+    ]
+    for hidden_test in data["tests"][1:]:
+        assert hidden_test["is_hidden"] is True
+        assert hidden_test["input"] is None
+        assert hidden_test["expected_output"] is None
+        assert hidden_test["actual_output"] is None
 
 
 def test_submission_is_saved_in_database(authenticated_client, db_session, monkeypatch):

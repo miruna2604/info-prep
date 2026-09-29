@@ -11,3 +11,8 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now())
     submissions: Mapped[list["UserSubmission"]] = relationship(back_populates="user")
+    profile: Mapped["UserProfile | None"] = relationship(back_populates="user", uselist=False)
+
+    @property
+    def onboarding_completed(self) -> bool:
+        return self.profile is not None and self.profile.onboarding_completed

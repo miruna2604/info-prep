@@ -4,7 +4,13 @@ from sqlalchemy.orm import Session
 from app.database.schemas.problem import Problem
 
 from app.models.enums import Verdict
-from app.models.submissions import (RunRequest, RunResponse, SubmissionRequest, SubmissionResponse)
+from app.models.submissions import (
+    RunRequest,
+    RunResponse,
+    SubmissionRequest,
+    SubmissionResponse,
+    SubmissionTestResponse,
+)
 
 from app.services import judge0_service, user_submission_service
 from app.services.verdict_mapare import map_judge0_status
@@ -21,31 +27,60 @@ def submit_solution(db: Session, problem_id: int, user_id: int, submission: Subm
             detail="Problem not found"
         )
 
-    tests = problem.tests
+    tests = sorted(problem.tests, key=lambda test: test.id)
     passed_tests = 0
     total_tests = len(tests)
-
     final_verdict = Verdict.ACCEPTED
+    test_results: list[SubmissionTestResponse] = []
+    stop_evaluation = False
 
-    for test in tests:
+    for number, test in enumerate(tests, start=1):
+        if stop_evaluation:
+            test_results.append(
+                SubmissionTestResponse(
+                    number=number,
+                    is_hidden=test.is_hidden,
+                    status="not_run",
+                )
+            )
+            continue
+
         result = judge0_service.execute_submission(source_code=submission.source_code, stdin=test.input)
         verdict = map_judge0_status(result.status.description)
-
-        if verdict != Verdict.ACCEPTED:
-            final_verdict = verdict
-            break
-
         expected_output = test.expected_output.strip()
         actual_output = (result.stdout or "").strip()
 
-        if actual_output != expected_output:
-            final_verdict = Verdict.WRONG_ANSWER
-            break
+        if verdict == Verdict.ACCEPTED and actual_output != expected_output:
+            verdict = Verdict.WRONG_ANSWER
 
-        passed_tests += 1
+        passed = verdict == Verdict.ACCEPTED
+        if passed:
+            passed_tests += 1
+        elif final_verdict == Verdict.ACCEPTED:
+            final_verdict = verdict
+
+        test_results.append(
+            SubmissionTestResponse(
+                number=number,
+                is_hidden=test.is_hidden,
+                status="passed" if passed else "failed",
+                verdict=verdict,
+                input=None if test.is_hidden else test.input,
+                expected_output=None if test.is_hidden else test.expected_output,
+                actual_output=None if test.is_hidden or verdict == Verdict.COMPILATION_ERROR else result.stdout,
+            )
+        )
+
+        if verdict not in (Verdict.ACCEPTED, Verdict.WRONG_ANSWER):
+            stop_evaluation = True
 
     user_submission_service.save_submission(db=db, user_id=user_id, problem_id=problem.id, source_code=submission.source_code, verdict=final_verdict, passed_tests=passed_tests, total_tests=total_tests)
-    return SubmissionResponse(verdict=final_verdict, passed_tests=passed_tests, total_tests=total_tests)
+    return SubmissionResponse(
+        verdict=final_verdict,
+        passed_tests=passed_tests,
+        total_tests=total_tests,
+        tests=test_results,
+    )
 
 def run_code(run_request: RunRequest) -> RunResponse:
     result = judge0_service.execute_submission(

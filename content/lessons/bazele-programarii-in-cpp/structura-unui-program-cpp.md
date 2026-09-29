@@ -1,81 +1,246 @@
+# Structura unui program C++
+
 ## Ce este un program C++?
 
-Un program C++ este o succesiune de instrucțiuni pe care calculatorul le execută în ordinea stabilită de programator.
+Un **program C++** este o succesiune de instrucțiuni prin care îi spunem calculatorului ce operații să execute.
+
+Instrucțiunile sunt scrise într-un **cod sursă**, respectând regulile limbajului C++.
+
+Hai să vedem cum arată un program simplu.
 
 ## Primul program
 
 ```cpp
-// Include biblioteca iostream,
-// care ne permite să afișăm și să citim date
 #include <iostream>
-
-// Ne permite să folosim cout, cin, endl
-// fără să scriem std:: înaintea lor
 using namespace std;
 
-// Funcția main este punctul de pornire al programului
 int main() {
+    cout << "Salut!";
 
-    // cout afișează un mesaj pe ecran
-    cout << "Hello World!" << endl;
-
-    // Marchează terminarea cu succes a programului
     return 0;
 }
 ```
 
-# Structura unui program în C++
+Acest program afișează pe ecran:
 
-1. **`#include <iostream>`** - ne permite să folosim operațiile standard de intrare/ieșire, precum `cin` și `cout`.
+```text
+Salut!
+```
 
-2. **`using namespace std;`** - ne permite să folosim `cout`, `cin` și alte elemente standard fără să scriem `std::` în fața lor.
+Chiar dacă programul este foarte scurt, conține principalele elemente pe care le vom întâlni în programele C++.
 
-3. **`int main()`** - este funcția principală a programului. Execuția unui program C++ începe din funcția `main()`.
+## Structura programului
 
-4. **`{ }`** - acoladele marchează începutul și sfârșitul unui bloc de cod. Aici delimitează corpul funcției `main()`.
+Să analizăm fiecare parte.
 
-5. **`cout << "Hello World!";`** - este o instrucțiune care afișează textul `Hello World!` pe ecran. `cout` este folosit pentru afișarea datelor.
+### `#include <iostream>`
 
-6. **`;`** - punctul și virgula marchează sfârșitul unei instrucțiuni.
+```cpp
+#include <iostream>
+```
 
-7. **`return 0;`** - încheie funcția `main()` și indică faptul că programul s-a terminat cu succes.
+Include biblioteca necesară pentru operațiile standard de **citire și afișare**.
 
-8. **Comentariile `//`** - sunt explicații scrise în cod pentru programator și sunt ignorate de compilator.
+Datorită ei vom putea folosi:
 
-> **De reținut:** Execuția unui program C++ începe din funcția `main()`.
+* `cin` pentru citirea datelor;
+* `cout` pentru afișarea datelor.
 
-## Ordinea execuției
+Le vom studia în detaliu în lecția despre **Citire și afișare**.
 
-Un program C++ începe execuția din funcția `main()`.
+---
 
-Instrucțiunile din interiorul funcției `main()` sunt executate, în mod normal, **de sus în jos**, în ordinea în care sunt scrise.
+### `using namespace std;`
+
+```cpp
+using namespace std;
+```
+
+Ne permite să folosim elemente precum `cin` și `cout` fără să scriem `std::` înaintea lor.
+
+Astfel putem scrie:
+
+```cpp
+cout << "Salut!";
+```
+
+în loc de:
+
+```cpp
+std::cout << "Salut!";
+```
+
+În programele pe care le vom scrie în continuare vom folosi:
+
+```cpp
+using namespace std;
+```
+
+---
+
+### Funcția `main()`
+
+```cpp
+int main() {
+
+}
+```
+
+`main()` este **funcția principală a programului**.
+
+Execuția unui program C++ începe din `main()`.
+
+Instrucțiunile pe care vrem să le execute programul vor fi scrise între acoladele funcției:
+
+```cpp
+int main() {
+    // instrucțiuni
+}
+```
+
+> **De reținut:** Execuția programului începe din funcția `main()`.
+
+---
+
+### Acoladele `{ }`
+
+Acoladele marchează începutul și sfârșitul unui **bloc de instrucțiuni**.
+
+În cazul nostru:
+
+```cpp
+int main() {
+    cout << "Salut!";
+    return 0;
+}
+```
+
+ele delimitează corpul funcției `main()`.
+
+Vom întâlni acolade și în alte situații pe parcursul lecțiilor.
+
+---
+
+### Instrucțiunile și `;`
+
+În interiorul funcției `main()` scriem instrucțiunile programului.
+
+De exemplu:
+
+```cpp
+cout << "Salut!";
+```
+
+este o instrucțiune care afișează textul `Salut!`.
+
+Majoritatea instrucțiunilor C++ se termină cu:
+
+```text
+;
+```
+
+Dacă uităm `;` acolo unde este necesar, programul nu se va compila.
+
+---
+
+### `return 0;`
+
+La finalul funcției `main()` vom întâlni:
+
+```cpp
+return 0;
+```
+
+Această instrucțiune încheie funcția `main()` și indică terminarea cu succes a programului.
+
+În programele noastre vom păstra forma:
+
+```cpp
+int main() {
+
+    // instrucțiuni
+
+    return 0;
+}
+```
+
+## În ce ordine sunt executate instrucțiunile?
+
+În mod normal, instrucțiunile sunt executate **de sus în jos**, în ordinea în care sunt scrise.
 
 ```cpp
 #include <iostream>
 using namespace std;
 
 int main() {
-    cout << "Prima";
-    cout << "A doua";
+    cout << "Prima ";
+    cout << "A doua ";
     cout << "A treia";
 
     return 0;
 }
 ```
 
-Programul va executa mai întâi prima instrucțiune, apoi a doua și apoi a treia.
+Programul execută:
 
-## Cum ajunge codul să fie executat?
+```text
+1. cout << "Prima ";
+2. cout << "A doua ";
+3. cout << "A treia";
+```
 
-Calculatorul nu execută direct codul C++ pe care îl scriem. Înainte de rulare, programul trebuie **compilat**.
+și afișează:
 
-Procesul poate fi reținut foarte simplu:
+```text
+Prima A doua A treia
+```
 
-**Scriem codul → Compilăm → Rulăm programul → Obținem rezultatul**
+Mai târziu vom învăța instrucțiuni care pot modifica această ordine, precum structurile alternative și repetitive.
+
+## Comentariile
+
+Comentariile sunt explicații scrise în cod pentru a-l face mai ușor de înțeles.
+
+Un comentariu pe o singură linie începe cu:
+
+```cpp
+//
+```
+
+Exemplu:
+
+```cpp
+// Afișăm un mesaj
+cout << "Salut!";
+```
+
+Comentariile sunt **ignorate de compilator**, deci nu influențează rezultatul programului.
+
+Putem avea și comentarii pe mai multe linii:
+
+```cpp
+/*
+Acesta este
+un comentariu
+pe mai multe linii.
+*/
+```
+
+Comentariile sunt utile pentru explicarea codului, dar nu trebuie să comentăm fiecare instrucțiune evidentă.
+
+## De la cod la rezultat
+
+Calculatorul nu execută direct codul C++ pe care îl scriem.
+
+Procesul poate fi privit simplu:
+
+```text
+Scriem codul → Compilăm → Rulăm → Obținem rezultatul
+```
 
 ### 1. Scriem codul
 
-Mai întâi scriem instrucțiunile programului în C++.
+Scriem programul respectând regulile limbajului C++.
 
 ```cpp
 #include <iostream>
@@ -87,11 +252,13 @@ int main() {
 }
 ```
 
-### 2. Compilarea
+### 2. Compilăm
 
-**Compilarea** este etapa în care compilatorul verifică programul și transformă codul C++ într-o formă pe care calculatorul o poate executa.
+Înainte ca programul să poată fi rulat, acesta trebuie **compilat**.
 
-Dacă am încălcat regulile limbajului C++, compilatorul ne semnalează o **eroare de compilare**.
+Compilatorul verifică dacă programul respectă regulile limbajului C++ și îl transformă într-o formă care poate fi executată de calculator.
+
+Dacă există anumite greșeli în cod, compilarea nu poate fi realizată cu succes.
 
 De exemplu:
 
@@ -99,70 +266,60 @@ De exemplu:
 cout << "Salut!"
 ```
 
-Lipsește `;`, deci programul nu se compilează.
+Lipsește:
 
-> **Eroare de compilare** = programul conține o greșeală care împiedică realizarea cu succes a compilării.
+```text
+;
+```
 
-### 3. Rularea
+Prin urmare, apare o **eroare de compilare**.
 
-Dacă programul a fost compilat cu succes, acesta poate fi **rulat**.
+> **Eroare de compilare:** o eroare care împiedică programul să fie compilat cu succes.
 
-În timpul rulării, calculatorul execută instrucțiunile programului.
+### 3. Rulăm programul
 
-De exemplu:
+Dacă programul a fost compilat cu succes, îl putem rula.
+
+În timpul rulării sunt executate instrucțiunile programului.
+
+Pentru:
 
 ```cpp
 cout << "Salut!";
 ```
 
-va produce:
+vom obține:
 
 ```text
 Salut!
 ```
 
-### Erori de rulare
+## Recapitulare pentru BAC
 
-Chiar dacă un program s-a compilat cu succes, poate apărea o problemă în timpul executării lui. Aceasta se numește **eroare de rulare**.
+Din această lecție trebuie să reții:
 
-### Exemplu de eroare de rulare
+* execuția unui program C++ începe din funcția `main()`;
+* `#include <iostream>` permite folosirea operațiilor standard de citire și afișare;
+* `using namespace std;` ne permite să folosim direct `cin` și `cout`;
+* `{ }` delimitează un bloc de instrucțiuni;
+* majoritatea instrucțiunilor se termină cu `;`;
+* comentariile sunt ignorate de compilator;
+* în mod normal, instrucțiunile sunt executate de sus în jos;
+* înainte de rulare, programul trebuie compilat;
+* o greșeală de scriere a codului poate produce o **eroare de compilare**.
 
-Un exemplu simplu este **împărțirea unui număr întreg la zero**.
+### Structura de bază pe care trebuie să o recunoști
 
 ```cpp
 #include <iostream>
 using namespace std;
 
 int main() {
-    int a = 10;
-    int b = 0;
 
-    cout << a / b;
+    // instrucțiuni
 
     return 0;
 }
 ```
 
-Programul poate trece de compilare, deoarece instrucțiunile respectă regulile de scriere ale limbajului C++.
-
-Problema apare **în timpul rulării**, când programul încearcă să calculeze:
-
-```text
-10 / 0
-```
-
-Împărțirea la zero nu este definită, iar programul poate eșua în timpul execuției.
-
-> **Important:** Faptul că un program se compilează nu înseamnă că acesta va funcționa corect atunci când este rulat.
-
-> **Eroare de rulare** = programul a putut fi compilat și pornit, dar apare o problemă în timpul execuției.
-
-## Recapitulare
-
-- **Cod sursă** - instrucțiunile C++ scrise de programator.
-- **Compilare** - codul este verificat și transformat pentru a putea fi executat.
-- **Eroare de compilare** - compilarea nu se poate finaliza cu succes din cauza unei greșeli.
-- **Rulare** - programul este executat.
-- **Eroare de rulare** - apare o problemă în timp ce programul se execută.
-
-> **Reține:** Mai întâi scriem codul, apoi îl compilăm și, dacă compilarea reușește, îl putem rula.
+> **Pentru BACUL la INFO:** structura unui program și comentariile fac parte explicit din programa de examen. În problemele de programare vei folosi această structură pentru a construi programele cerute.

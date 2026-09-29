@@ -1,8 +1,8 @@
 # Tipuri de date în C++
 
-Fiecare variabilă din C++ are un **tip de date**.
+În lecția anterioară am văzut că fiecare variabilă are un **tip**.
 
-Tipul stabilește **ce fel de valoare poate memora variabila** și ce operații putem face cu aceasta.
+Tipul stabilește **ce fel de valoare poate memora variabila**.
 
 De exemplu:
 
@@ -13,7 +13,7 @@ char litera = 'A';
 bool admis = true;
 ```
 
-Avem tipuri diferite deoarece valorile memorate sunt diferite:
+Valorile memorate sunt diferite:
 
 ```text
 18      → număr întreg
@@ -22,15 +22,25 @@ Avem tipuri diferite deoarece valorile memorate sunt diferite:
 true    → valoare logică
 ```
 
-> **De reținut:** Tipul variabilei trebuie ales în funcție de valorile pe care vrem să le memorăm și de rezultatele care pot apărea în calcule.
+De aceea avem nevoie de tipuri de date diferite.
+
+În probleme vom folosi în principal:
+
+```text
+int        → numere întregi
+long long  → numere întregi foarte mari
+double     → numere reale
+char       → caractere
+bool       → adevărat / fals
+```
+
+> **De reținut:** Alegem tipul unei variabile în funcție de valorile pe care trebuie să le memoreze.
 
 ---
 
-# `int` - numere întregi
+# `int` — numere întregi
 
-Tipul `int` este folosit pentru **numere întregi**.
-
-Exemple:
+Tipul `int` este folosit pentru memorarea **numerelor întregi**.
 
 ```cpp
 int varsta = 18;
@@ -48,7 +58,7 @@ Un `int` poate memora valori precum:
 1000
 ```
 
-dar nu este potrivit pentru valori cu parte zecimală, precum:
+dar nu este potrivit pentru valori cu parte zecimală precum:
 
 ```text
 3.14
@@ -56,88 +66,89 @@ dar nu este potrivit pentru valori cu parte zecimală, precum:
 2.5
 ```
 
-`int` este unul dintre cele mai folosite tipuri de date în problemele de BAC.
-
-Îl vom întâlni pentru:
-
-* numere naturale și întregi
-* contoare
-* indici
-* cifre
-* elementele vectorilor
-* elementele matricilor
+`int` va fi unul dintre cele mai folosite tipuri în problemele pe care le vom rezolva.
 
 ---
 
 ## Cât de mare poate fi un `int`?
 
-În mediile folosite în mod obișnuit la problemele de liceu, un `int` pe 32 de biți poate memora valori între:
+În mediile întâlnite în mod obișnuit la problemele de liceu, un `int` are limita aproximativă:
+
+```text
+-2 × 10⁹ ... 2 × 10⁹
+```
+
+Mai exact, pentru un `int` pe 32 de biți:
 
 ```text
 -2 147 483 648
-și
+...
  2 147 483 647
 ```
 
-Pentru BAC este suficient să reții aproximativ:
+Nu este necesar să memorezi valorile exacte.
+
+Este suficient să reții:
 
 ```text
-int → de la -2 × 10⁹ până la 2 × 10⁹
+int → aproximativ ±2 × 10⁹
 ```
 
 De exemplu:
 
 ```text
-100000        → încape în int
-1000000000    → încape în int
-1000000000000 → NU încape în int
+100 000          → încape
+1 000 000 000    → încape
+1 000 000 000 000 → nu încape
 ```
 
 ---
 
-# `long long` - numere întregi mai mari
+# `long long` — numere întregi mai mari
 
-Dacă avem nevoie să memorăm numere întregi mai mari decât limita lui `int`, putem folosi:
+Dacă avem nevoie să memorăm numere întregi care depășesc limita lui `int`, putem folosi:
 
 ```cpp
 long long
 ```
 
-Exemplu:
+De exemplu:
 
 ```cpp
 long long n = 5000000000;
 ```
 
-Valoarea `5 000 000 000` este prea mare pentru un `int` obișnuit, dar încape într-un `long long`.
-
-Un `long long` pe 64 de biți poate memora valori aproximativ între:
+Numărul:
 
 ```text
--9,22 × 10¹⁸
-și
- 9,22 × 10¹⁸
+5 000 000 000
 ```
 
-Pentru BAC putem reține:
+este mai mare decât limita unui `int`, dar poate fi memorat într-un `long long`.
+
+Pentru problemele noastre putem reține aproximativ:
 
 ```text
-int        → aproximativ ±2 × 10⁹
-long long  → aproximativ ±9 × 10¹⁸
+int        → până în zona lui 10⁹
+long long  → până în zona lui 10¹⁸
 ```
 
-> **Regulă utilă:** `int` ajunge în zona lui `10⁹`, iar `long long` ajunge în zona lui `10¹⁸`.
+Mai precis, un `long long` pe 64 de biți poate ajunge aproximativ până la:
+
+```text
+±9 × 10¹⁸
+```
 
 ---
 
-# Cum alegem între `int` și `long long`?
+## Cum alegem între `int` și `long long`?
 
-Ne uităm în primul rând la **restricțiile din enunțul problemei**.
+Ne uităm la **valorile maxime care pot apărea**.
 
-Dacă avem:
+Dacă enunțul spune:
 
 ```text
-n ≤ 100000
+n ≤ 100 000
 ```
 
 putem folosi:
@@ -149,12 +160,6 @@ int n;
 Dacă avem:
 
 ```text
-n ≤ 1000000000
-```
-
-adică:
-
-```text
 n ≤ 10⁹
 ```
 
@@ -163,18 +168,12 @@ valoarea încă încape într-un `int`.
 Dar dacă avem:
 
 ```text
-n ≤ 1000000000000
-```
-
-adică:
-
-```text
 n ≤ 10¹²
 ```
 
 `int` nu mai este suficient.
 
-Folosim:
+Vom folosi:
 
 ```cpp
 long long n;
@@ -188,13 +187,13 @@ pentru că:
 
 ---
 
-# Atenție la rezultatele calculelor
+## Atenție și la rezultatul calculelor
 
-Nu este suficient să verificăm doar dacă valorile citite încap într-un `int`.
+Nu trebuie să verificăm doar dacă valorile inițiale încap într-un anumit tip.
 
-Trebuie să verificăm și **valorile care pot apărea în timpul calculelor**.
+Trebuie să ne gândim și la **valorile care pot apărea în timpul calculelor**.
 
-De exemplu:
+Să presupunem că avem:
 
 ```cpp
 int a = 100000;
@@ -203,89 +202,79 @@ int b = 100000;
 
 Atât `a`, cât și `b` încap fără probleme într-un `int`.
 
-Dar:
+Dar produsul lor este:
 
 ```text
-a × b = 100000 × 100000
-      = 10000000000
-      = 10¹⁰
+100 000 × 100 000 = 10 000 000 000
 ```
 
-Rezultatul nu mai încape într-un `int`.
+adică:
 
-Pentru a efectua calculul folosind `long long`, putem scrie:
-
-```cpp
-long long produs = 1LL * a * b;
+```text
+10¹⁰
 ```
 
-`1LL` este o constantă de tip `long long`, astfel încât calculul este realizat folosind `long long`.
+Această valoare depășește limita unui `int`.
 
-> **Important pentru BAC:** Verifică atât valorile de intrare, cât și cea mai mare valoare care poate apărea în calcule.
+Într-o astfel de situație avem nevoie de un tip suficient de mare pentru rezultat, de exemplu `long long`.
+
+> **Important:** Atunci când alegi tipul unei variabile, gândește-te și la cât de mari pot deveni rezultatele calculelor.
+
+Dacă o valoare depășește intervalul pe care tipul respectiv îl poate reprezenta, apare o problemă numită **overflow**.
+
+Pentru moment este suficient să reții ideea:
+
+```text
+valoarea devine prea mare pentru tipul ales
+→ tipul respectiv nu mai este potrivit
+```
 
 ---
 
-# `float` și `double` - numere reale
+# `double` — numere reale
 
-Pentru numere care pot avea **parte zecimală** putem folosi:
+Pentru valori care pot avea **parte zecimală** folosim, în general:
 
 ```cpp
-float
 double
 ```
 
-Exemple:
+De exemplu:
 
 ```cpp
-float temperatura = 23.5;
 double medie = 9.75;
+double temperatura = 23.5;
+double x = 2.5;
 ```
 
-Ambele tipuri pot memora numere reale, dar `double` oferă o precizie mai mare.
-
-Aproximativ:
-
-```text
-float  → 6-7 cifre semnificative
-double → 15-16 cifre semnificative
-```
-
-Pentru problemele de liceu, atunci când avem nevoie de numere reale, vom prefera în general:
+Compară:
 
 ```cpp
-double
+int a = 5;
+double b = 5.5;
 ```
+
+`a` memorează un număr întreg, iar `b` poate memora o valoare cu parte zecimală.
+
+Există și tipul `float` pentru numere reale, însă `double` oferă o precizie mai mare și va fi alegerea noastră obișnuită atunci când avem nevoie de valori reale.
 
 ---
 
-## Exemplu
+# `int` vs. `double` la împărțire
 
-```cpp
-double a = 10;
-double b = 4;
+Aici apare una dintre cele mai importante diferențe dintre cele două tipuri.
 
-cout << a / b;
-```
-
-Rezultatul este:
-
-```text
-2.5
-```
-
----
-
-# Împărțirea între numere întregi
-
-Aceasta este una dintre cele mai importante diferențe pe care trebuie să le înțelegem.
-
-Dacă ambii operanzi sunt întregi:
+Să avem:
 
 ```cpp
 int a = 5;
 int b = 2;
+```
 
-cout << a / b;
+Dacă efectuăm:
+
+```cpp
+a / b
 ```
 
 rezultatul este:
@@ -300,92 +289,62 @@ nu:
 2.5
 ```
 
-Pentru că avem:
+De ce?
+
+Pentru că ambii operanzi sunt de tip `int`:
 
 ```text
-int / int → împărțire întreagă
+int / int
+     ↓
+împărțire întreagă
+     ↓
+     2
 ```
 
 Partea zecimală este eliminată.
 
 ---
 
-## `int` vs. `double` la împărțire
+## Dacă apare un `double`
 
-Compară:
-
-```cpp
-int a = 5;
-int b = 2;
-
-cout << a / b;
-```
-
-Rezultat:
-
-```text
-2
-```
-
-cu:
+Să schimbăm tipul uneia dintre valori:
 
 ```cpp
 double a = 5;
-double b = 2;
-
-cout << a / b;
-```
-
-Rezultat:
-
-```text
-2.5
-```
-
-Tipurile operanzilor influențează rezultatul operației.
-
----
-
-# Conversia pentru o împărțire reală
-
-Să presupunem că avem:
-
-```cpp
-int a = 5;
 int b = 2;
 ```
 
-Dacă scriem:
+Acum:
 
 ```cpp
-cout << a / b;
+a / b
 ```
 
-obținem:
-
-```text
-2
-```
-
-Putem transforma unul dintre operanzi în `double`:
-
-```cpp
-cout << (double)a / b;
-```
-
-Acum obținem:
+produce:
 
 ```text
 2.5
 ```
 
-Această transformare se numește **conversie de tip**.
+Putem reține regula astfel:
+
+```text
+int / int
+→ împărțire întreagă
+
+int / double
+double / int
+double / double
+→ împărțire reală
+```
+
+> **De reținut:** Dacă ambii operanzi sunt `int`, împărțirea este întreagă. Dacă cel puțin unul este `double`, împărțirea este reală.
 
 ---
 
 # Atenție la tipul expresiei
 
-Să analizăm următorul cod:
+Să analizăm:
 
 ```cpp
 int a = 5;
@@ -394,51 +353,84 @@ int b = 2;
 double rezultat = a / b;
 ```
 
-Am putea crede că `rezultat` va fi `2.5`, deoarece variabila este `double`.
+Am putea crede că:
 
-Dar expresia:
+```text
+rezultat = 2.5
+```
+
+deoarece `rezultat` este `double`.
+
+Dar nu se întâmplă așa.
+
+Mai întâi este calculată expresia:
 
 ```cpp
 a / b
 ```
 
-este calculată **înainte** de atribuirea rezultatului.
-
-Pentru că `a` și `b` sunt `int`:
+Cum `a` și `b` sunt `int`:
 
 ```text
 5 / 2
- ↓
-2
+  ↓
+  2
 ```
 
-Abia apoi valoarea este pusă în `double`:
+Abia apoi rezultatul este memorat în variabila `rezultat`:
 
 ```text
 2 → 2.0
 ```
 
-Deci:
+Prin urmare:
 
 ```text
 rezultat = 2.0
 ```
 
-Pentru a obține `2.5`:
-
-```cpp
-double rezultat = (double)a / b;
-```
-
-> **De reținut:** Tipul variabilei în care salvăm rezultatul nu schimbă automat modul în care a fost calculată expresia.
+> **Important:** Tipul variabilei în care memorăm rezultatul nu schimbă modul în care expresia a fost deja calculată.
 
 ---
 
-# `char` - un singur caracter
+## Cum obținem rezultatul real?
+
+Putem transforma unul dintre operanzi în `double`:
+
+```cpp
+int a = 5;
+int b = 2;
+
+double rezultat = (double)a / b;
+```
+
+Acum avem:
+
+```text
+(double)a / b
+     ↓
+   5.0 / 2
+     ↓
+     2.5
+```
+
+Această transformare se numește **conversie de tip**.
+
+Pentru moment este suficient să recunoști forma:
+
+```cpp
+(double)a
+```
+
+și să știi că valoarea lui `a` este tratată ca `double` în expresia respectivă.
+
+---
+
+# `char` — un singur caracter
 
 Tipul `char` este folosit pentru memorarea unui **singur caracter**.
 
-Exemple:
+De exemplu:
 
 ```cpp
 char litera = 'A';
@@ -446,17 +438,25 @@ char cifra = '7';
 char semn = '+';
 ```
 
-Un caracter se scrie între **apostrofuri**:
+Valorile de tip `char` se scriu între **apostrofuri**:
 
 ```cpp
 'A'
 ```
 
+```cpp
+'7'
+```
+
+```cpp
+'+'
+```
+
 ---
 
-## Caracter vs. număr
+## Caracterul `'7'` nu este numărul `7`
 
-Este foarte important să facem diferența între:
+Este foarte important să facem diferența dintre:
 
 ```cpp
 char c = '7';
@@ -468,380 +468,192 @@ char c = '7';
 int x = 7;
 ```
 
-În primul caz:
+În primul caz avem:
 
 ```text
-'7' → caracterul 7
+'7' → caracter
 ```
 
 În al doilea:
 
 ```text
-7 → numărul 7
+7 → număr întreg
 ```
 
-Deci:
+Așadar:
 
 ```text
-'7' ≠ 7
+'7' și 7 nu reprezintă același lucru
+```
+
+Calculatorul reprezintă intern caracterele prin coduri numerice. Vom folosi această proprietate mai târziu, când vom lucra cu șiruri de caractere.
+
+Pentru moment este suficient să reții:
+
+```text
+'A' → caracter
+'7' → caracter
+7   → număr
 ```
 
 ---
 
-# Codurile caracterelor
+# `bool` — adevărat sau fals
 
-Calculatorul reprezintă caracterele prin valori numerice.
+Uneori vrem să memorăm dacă o anumită situație este **adevărată sau falsă**.
 
-De exemplu, cifrele:
-
-```text
-'0'
-'1'
-'2'
-...
-'9'
-```
-
-au coduri consecutive.
-
-Acest lucru ne permite să facem anumite transformări foarte simplu.
-
----
-
-## Transformarea unei cifre caracter în număr
-
-Dacă avem:
+Pentru aceasta putem folosi tipul:
 
 ```cpp
-char c = '7';
+bool
 ```
 
-putem obține numărul `7` astfel:
-
-```cpp
-int cifra = c - '0';
-```
-
-Rezultatul este:
-
-```text
-cifra = 7
-```
-
-Acest tip de operație va fi foarte util atunci când vom lucra cu **șiruri de caractere**.
-
----
-
-# `bool` - adevărat sau fals
-
-Tipul `bool` poate memora doar două valori:
+Acesta are două valori:
 
 ```cpp
 true
 false
 ```
 
-Exemplu:
+De exemplu:
 
 ```cpp
 bool gasit = false;
 ```
 
-Putem modifica valoarea:
+Mai târziu valoarea poate deveni:
 
 ```cpp
 gasit = true;
 ```
 
-`bool` este foarte util atunci când vrem să memorăm dacă o anumită proprietate este sau nu adevărată.
+Putem privi o variabilă `bool` ca pe un indicator:
+
+```text
+true  → DA
+false → NU
+```
+
+De exemplu, nume precum:
+
+```cpp
+bool gasit;
+bool prim;
+bool exista;
+```
+
+sugerează că vrem să memorăm dacă o anumită proprietate este adevărată sau falsă.
+
+Vom vedea cum folosim astfel de variabile după ce învățăm condițiile și structurile de control.
 
 ---
 
-## `bool` în algoritmii de BAC
+# Cum alegem tipul potrivit?
 
-Vom întâlni frecvent variabile precum:
+Putem porni de la două întrebări:
 
-```cpp
-bool prim = true;
-bool gasit = false;
-bool palindrom = true;
-bool schimbat = false;
+### 1. Ce fel de valoare trebuie să memorez?
+
+```text
+număr întreg      → int / long long
+număr real        → double
+caracter           → char
+adevărat / fals   → bool
+```
+
+### 2. Cât de mare poate deveni valoarea?
+
+Pentru numerele întregi:
+
+```text
+până în zona lui 10⁹
+→ int
+
+mai mare decât limita lui int,
+dar în zona lui 10¹⁸
+→ long long
 ```
 
 De exemplu:
 
-```cpp
-bool prim = true;
-
-if (n < 2)
-    prim = false;
-
-for (int d = 2; d * d <= n && prim; d++) {
-    if (n % d == 0)
-        prim = false;
-}
-```
-
-Variabila `prim` poate fi privită ca un indicator:
-
 ```text
-true  → numărul este considerat prim
-false → numărul nu este prim
+n ≤ 100 000
 ```
 
-> **De reținut:** `bool` este foarte util pentru situații de tip **DA / NU**, **există / nu există**, **adevărat / fals**.
-
----
-
-# `void` - lipsa unei valori returnate
-
-`void` va fi întâlnit mai ales atunci când vom studia **subprogramele**.
-
-De exemplu:
-
-```cpp
-void afisare() {
-    cout << "Salut!";
-}
-```
-
-`void` arată că funcția **nu returnează o valoare**.
-
-Pentru moment este suficient să reții:
-
-> **`void` este folosit în special pentru funcții care nu returnează o valoare.**
-
-Vom reveni asupra lui la lecția despre subprograme.
-
----
-
-# Conversii între tipuri
-
-Uneori o valoare este transformată dintr-un tip în altul.
-
-De exemplu:
-
-```cpp
-double x = 5.8;
-
-int n = x;
-```
-
-Variabila `n` va conține:
-
-```text
-5
-```
-
-Putem reprezenta conversia astfel:
-
-```text
-5.8
- ↓
-int
- ↓
-5
-```
-
-Partea zecimală este eliminată.
-
-> **Important:** Conversia de la un număr real la `int` elimină partea zecimală. Nu realizează rotunjirea obișnuită.
-
----
-
-## Conversie explicită
-
-Putem cere noi conversia:
-
-```cpp
-double x = 5.8;
-
-int n = (int)x;
-```
-
-Rezultatul este:
-
-```text
-n = 5
-```
-
-Un alt exemplu foarte important:
-
-```cpp
-int a = 5;
-int b = 2;
-
-double rezultat = (double)a / b;
-```
-
-Rezultatul este:
-
-```text
-2.5
-```
-
----
-
-# Ce tip alegem?
-
-Pentru BAC, putem folosi următoarea regulă simplă:
-
-| Ce vrem să memorăm?      | Tip recomandat |
-| ------------------------ | -------------- |
-| Număr întreg             | `int`          |
-| Număr întreg foarte mare | `long long`    |
-| Număr real               | `double`       |
-| Un caracter              | `char`         |
-| Adevărat / fals          | `bool`         |
-
-Exemple:
-
-```cpp
-int varsta = 18;
-
-long long numar = 5000000000;
-
-double medie = 9.75;
-
-char litera = 'A';
-
-bool gasit = false;
-```
-
----
-
-# Ce limite trebuie să reținem?
-
-Pentru BAC, cele mai importante sunt:
-
-```text
-int
-≈ -2 × 10⁹ ... 2 × 10⁹
-
-long long
-≈ -9 × 10¹⁸ ... 9 × 10¹⁸
-
-float
-≈ 6-7 cifre semnificative
-
-double
-≈ 15-16 cifre semnificative
-```
-
-Nu este necesar să memorezi toate limitele exacte.
-
-Cele mai utile valori de ținut minte sunt:
-
-```text
-int        → zona lui 10⁹
-long long  → zona lui 10¹⁸
-```
-
----
-
-# Exemplu de alegere a tipului
-
-Să presupunem că într-o problemă avem:
-
-```text
-1 ≤ n ≤ 100000
-```
-
-Putem folosi:
+→
 
 ```cpp
 int n;
 ```
 
-Dacă avem:
+Dar:
 
 ```text
-1 ≤ n ≤ 10¹²
+n ≤ 10¹²
 ```
 
-trebuie să folosim:
+→
 
 ```cpp
 long long n;
 ```
 
-Dacă trebuie să calculăm o medie:
+Dacă avem o valoare reală:
 
 ```cpp
 double medie;
 ```
 
-Dacă trebuie să memorăm o literă:
+Un caracter:
 
 ```cpp
 char litera;
 ```
 
-Dacă trebuie să memorăm dacă am găsit sau nu o valoare:
+O situație adevărat/fals:
 
 ```cpp
 bool gasit;
 ```
 
-Alegerea tipului pornește întotdeauna de la **ce fel de valoare avem și cât de mare poate deveni aceasta**.
+> Alegerea tipului pornește de la **ce vrem să memorăm** și **ce valori pot apărea în program**.
 
 ---
 
 # Recapitulare
 
-* **`int`** - numere întregi.
-
-```cpp
-int x = 10;
-```
-
-Interval uzual:
+Din această lecție trebuie să reții în primul rând:
 
 ```text
-aproximativ ±2 × 10⁹
+int        → numere întregi
+long long  → numere întregi mai mari
+double     → numere reale
+char       → un caracter
+bool       → true / false
 ```
 
-* **`long long`** - numere întregi mai mari.
-
-```cpp
-long long x = 5000000000;
-```
-
-Interval uzual:
+Pentru numere întregi, limitele utile de reținut sunt aproximativ:
 
 ```text
-aproximativ ±9 × 10¹⁸
+int        → ±2 × 10⁹
+long long  → ±9 × 10¹⁸
 ```
 
-* **`double`** - numere reale.
+Nu te uita doar la valoarea citită. Verifică și **cât de mari pot deveni rezultatele calculelor**.
 
-```cpp
-double x = 3.14;
+### Foarte important
+
+La împărțire:
+
+```text
+int / int
+→ împărțire întreagă
+
+cel puțin un operand double
+→ împărțire reală
 ```
 
-Are o precizie de aproximativ **15-16 cifre semnificative**.
-
-* **`float`** - tot pentru numere reale, dar are o precizie mai mică decât `double`.
-
-* **`char`** - un singur caracter.
-
-```cpp
-char c = 'A';
-```
-
-* **`bool`** - adevărat sau fals.
-
-```cpp
-bool gasit = false;
-```
-
-* **`void`** - folosit în special pentru funcții care nu returnează o valoare.
-
----
-
-## Lucruri importante pentru BAC
-
-### 1. `int / int` produce împărțire întreagă
+De exemplu:
 
 ```cpp
 5 / 2
@@ -853,9 +665,7 @@ produce:
 2
 ```
 
----
-
-### 2. Pentru împărțire reală putem face conversie
+iar:
 
 ```cpp
 (double)5 / 2
@@ -867,31 +677,23 @@ produce:
 2.5
 ```
 
----
-
-### 3. Conversia la `int` elimină partea zecimală
-
-```text
-(int)5.8 → 5
-```
-
----
-
-### 4. Verificăm limitele din enunț
-
-```text
-int       → aproximativ 10⁹
-long long → aproximativ 10¹⁸
-```
-
----
-
-### 5. Verificăm și rezultatele intermediare
-
-Chiar dacă `a` și `b` încap în `int`, produsul lor poate să nu încapă.
+De asemenea:
 
 ```cpp
-long long produs = 1LL * a * b;
+double rezultat = 5 / 2;
 ```
 
-> **Reține:** La BAC nu trebuie să memorezi toate tipurile existente în C++. Trebuie să știi să alegi tipul potrivit pentru valoarea din problemă și să înțelegi cum tipurile influențează rezultatul expresiilor.
+nu produce `2.5`.
+
+Expresia `5 / 2` este calculată mai întâi ca împărțire întreagă, deci în `rezultat` ajunge valoarea `2.0`.
+
+### Alte diferențe de recunoscut
+
+```text
+'7' → caracter
+7   → număr
+
+true / false → valori de tip bool
+```
+
+> **Pentru bacul la info:** alegerea corectă între `int` și `long long` și înțelegerea împărțirii dintre valori `int` sunt mult mai importante decât memorarea tuturor tipurilor existente în C++. Urmărește întotdeauna tipurile valorilor și rezultatul pe care îl poate produce o expresie.

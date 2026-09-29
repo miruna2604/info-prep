@@ -40,6 +40,7 @@ def test_user_response_exposes_only_public_fields():
         "username": "miruna",
         "email": "miruna@example.com",
         "created_at": created_at,
+        "onboarding_completed": False,
     }
     assert "password_hash" not in response_data
 

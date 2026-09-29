@@ -19,12 +19,34 @@ export type SubmitSolutionResult = {
   verdict: string;
   passedTests: number;
   totalTests: number;
+  tests: SubmitTestResult[];
+};
+
+export type SubmitTestResult = {
+  number: number;
+  isHidden: boolean;
+  status: "passed" | "failed" | "not_run";
+  verdict: string | null;
+  input: string | null;
+  expectedOutput: string | null;
+  actualOutput: string | null;
+};
+
+type SubmitTestApiResponse = {
+  number: number;
+  is_hidden: boolean;
+  status: "passed" | "failed" | "not_run";
+  verdict: string | null;
+  input: string | null;
+  expected_output: string | null;
+  actual_output: string | null;
 };
 
 type SubmitSolutionApiResponse = {
   verdict: string;
   passed_tests: number;
   total_tests: number;
+  tests: SubmitTestApiResponse[];
 };
 
 type RunCodeApiResponse = {
@@ -73,5 +95,14 @@ export async function submitSolution(
     verdict: response.verdict,
     passedTests: response.passed_tests,
     totalTests: response.total_tests,
+    tests: response.tests.map((test) => ({
+      number: test.number,
+      isHidden: test.is_hidden,
+      status: test.status,
+      verdict: test.verdict,
+      input: test.input,
+      expectedOutput: test.expected_output,
+      actualOutput: test.actual_output,
+    })),
   };
 }

@@ -5,6 +5,7 @@ type UserApiResponse = {
   username: string;
   email: string;
   created_at: string;
+  onboarding_completed: boolean;
 };
 
 export type AuthUser = {
@@ -12,6 +13,7 @@ export type AuthUser = {
   username: string;
   email: string;
   createdAt: string;
+  onboardingCompleted: boolean;
 };
 
 export type RegisterInput = {
@@ -31,6 +33,7 @@ function mapAuthUser(response: UserApiResponse): AuthUser {
     username: response.username,
     email: response.email,
     createdAt: response.created_at,
+    onboardingCompleted: response.onboarding_completed,
   };
 }
 

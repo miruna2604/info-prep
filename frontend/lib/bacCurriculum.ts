@@ -7,112 +7,192 @@ export type CurriculumNode = {
 };
 
 export const bacCurriculum: CurriculumNode[] = [
-  {
-    "id": "bazele-c",
-    "label": "Bazele C++",
-    "children": [
-      {
-        "id": "bazele-c-structura-programului",
-        "label": "Structura programului",
-        "href": "/chapters/bazele-programarii-in-cpp/lessons/structura-unui-program-cpp",
-        "children": [
-          {
-            "id": "bazele-c-structura-programului-include-iostream",
-            "label": "#include <iostream>"
-          },
-          {
-            "id": "bazele-c-structura-programului-using-namespace-std",
-            "label": "using namespace std"
-          },
-          {
-            "id": "bazele-c-structura-programului-main",
-            "label": "main()"
-          }
-        ]
-      },
-      {
-        "id": "bazele-c-date",
-        "label": "Date",
-        "children": [
-          {
-            "id": "bazele-c-date-variabile-si-constante",
-            "label": "variabile și constante",
-            "href": "/chapters/bazele-programarii-in-cpp/lessons/variabile-si-constante"
-          },
-          {
-            "id": "bazele-c-date-tipuri-de-date",
-            "label": "tipuri de date",
-            "href": "/chapters/bazele-programarii-in-cpp/lessons/tipuri-de-date"
-          }
-        ]
-      },
-      {
-        "id": "bazele-c-citire-afisare",
-        "label": "Citire / afișare",
-        "href": "/chapters/bazele-programarii-in-cpp/lessons/citire-si-afisare",
-        "children": [
-          {
-            "id": "bazele-c-citire-afisare-cin",
-            "label": "cin"
-          },
-          {
-            "id": "bazele-c-citire-afisare-cout",
-            "label": "cout"
-          }
-        ]
-      },
-      {
-        "id": "bazele-c-operatori",
-        "label": "Operatori",
-        "children": [
-          {
-            "id": "bazele-c-operatori-aritmetici",
-            "label": "aritmetici: + - * / %",
-            "href": "/chapters/bazele-programarii-in-cpp/lessons/operatori-aritmetici"
-          },
-          {
-            "id": "bazele-c-operatori-relationali",
-            "label": "relaționali: < > <= >= == !=",
-            "href": "/chapters/bazele-programarii-in-cpp/lessons/operatori-relationali"
-          },
-          {
-            "id": "bazele-c-operatori-logici",
-            "label": "logici: && || !",
-            "href": "/chapters/bazele-programarii-in-cpp/lessons/operatori-logici"
-          }
-        ]
-      },
-      {
-        "id": "bazele-c-expresii-si-atribuiri",
-        "label": "Expresii și atribuiri"
-      },
-      {
-        "id": "bazele-c-structuri-de-control",
-        "label": "Structuri de control",
-        "children": [
-          {
-            "id": "bazele-c-structuri-de-control-if-else",
-            "label": "if / else"
-          },
-          {
-            "id": "bazele-c-structuri-de-control-for",
-            "label": "for",
-            "href": "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-for"
-          },
-          {
-            "id": "bazele-c-structuri-de-control-while",
-            "label": "while",
-            "href": "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-while"
-          },
-          {
-            "id": "bazele-c-structuri-de-control-do-while",
-            "label": "do while",
-            "href": "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-do-while"
-          }
-        ]
-      }
-    ]
-  },
+    {
+      id: "bazele-c",
+      label: "Bazele C++",
+      href: "/chapters/bazele-programarii-in-cpp",
+      children: [
+        {
+          id: "bazele-c-structura-programului",
+          label: "1. Structura unui program C++",
+          href: "/chapters/bazele-programarii-in-cpp/lessons/structura-unui-program-cpp",
+          children: [
+            {
+              id: "bazele-c-structura-programului-include-iostream",
+              label: "#include <iostream>",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/structura-unui-program-cpp#include-iostream",
+            },
+            {
+              id: "bazele-c-structura-programului-using-namespace-std",
+              label: "using namespace std;",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/structura-unui-program-cpp#using-namespace-std",
+            },
+            {
+              id: "bazele-c-structura-programului-main",
+              label: "int main()",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/structura-unui-program-cpp#functia-main",
+            },
+            {
+              id: "bazele-c-structura-programului-comentarii",
+              label: "Comentarii",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/structura-unui-program-cpp#comentariile",
+            },
+          ],
+        },
+
+        {
+          id: "bazele-c-variabile-constante-tipuri-date",
+          label: "2. Variabile, constante și tipuri de date",
+          children: [
+            {
+              id: "bazele-c-variabile-constante",
+              label: "Variabile și constante",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/variabile-si-constante",
+              children: [
+                {
+                  id: "bazele-c-declararea-unei-variabile",
+                  label: "Declararea unei variabile",
+                  href: "/chapters/bazele-programarii-in-cpp/lessons/variabile-si-constante#declararea-unei-variabile",
+                },
+                {
+                  id: "bazele-c-initializarea-unei-variabile",
+                  label: "Inițializarea unei variabile",
+                  href: "/chapters/bazele-programarii-in-cpp/lessons/variabile-si-constante#initializarea-unei-variabile",
+                },
+                {
+                  id: "bazele-c-constante",
+                  label: "Constante",
+                  href: "/chapters/bazele-programarii-in-cpp/lessons/variabile-si-constante#ce-este-o-constanta",
+                },
+              ],
+            },
+
+            {
+              id: "bazele-c-tipuri-date",
+              label: "Tipuri de date",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/tipuri-de-date",
+              children: [
+                {
+                  id: "bazele-c-tip-int",
+                  label: "int",
+                  href: "/chapters/bazele-programarii-in-cpp/lessons/tipuri-de-date#int-numere-intregi",
+                },
+                {
+                  id: "bazele-c-tip-long-long",
+                  label: "long long",
+                  href: "/chapters/bazele-programarii-in-cpp/lessons/tipuri-de-date#long-long-numere-intregi-mai-mari",
+                },
+                {
+                  id: "bazele-c-tip-float-double",
+                  label: "float / double",
+                  href: "/chapters/bazele-programarii-in-cpp/lessons/tipuri-de-date#float-si-double-numere-reale",
+                },
+                {
+                  id: "bazele-c-tip-char",
+                  label: "char",
+                  href: "/chapters/bazele-programarii-in-cpp/lessons/tipuri-de-date#char-un-singur-caracter",
+                },
+                {
+                  id: "bazele-c-tip-bool",
+                  label: "bool",
+                  href: "/chapters/bazele-programarii-in-cpp/lessons/tipuri-de-date#bool-adevarat-sau-fals",
+                },
+              ],
+            },
+          ],
+        },
+
+        {
+          id: "bazele-c-citire-afisare",
+          label: "3. Citire și afișare",
+          href: "/chapters/bazele-programarii-in-cpp/lessons/citire-si-afisare",
+          children: [
+            {
+              id: "bazele-c-citire-afisare-cin",
+              label: "cin >>",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/citire-si-afisare#citirea-datelor-cu-cin",
+            },
+            {
+              id: "bazele-c-citire-afisare-cout",
+              label: "cout <<",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/citire-si-afisare#afisarea-datelor-cu-cout",
+            },
+          ],
+        },
+
+        {
+          id: "bazele-c-operatori-expresii",
+          label: "4. Operatori",
+          children: [
+            {
+              id: "bazele-c-operatori-aritmetici",
+              label: "Operatori aritmetici",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/operatori-aritmetici",
+            },
+            {
+              id: "bazele-c-operatori-relationali",
+              label: "Operatori relaționali",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/operatori-relationali",
+            },
+            {
+              id: "bazele-c-operatori-logici",
+              label: "Operatori logici",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/operatori-logici",
+            },
+          ],
+        },
+
+        {
+          id: "bazele-c-structura-alternativa-if",
+          label: "5. Structura alternativă — if",
+          href: "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-if",
+          children: [
+            {
+              id: "bazele-c-if",
+              label: "if",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-if#cum-functioneaza-if",
+            },
+            {
+              id: "bazele-c-if-else",
+              label: "if / else",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-if#if-else",
+            },
+            {
+              id: "bazele-c-if-uri-imbricate",
+              label: "if-uri imbricate",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-if#if-in-interiorul-altui-if",
+            },
+            {
+              id: "bazele-c-conditii-compuse",
+              label: "Condiții compuse",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-if#conditii-compuse",
+            },
+          ],
+        },
+
+        {
+          id: "bazele-c-structuri-repetitive",
+          label: "6. Structuri repetitive",
+          children: [
+            {
+              id: "bazele-c-structuri-repetitive-for",
+              label: "for",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-for",
+            },
+            {
+              id: "bazele-c-structuri-repetitive-while",
+              label: "while",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-while",
+            },
+            {
+              id: "bazele-c-structuri-repetitive-do-while",
+              label: "do...while",
+              href: "/chapters/bazele-programarii-in-cpp/lessons/instructiunea-do-while",
+            },
+          ],
+        },
+      ],
+    },
   {
     "id": "algoritmi-elementari",
     "label": "Algoritmi elementari",
@@ -220,78 +300,222 @@ export const bacCurriculum: CurriculumNode[] = [
     "label": "Vectori",
     "children": [
       {
-        "id": "vectori-declarare",
-        "label": "Declarare"
-      },
-      {
-        "id": "vectori-citire-afisare",
-        "label": "Citire / afișare"
+        "id": "vectori-notiuni-de-baza",
+        "label": "1. Noțiuni de bază despre vectori",
+        "href": "/chapters/vectori/lessons/notiuni-de-baza",
+        "children": [
+          {
+            "id": "vectori-declarare",
+            "label": "Declararea unui vector",
+            "href": "/chapters/vectori/lessons/notiuni-de-baza#declararea-unui-vector"
+          },
+          {
+            "id": "vectori-citire",
+            "label": "Citirea unui vector",
+            "href": "/chapters/vectori/lessons/notiuni-de-baza#citirea-unui-vector"
+          },
+          {
+            "id": "vectori-afisare",
+            "label": "Afișarea unui vector",
+            "href": "/chapters/vectori/lessons/notiuni-de-baza#afisarea-unui-vector"
+          },
+          {
+            "id": "vectori-accesarea-elementelor",
+            "label": "Accesarea elementelor",
+            "href": "/chapters/vectori/lessons/notiuni-de-baza#accesarea-elementelor"
+          }
+        ]
       },
       {
         "id": "vectori-parcurgere",
-        "label": "Parcurgere"
-      },
-      {
-        "id": "vectori-prelucrari",
-        "label": "Prelucrări",
+        "label": "2. Parcurgerea vectorilor",
+        "href": "/chapters/vectori/lessons/parcurgerea-vectorilor",
         "children": [
           {
-            "id": "vectori-prelucrari-suma-produs",
-            "label": "sumă / produs"
+            "id": "vectori-parcurgere-completa",
+            "label": "Parcurgerea completă",
+            "href": "/chapters/vectori/lessons/parcurgerea-vectorilor#parcurgerea-completa"
           },
           {
-            "id": "vectori-prelucrari-numarare",
-            "label": "numărare"
+            "id": "vectori-prelucrari-suma-produs",
+            "label": "Suma / produsul elementelor",
+            "children": [
+              {
+                "id": "vectori-suma",
+                "label": "Suma elementelor",
+                "href": "/chapters/vectori/lessons/parcurgerea-vectorilor#suma-elementelor"
+              },
+              {
+                "id": "vectori-produs",
+                "label": "Produsul elementelor",
+                "href": "/chapters/vectori/lessons/parcurgerea-vectorilor#produsul-elementelor"
+              }
+            ]
           },
           {
             "id": "vectori-prelucrari-minim-maxim",
-            "label": "minim / maxim"
+            "label": "Minim și maxim",
+            "href": "/chapters/vectori/lessons/parcurgerea-vectorilor#minim-si-maxim"
           },
           {
-            "id": "vectori-prelucrari-verificarea-unei-proprietati",
-            "label": "verificarea unei proprietăți"
+            "id": "vectori-prelucrari-numarare",
+            "label": "Numărarea elementelor",
+            "href": "/chapters/vectori/lessons/parcurgerea-vectorilor#numararea-elementelor"
+          },
+          {
+            "id": "vectori-parcurgere-cautare",
+            "label": "Căutarea unui element",
+            "href": "/chapters/vectori/lessons/parcurgerea-vectorilor#cautarea-unui-element"
           }
         ]
       },
       {
         "id": "vectori-modificarea-vectorului",
-        "label": "Modificarea vectorului",
+        "label": "3. Inserarea și ștergerea elementelor unui vector",
+        "href": "/chapters/vectori/lessons/inserare-stergere",
         "children": [
           {
             "id": "vectori-modificarea-vectorului-inserare",
-            "label": "inserare"
+            "label": "Inserarea unui element",
+            "href": "/chapters/vectori/lessons/inserare-stergere#inserarea-unui-element",
+            "children": [
+              {
+                "id": "vectori-deplasarea-dreapta",
+                "label": "Pasul 1 — deplasăm elementele la dreapta",
+                "href": "/chapters/vectori/lessons/inserare-stergere#pasul-1-deplasam-elementele-la-dreapta"
+              }
+            ]
           },
           {
             "id": "vectori-modificarea-vectorului-stergere",
-            "label": "ștergere"
+            "label": "Ștergerea unui element",
+            "href": "/chapters/vectori/lessons/inserare-stergere#stergerea-unui-element",
+            "children": [
+              {
+                "id": "vectori-deplasarea-stanga",
+                "label": "Cum funcționează deplasarea la stânga?",
+                "href": "/chapters/vectori/lessons/inserare-stergere#cum-functioneaza-deplasarea-la-stanga"
+              }
+            ]
           }
         ]
       },
       {
         "id": "vectori-sortare",
-        "label": "Sortare"
+        "label": "4. Sortarea vectorilor",
+        "href": "/chapters/vectori/lessons/sortarea-vectorilor",
+        "children": [
+          {
+            "id": "vectori-bubble-sort",
+            "label": "Bubble Sort",
+            "href": "/chapters/vectori/lessons/sortarea-vectorilor#bubble-sort"
+          },
+          {
+            "id": "vectori-selection-sort",
+            "label": "Selection Sort",
+            "href": "/chapters/vectori/lessons/sortarea-vectorilor#selection-sort"
+          },
+          {
+            "id": "vectori-insertion-sort",
+            "label": "Insertion Sort",
+            "href": "/chapters/vectori/lessons/sortarea-vectorilor#insertion-sort"
+          }
+        ]
       },
       {
         "id": "vectori-cautare",
-        "label": "Căutare",
+        "label": "5. Căutarea într-un vector",
+        "href": "/chapters/vectori/lessons/cautare-element",
         "children": [
           {
             "id": "vectori-cautare-secventiala",
-            "label": "secvențială"
+            "label": "Căutarea secvențială",
+            "href": "/chapters/vectori/lessons/cautare-element#cautarea-secventiala"
           },
           {
             "id": "vectori-cautare-binara",
-            "label": "binară"
+            "label": "Căutarea binară",
+            "href": "/chapters/vectori/lessons/cautare-element#cautarea-binara",
+            "children": [
+              {
+                "id": "vectori-cautare-vector-sortat",
+                "label": "De ce vectorul trebuie să fie sortat?",
+                "href": "/chapters/vectori/lessons/cautare-element#de-ce-vectorul-trebuie-sa-fie-sortat"
+              }
+            ]
           }
         ]
       },
       {
         "id": "vectori-vector-de-frecventa",
-        "label": "Vector de frecvență"
+        "label": "6. Vector de frecvență",
+        "href": "/chapters/vectori/lessons/vector-frecventa",
+        "children": [
+          {
+            "id": "vectori-frecventa-construire",
+            "label": "Construirea vectorului de frecvență",
+            "href": "/chapters/vectori/lessons/vector-frecventa#construirea-vectorului-de-frecventa"
+          },
+          {
+            "id": "vectori-frecventa-aparitii",
+            "label": "Numărul de apariții al unei valori",
+            "href": "/chapters/vectori/lessons/vector-frecventa#numarul-de-aparitii-al-unei-valori"
+          },
+          {
+            "id": "vectori-frecventa-parcurgere",
+            "label": "Parcurgerea vectorului de frecvență",
+            "href": "/chapters/vectori/lessons/vector-frecventa#parcurgerea-vectorului-de-frecventa"
+          }
+        ]
+      },
+      {
+        "id": "vectori-secvente",
+        "label": "7. Secvențe în vector",
+        "href": "/chapters/vectori/lessons/secvente-vector",
+        "children": [
+          {
+            "id": "vectori-secvente-egale",
+            "label": "Secvență de elemente egale",
+            "href": "/chapters/vectori/lessons/secvente-vector#secventa-de-elemente-egale"
+          },
+          {
+            "id": "vectori-secvente-crescatoare",
+            "label": "Secvență crescătoare",
+            "href": "/chapters/vectori/lessons/secvente-vector#secventa-crescatoare"
+          },
+          {
+            "id": "vectori-secvente-descrescatoare",
+            "label": "Secvență descrescătoare",
+            "href": "/chapters/vectori/lessons/secvente-vector#secventa-descrescatoare"
+          },
+          {
+            "id": "vectori-secvente-lungime",
+            "label": "Cea mai lungă secvență",
+            "href": "/chapters/vectori/lessons/secvente-vector#cea-mai-lunga-secventa"
+          }
+        ]
       },
       {
         "id": "vectori-interclasare",
-        "label": "Interclasare"
+        "label": "8. Interclasarea a doi vectori sortați",
+        "href": "/chapters/vectori/lessons/interclasare",
+        "children": [
+          {
+            "id": "vectori-interclasare-vectori-sortati",
+            "label": "De ce trebuie să fie vectorii sortați?",
+            "href": "/chapters/vectori/lessons/interclasare#de-ce-trebuie-sa-fie-vectorii-sortati"
+          },
+          {
+            "id": "vectori-interclasare-comparare",
+            "label": "Compararea elementelor",
+            "href": "/chapters/vectori/lessons/interclasare#construirea-vectorului-rezultat"
+          },
+          {
+            "id": "vectori-interclasare-rezultat",
+            "label": "Construirea vectorului rezultat",
+            "href": "/chapters/vectori/lessons/interclasare#construirea-vectorului-rezultat"
+          }
+        ]
       }
     ]
   },
@@ -528,28 +752,81 @@ export const bacCurriculum: CurriculumNode[] = [
     "label": "Structuri (struct)",
     "children": [
       {
-        "id": "structuri-struct-definirea-structurii",
-        "label": "Definirea structurii"
-      },
-      {
-        "id": "structuri-struct-declararea-variabilelor",
-        "label": "Declararea variabilelor"
+        "id": "structuri-struct-notiuni-de-baza",
+        "label": "1. Noțiuni de bază despre structuri (struct)",
+        "href": "/chapters/structuri-de-date-struct/lessons/notiuni-de-baza-struct",
+        "children": [
+          {
+            "id": "structuri-struct-definirea-structurii",
+            "label": "Declararea unei structuri",
+            "href": "/chapters/structuri-de-date-struct/lessons/notiuni-de-baza-struct#declararea-unei-structuri"
+          },
+          {
+            "id": "structuri-struct-campuri",
+            "label": "Câmpurile structurii",
+            "href": "/chapters/structuri-de-date-struct/lessons/notiuni-de-baza-struct#declararea-unei-structuri"
+          },
+          {
+            "id": "structuri-struct-declararea-variabilelor",
+            "label": "Variabile de tip structură",
+            "href": "/chapters/structuri-de-date-struct/lessons/notiuni-de-baza-struct#variabile-de-tip-structura"
+          }
+        ]
       },
       {
         "id": "structuri-struct-accesarea-campurilor",
-        "label": "Accesarea câmpurilor"
-      },
-      {
-        "id": "structuri-struct-citire-afisare",
-        "label": "Citire / afișare"
+        "label": "2. Accesarea și modificarea câmpurilor",
+        "href": "/chapters/structuri-de-date-struct/lessons/campuri",
+        "children": [
+          {
+            "id": "structuri-struct-operator-punct",
+            "label": "Operatorul .",
+            "href": "/chapters/structuri-de-date-struct/lessons/campuri#operatorul"
+          },
+          {
+            "id": "structuri-struct-citire-afisare",
+            "label": "Citirea / afișarea câmpurilor",
+            "children": [
+              {
+                "id": "structuri-struct-citire",
+                "label": "Citirea câmpurilor",
+                "href": "/chapters/structuri-de-date-struct/lessons/campuri#citirea-campurilor"
+              },
+              {
+                "id": "structuri-struct-afisare",
+                "label": "Afișarea câmpurilor",
+                "href": "/chapters/structuri-de-date-struct/lessons/campuri#afisarea-campurilor"
+              }
+            ]
+          },
+          {
+            "id": "structuri-struct-prelucrarea-campurilor",
+            "label": "Modificarea valorilor",
+            "href": "/chapters/structuri-de-date-struct/lessons/campuri#modificarea-valorilor"
+          }
+        ]
       },
       {
         "id": "structuri-struct-vector-de-structuri",
-        "label": "Vector de structuri"
-      },
-      {
-        "id": "structuri-struct-prelucrarea-campurilor",
-        "label": "Prelucrarea câmpurilor"
+        "label": "3. Vectori de structuri",
+        "href": "/chapters/structuri-de-date-struct/lessons/vectori-de-structuri",
+        "children": [
+          {
+            "id": "structuri-struct-vector-declarare",
+            "label": "Declararea unui vector de structuri",
+            "href": "/chapters/structuri-de-date-struct/lessons/vectori-de-structuri#declararea-unui-vector-de-structuri"
+          },
+          {
+            "id": "structuri-struct-vector-accesare",
+            "label": "Accesarea câmpurilor",
+            "href": "/chapters/structuri-de-date-struct/lessons/vectori-de-structuri#accesarea-campurilor"
+          },
+          {
+            "id": "structuri-struct-vector-parcurgere",
+            "label": "Prelucrarea vectorului",
+            "href": "/chapters/structuri-de-date-struct/lessons/vectori-de-structuri#prelucrarea-vectorului"
+          }
+        ]
       }
     ]
   },

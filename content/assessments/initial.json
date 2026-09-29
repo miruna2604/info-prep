@@ -1,0 +1,1076 @@
+{
+  "version": 1,
+  "title": "Evaluare inițială",
+  "description": "Descoperă ce poți consolida și cu ce să continui. Rezultatul descrie această evaluare, nu nivelul tău general.",
+  "questions": [
+    {
+      "order": 1,
+      "prompt": "Indicați valoarea expresiei C/C++ alăturate.\n\n`6.3/20+24`",
+      "answer_type": "multiple_choice",
+      "points": 4,
+      "allow_not_learned": true,
+      "question_config": {
+        "options": [
+          {
+            "id": "a",
+            "text": "0"
+          },
+          {
+            "id": "b",
+            "text": "24"
+          },
+          {
+            "id": "c",
+            "text": "24.315"
+          },
+          {
+            "id": "d",
+            "text": "24.9"
+          }
+        ]
+      },
+      "concept_refs": [
+        "bazele_cpp.operatori.impartire_reala_si_tipuri"
+      ],
+      "grading_config": {
+        "kind": "choice",
+        "correct_answer": "c",
+        "explanation": "Împărțirea este reală: 6.3/20 = 0.315, iar suma este 24.315."
+      }
+    },
+    {
+      "order": 2,
+      "prompt": "Variabilele x și y sunt întregi. Indicați o expresie C/C++ care are valoarea 1 dacă și numai dacă numerele naturale memorate în variabilele x și y au aceeași paritate.",
+      "answer_type": "multiple_choice",
+      "points": 4,
+      "allow_not_learned": true,
+      "question_config": {
+        "options": [
+          {
+            "id": "a",
+            "text": "(x*y)%2==0"
+          },
+          {
+            "id": "b",
+            "text": "x%2==0 && y%2==0"
+          },
+          {
+            "id": "c",
+            "text": "(x+y)%2==0"
+          },
+          {
+            "id": "d",
+            "text": "!(x%2==y%2)"
+          }
+        ]
+      },
+      "concept_refs": [
+        "bazele_cpp.operatori.modulo_si_expresii_logice"
+      ],
+      "grading_config": {
+        "kind": "choice",
+        "correct_answer": "c",
+        "explanation": "Suma a două numere naturale are restul 0 la împărțirea la 2 exact când numerele au aceeași paritate."
+      }
+    },
+    {
+      "order": 3,
+      "prompt": "Subprogramul f este definit alăturat. Indicați ce se afișează în urma apelului de mai jos.\n\n`f(2024);`\n\n```cpp\nvoid f(int x)\n{\n    if(x>=24)\n        if(x%2==0)\n        {\n            cout<<2;\n            f(x/2);\n        }\n        else\n        {\n            f(x/2);\n            cout<<4;\n        }\n    else cout<<0;\n}\n```\n\nEchivalente C pentru afișări: `printf(\"2\")`, `printf(\"4\")`, `printf(\"0\")`.",
+      "answer_type": "multiple_choice",
+      "points": 4,
+      "allow_not_learned": true,
+      "question_config": {
+        "options": [
+          {
+            "id": "a",
+            "text": "04424222"
+          },
+          {
+            "id": "b",
+            "text": "22220444"
+          },
+          {
+            "id": "c",
+            "text": "22242440"
+          },
+          {
+            "id": "d",
+            "text": "44402222"
+          }
+        ]
+      },
+      "concept_refs": [
+        "recursivitate.urmarire_apeluri_recursive",
+        "recursivitate.ordine_executie_inainte_dupa_apel"
+      ],
+      "grading_config": {
+        "kind": "choice",
+        "correct_answer": "b",
+        "explanation": "Apelurile cu argument par afișează 2 înainte de apel; cele cu argument impar afișează 4 după revenire. Cazul de bază afișează 0."
+      }
+    },
+    {
+      "order": 4,
+      "prompt": "Utilizând metoda backtracking se generează toate șirurile de 5 litere distincte din mulțimea {A, M, U, R, G}, astfel încât în fiecare șir litera R precede literele A și M. Primele cinci soluții generate sunt, în această ordine: URAMG, URAGM, URMAG, URMGA, URGAM. Indicați soluția generată imediat după GURMA.",
+      "answer_type": "multiple_choice",
+      "points": 4,
+      "allow_not_learned": true,
+      "question_config": {
+        "options": [
+          {
+            "id": "a",
+            "text": "GARUM"
+          },
+          {
+            "id": "b",
+            "text": "GRAMU"
+          },
+          {
+            "id": "c",
+            "text": "GRAUM"
+          },
+          {
+            "id": "d",
+            "text": "GRUAM"
+          }
+        ]
+      },
+      "concept_refs": [
+        "backtracking.generarea_solutiilor",
+        "backtracking.ordinea_solutiilor"
+      ],
+      "grading_config": {
+        "kind": "choice",
+        "correct_answer": "b",
+        "explanation": "Ordinea literelor dedusă din primele soluții este U, R, A, M, G. După GURMA urmează GRAMU, respectând poziția lui R înainte de A și M."
+      }
+    },
+    {
+      "order": 5,
+      "prompt": "Într-o zonă sunt 23 de obiective turistice, numerotate de la 1 la 23; zona este reprezentată ca un graf orientat în care vârfurile corespund acestor obiective, iar arcele sunt stabilite în funcție de modalitatea de deplasare între două obiective, astfel: de la fiecare obiectiv numerotat cu i (i∈[1,23]) se poate merge direct doar la obiectivul numerotat cu 2*i, dacă acesta există, sau doar la obiectivul numerotat cu i-1, în caz contrar. Indicați numărul maxim de vârfuri ale unui drum elementar în acest graf, cu extremitatea inițială 1.",
+      "answer_type": "multiple_choice",
+      "points": 4,
+      "allow_not_learned": true,
+      "question_config": {
+        "options": [
+          {
+            "id": "a",
+            "text": "5"
+          },
+          {
+            "id": "b",
+            "text": "11"
+          },
+          {
+            "id": "c",
+            "text": "16"
+          },
+          {
+            "id": "d",
+            "text": "21"
+          }
+        ]
+      },
+      "concept_refs": [
+        "grafuri.graf_orientat",
+        "grafuri.drum_elementar"
+      ],
+      "grading_config": {
+        "kind": "choice",
+        "correct_answer": "c",
+        "explanation": "Drumul este 1, 2, 4, 8, 16, 15, 14, 13, 12, 11, 22, 21, 20, 19, 18, 17. Următorul vârf ar repeta 16."
+      }
+    },
+    {
+      "order": 6,
+      "prompt": "Un arbore cu 14 noduri, numerotate de la 1 la 14, este reprezentat prin vectorul de „tați” (13,3,0,6,13,3,3,7,6,2,13,2,6,13). Indicați nodul care este rădăcina arborelui.",
+      "answer_type": "multiple_choice",
+      "points": 4,
+      "allow_not_learned": true,
+      "question_config": {
+        "options": [
+          {
+            "id": "a",
+            "text": "1"
+          },
+          {
+            "id": "b",
+            "text": "3"
+          },
+          {
+            "id": "c",
+            "text": "7"
+          },
+          {
+            "id": "d",
+            "text": "13"
+          }
+        ]
+      },
+      "concept_refs": [
+        "arbori.vector_de_tati",
+        "arbori.radacina"
+      ],
+      "grading_config": {
+        "kind": "choice",
+        "correct_answer": "b",
+        "explanation": "Rădăcina este nodul al cărui tată este 0: poziția 3 din vector."
+      }
+    },
+    {
+      "order": 7,
+      "prompt": "Pentru o sală de spectacole se memorează următoarele informații specifice: numărul de locuri disponibile și prețul biletului pentru un loc. Variabilele i și s sunt întregi, iar variabila t memorează informațiile specifice pentru fiecare dintre cele 15 săli de spectacole dintr-un oraș.\n\n```cpp\nstruct sala\n{\n    int nrLocuri;\n    int pret;\n} t[15];\n```\n\nScrieți o secvență de instrucțiuni în urma executării căreia variabila s să memoreze suma totală obținută în urma vânzării biletelor pentru un festival de teatru care s-ar desfășura simultan în toate sălile, iar acestea ar fi ocupate complet.",
+      "answer_type": "code",
+      "points": 6,
+      "allow_not_learned": true,
+      "question_config": {
+        "input_hint": "Scrie numai secvența de instrucțiuni. Variabilele i, s și t sunt deja declarate."
+      },
+      "concept_refs": [
+        "struct.acces_campuri",
+        "struct.vector_de_structuri",
+        "algoritmica.acumulare"
+      ],
+      "grading_config": {
+        "kind": "judge0",
+        "partial_credit": true,
+        "tests": [
+          {
+            "stdin": "0 0\n0 0\n0 0\n0 0\n0 0\n0 0\n0 0\n0 0\n0 0\n0 0\n0 0\n0 0\n0 0\n0 0\n0 0",
+            "expected": [
+              0
+            ]
+          },
+          {
+            "stdin": "1 1\n1 1\n1 1\n1 1\n1 1\n1 1\n1 1\n1 1\n1 1\n1 1\n1 1\n1 1\n1 1\n1 1\n1 1",
+            "expected": [
+              15
+            ]
+          },
+          {
+            "stdin": "1 2\n8 5\n15 8\n22 11\n29 14\n36 17\n43 20\n50 23\n57 26\n64 29\n71 32\n78 35\n85 38\n92 41\n99 44",
+            "expected": [
+              23130
+            ]
+          },
+          {
+            "stdin": "500 80\n500 80\n500 80\n500 80\n500 80\n500 80\n500 80\n500 80\n500 80\n500 80\n500 80\n500 80\n500 80\n500 80\n500 80",
+            "expected": [
+              600000
+            ]
+          },
+          {
+            "stdin": "200 17\n0 18\n0 19\n0 20\n0 21\n0 22\n0 23\n0 24\n0 25\n0 26\n0 27\n0 28\n0 29\n0 30\n200 31",
+            "expected": [
+              9600
+            ]
+          }
+        ],
+        "explanation": "Inițializează suma și acumulează produsul dintre numărul de locuri și preț, pentru fiecare dintre cele 15 săli.",
+        "harness": "#include <bits/stdc++.h>\nusing namespace std;\nstruct sala { int nrLocuri; int pret; };\nvoid rezolva(sala (&t)[15], int &s) { int i;\n{{CODE}}\n}\nint main() { sala t[15]; for(int k=0;k<15;k++) cin>>t[k].nrLocuri>>t[k].pret; int s=-1234567; rezolva(t,s); cout<<s; }",
+        "comparator": "integer_sequence"
+      }
+    },
+    {
+      "order": 8,
+      "prompt": "Variabilele i și j sunt de tip întreg, iar variabila a memorează un tablou bidimensional cu 5 linii și 5 coloane, numerotate de la 1 la 5, cu elemente numere întregi.\n\nFără a utiliza alte variabile, scrieți secvența C/C++ de mai jos, înlocuind punctele de suspensie cu instrucțiuni adecvate, dintre care cel mult trei atribuiri, astfel încât în urma executării secvenței obținute, tabloul memorat în variabila a să aibă elementele alăturate.\n\n```cpp\nfor(i=1;i<=5;i++)\n    for(j=1;j<=5;j++)\n        ................\n```\n\nMatricea țintă:\n\n```text\n2 3 2 3 2\n3 0 3 0 3\n2 3 2 3 2\n3 0 3 0 3\n2 3 2 3 2\n```",
+      "answer_type": "code",
+      "points": 6,
+      "allow_not_learned": true,
+      "question_config": {
+        "input_hint": "Completează doar corpul celor două bucle (punctele de suspensie), fără alte variabile și cu cel mult trei atribuiri."
+      },
+      "concept_refs": [
+        "matrici.parcurgere",
+        "matrici.constructie_dupa_indici",
+        "bazele_cpp.operatori_si_conditii"
+      ],
+      "grading_config": {
+        "kind": "judge0",
+        "partial_credit": true,
+        "tests": [
+          {
+            "stdin": "-19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19 -19",
+            "expected": [
+              2,
+              3,
+              2,
+              3,
+              2,
+              3,
+              0,
+              3,
+              0,
+              3,
+              2,
+              3,
+              2,
+              3,
+              2,
+              3,
+              0,
+              3,
+              0,
+              3,
+              2,
+              3,
+              2,
+              3,
+              2
+            ]
+          },
+          {
+            "stdin": "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0",
+            "expected": [
+              2,
+              3,
+              2,
+              3,
+              2,
+              3,
+              0,
+              3,
+              0,
+              3,
+              2,
+              3,
+              2,
+              3,
+              2,
+              3,
+              0,
+              3,
+              0,
+              3,
+              2,
+              3,
+              2,
+              3,
+              2
+            ]
+          },
+          {
+            "stdin": "47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47",
+            "expected": [
+              2,
+              3,
+              2,
+              3,
+              2,
+              3,
+              0,
+              3,
+              0,
+              3,
+              2,
+              3,
+              2,
+              3,
+              2,
+              3,
+              0,
+              3,
+              0,
+              3,
+              2,
+              3,
+              2,
+              3,
+              2
+            ]
+          }
+        ],
+        "explanation": "Valorile depind de paritatea indicilor: 2 pentru ambii impari, 0 pentru ambii pari și 3 pentru parități diferite.",
+        "harness": "#include <bits/stdc++.h>\nusing namespace std;\nvoid rezolva(int (&a)[6][6]) { int i,j; for(i=1;i<=5;i++) for(j=1;j<=5;j++) {\n{{CODE}}\n} }\nint main() { int a[6][6]; for(int r=0;r<6;r++) for(int c=0;c<6;c++) cin>>a[r][c]; rezolva(a); for(int r=1;r<=5;r++) for(int c=1;c<=5;c++) cout<<a[r][c]<<\" \"; }",
+        "comparator": "integer_sequence",
+        "restrictions": {
+          "identifiers": [
+            "a",
+            "i",
+            "j"
+          ],
+          "max_assignments": 3,
+          "no_declarations": true
+        }
+      }
+    },
+    {
+      "order": 9,
+      "prompt": "Variabila p este de tip întreg, iar variabilele s1 și s2 permit memorarea câte unui șir de cel mult 30 de caractere. Scrieți ce se afișează în urma executării secvenței alăturate.\n\n```cpp\nstrcpy(s1,\"plantau fistic\");\np=strchr(s1,' ')-s1;\nstrcpy(s2,s1+p+1);\nstrcpy(s1+p-1,s2+2);\nstrcpy(s2+1,s1+2);\ncout<<p<<s2;\n```\n\nÎn sursa originală apare și alternativa:\n`printf(\"%d%s\",p,s2);`",
+      "answer_type": "output",
+      "points": 6,
+      "allow_not_learned": true,
+      "question_config": {},
+      "concept_refs": [
+        "siruri_caractere.strcpy",
+        "siruri_caractere.strchr",
+        "siruri_caractere.pointeri_si_indici",
+        "siruri_caractere.urmarire_cod"
+      ],
+      "grading_config": {
+        "kind": "output",
+        "correct_answer": "7fantastic",
+        "normalization": "whitespace",
+        "explanation": "Spațiul are indicele 7. Copiile succesive formează șirul fantastic în s2, afișat imediat după p."
+      }
+    },
+    {
+      "order": 10,
+      "prompt": "Subprogramul DNPI are un singur parametru, n, prin care primește un număr natural (n∈[1,10^9]), și afișează pe ecran, separați prin câte un spațiu, toți divizorii pozitivi impari ai lui n care NU sunt primi.\n\nScrieți definiția completă a subprogramului.\n\nExemplu: dacă n=90, se afișează pe ecran, nu neapărat în această ordine, numerele\n\n`1 9 15 45`",
+      "answer_type": "code",
+      "points": 10,
+      "allow_not_learned": true,
+      "question_config": {
+        "input_hint": "Scrie definiția completă a subprogramului DNPI, fără main. Bibliotecile C++ și using namespace std sunt deja incluse."
+      },
+      "concept_refs": [
+        "subprograme.definire_si_parametri",
+        "algoritmi_elementari.divizori",
+        "algoritmi_elementari.numere_prime",
+        "algoritmi_elementari.combinarea_conditiilor"
+      ],
+      "grading_config": {
+        "kind": "judge0",
+        "partial_credit": true,
+        "tests": [
+          {
+            "stdin": "1",
+            "expected": [
+              1
+            ]
+          },
+          {
+            "stdin": "2",
+            "expected": [
+              1
+            ]
+          },
+          {
+            "stdin": "97",
+            "expected": [
+              1
+            ]
+          },
+          {
+            "stdin": "90",
+            "expected": [
+              1,
+              9,
+              15,
+              45
+            ]
+          },
+          {
+            "stdin": "81",
+            "expected": [
+              1,
+              9,
+              27,
+              81
+            ]
+          },
+          {
+            "stdin": "945",
+            "expected": [
+              1,
+              9,
+              15,
+              21,
+              27,
+              35,
+              45,
+              63,
+              105,
+              135,
+              189,
+              315,
+              945
+            ]
+          },
+          {
+            "stdin": "1024",
+            "expected": [
+              1
+            ]
+          },
+          {
+            "stdin": "999999937",
+            "expected": [
+              1
+            ]
+          },
+          {
+            "stdin": "1000000000",
+            "expected": [
+              1,
+              25,
+              125,
+              625,
+              3125,
+              15625,
+              78125,
+              390625,
+              1953125
+            ]
+          },
+          {
+            "stdin": "999950884",
+            "expected": [
+              1,
+              9409,
+              15811,
+              26569,
+              1533667,
+              2577193,
+              249987721
+            ]
+          }
+        ],
+        "explanation": "Include 1, care nu este prim. Dintre ceilalți divizori păstrează numai valorile impare compuse; ordinea afișării nu contează.",
+        "harness": "#include <bits/stdc++.h>\nusing namespace std;\n{{CODE}}\nint main() { int n; cin>>n; DNPI(n); }",
+        "comparator": "integer_set"
+      }
+    }
+  ],
+  "concepts": [
+    {
+      "key": "bazele_cpp.operatori.impartire_reala_si_tipuri",
+      "label": "Bazele C++ · Împărțire reală și tipuri",
+      "chapter_slug": "bazele-programarii-in-cpp",
+      "lesson_slug": "tipuri-de-date",
+      "prerequisites": [],
+      "planning_config": {
+        "fundamental": true,
+        "recommended_grade": 9,
+        "bac_importance": 2,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "bazele_cpp.operatori.modulo_si_expresii_logice",
+      "label": "Bazele C++ · Modulo și expresii logice",
+      "chapter_slug": "bazele-programarii-in-cpp",
+      "lesson_slug": "operatori-logici",
+      "prerequisites": [],
+      "planning_config": {
+        "fundamental": true,
+        "recommended_grade": 9,
+        "bac_importance": 2,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "recursivitate.urmarire_apeluri_recursive",
+      "label": "Recursivitate · Urmărirea apelurilor recursive",
+      "chapter_slug": "recursivitate",
+      "lesson_slug": null,
+      "prerequisites": [
+        "bazele_cpp.urmarire_cod",
+        "subprograme.definire_si_parametri"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 11,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 2,
+          "MATH_INFO_INTENSIVE": 2,
+          "MILITARY": 2,
+          "NATURAL_SCIENCES": 0
+        }
+      }
+    },
+    {
+      "key": "recursivitate.ordine_executie_inainte_dupa_apel",
+      "label": "Recursivitate · Ordinea execuției înainte și după apel",
+      "chapter_slug": "recursivitate",
+      "lesson_slug": null,
+      "prerequisites": [
+        "bazele_cpp.urmarire_cod",
+        "subprograme.definire_si_parametri"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 11,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 2,
+          "MATH_INFO_INTENSIVE": 2,
+          "MILITARY": 2,
+          "NATURAL_SCIENCES": 0
+        }
+      }
+    },
+    {
+      "key": "backtracking.generarea_solutiilor",
+      "label": "Backtracking · Generarea soluțiilor",
+      "chapter_slug": "backtracking",
+      "lesson_slug": null,
+      "prerequisites": [
+        "recursivitate.urmarire_apeluri_recursive"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 11,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 2,
+          "MATH_INFO_INTENSIVE": 2,
+          "MILITARY": 2,
+          "NATURAL_SCIENCES": 0
+        }
+      }
+    },
+    {
+      "key": "backtracking.ordinea_solutiilor",
+      "label": "Backtracking · Ordinea soluțiilor",
+      "chapter_slug": "backtracking",
+      "lesson_slug": null,
+      "prerequisites": [
+        "recursivitate.urmarire_apeluri_recursive"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 11,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 2,
+          "MATH_INFO_INTENSIVE": 2,
+          "MILITARY": 2,
+          "NATURAL_SCIENCES": 0
+        }
+      }
+    },
+    {
+      "key": "grafuri.graf_orientat",
+      "label": "Grafuri · Graf orientat",
+      "chapter_slug": "grafuri",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 11,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 2,
+          "MATH_INFO_INTENSIVE": 2,
+          "MILITARY": 2,
+          "NATURAL_SCIENCES": 0
+        }
+      }
+    },
+    {
+      "key": "grafuri.drum_elementar",
+      "label": "Grafuri · Drum elementar",
+      "chapter_slug": "grafuri",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 11,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 2,
+          "MATH_INFO_INTENSIVE": 2,
+          "MILITARY": 2,
+          "NATURAL_SCIENCES": 0
+        }
+      }
+    },
+    {
+      "key": "arbori.vector_de_tati",
+      "label": "Arbori · Vector de tați",
+      "chapter_slug": "arbori",
+      "lesson_slug": null,
+      "prerequisites": [
+        "grafuri.graf_orientat"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 11,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 2,
+          "MATH_INFO_INTENSIVE": 2,
+          "MILITARY": 2,
+          "NATURAL_SCIENCES": 0
+        }
+      }
+    },
+    {
+      "key": "arbori.radacina",
+      "label": "Arbori · Rădăcină",
+      "chapter_slug": "arbori",
+      "lesson_slug": null,
+      "prerequisites": [
+        "grafuri.graf_orientat"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 11,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 2,
+          "MATH_INFO_INTENSIVE": 2,
+          "MILITARY": 2,
+          "NATURAL_SCIENCES": 0
+        }
+      }
+    },
+    {
+      "key": "struct.acces_campuri",
+      "label": "Struct · Accesarea câmpurilor",
+      "chapter_slug": "structuri-de-date-struct",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 10,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "struct.vector_de_structuri",
+      "label": "Struct · Vector de structuri",
+      "chapter_slug": "structuri-de-date-struct",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 10,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "algoritmica.acumulare",
+      "label": "Algoritmi elementari · Acumulare",
+      "chapter_slug": "algoritmi-elementari",
+      "lesson_slug": null,
+      "prerequisites": [
+        "bazele_cpp.structuri_de_control"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 9,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "matrici.parcurgere",
+      "label": "Matrici · Parcurgere",
+      "chapter_slug": "matrici",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 10,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "matrici.constructie_dupa_indici",
+      "label": "Matrici · Construirea matricei după indici",
+      "chapter_slug": "matrici",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 10,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "bazele_cpp.operatori_si_conditii",
+      "label": "Bazele C++ · Operatori și condiții",
+      "chapter_slug": "bazele-programarii-in-cpp",
+      "lesson_slug": "operatori-relationali",
+      "prerequisites": [
+        "bazele_cpp.operatori.modulo_si_expresii_logice"
+      ],
+      "planning_config": {
+        "fundamental": true,
+        "recommended_grade": 9,
+        "bac_importance": 2,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "siruri_caractere.strcpy",
+      "label": "Șiruri de caractere · Copiere cu strcpy",
+      "chapter_slug": "siruri-de-caractere",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 10,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "siruri_caractere.strchr",
+      "label": "Șiruri de caractere · Căutare cu strchr",
+      "chapter_slug": "siruri-de-caractere",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 10,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "siruri_caractere.pointeri_si_indici",
+      "label": "Șiruri de caractere · Pointeri și indici",
+      "chapter_slug": "siruri-de-caractere",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 10,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "siruri_caractere.urmarire_cod",
+      "label": "Șiruri de caractere · Urmărirea codului",
+      "chapter_slug": "siruri-de-caractere",
+      "lesson_slug": null,
+      "prerequisites": [
+        "vectori.parcurgere"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 10,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "subprograme.definire_si_parametri",
+      "label": "Subprograme · Definire și parametri",
+      "chapter_slug": "subprograme",
+      "lesson_slug": null,
+      "prerequisites": [
+        "bazele_cpp.structuri_de_control",
+        "algoritmi_elementari.divizori"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 10,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "algoritmi_elementari.divizori",
+      "label": "Algoritmi elementari · Divizori",
+      "chapter_slug": "algoritmi-elementari",
+      "lesson_slug": "divizorii-unui-numar",
+      "prerequisites": [
+        "bazele_cpp.structuri_de_control"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 9,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "algoritmi_elementari.numere_prime",
+      "label": "Algoritmi elementari · Numere prime",
+      "chapter_slug": "algoritmi-elementari",
+      "lesson_slug": "verificarea-unui-numar-prim",
+      "prerequisites": [
+        "bazele_cpp.structuri_de_control"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 9,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "algoritmi_elementari.combinarea_conditiilor",
+      "label": "Algoritmi elementari · Combinarea condițiilor",
+      "chapter_slug": "algoritmi-elementari",
+      "lesson_slug": null,
+      "prerequisites": [
+        "bazele_cpp.structuri_de_control"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 9,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "bazele_cpp.structuri_de_control",
+      "label": "Bazele C++ · Structuri de control",
+      "chapter_slug": "bazele-programarii-in-cpp",
+      "lesson_slug": "instructiunea-for",
+      "prerequisites": [
+        "bazele_cpp.operatori.modulo_si_expresii_logice"
+      ],
+      "planning_config": {
+        "fundamental": true,
+        "recommended_grade": 9,
+        "bac_importance": 2,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "bazele_cpp.urmarire_cod",
+      "label": "Bazele C++ · Urmărirea codului",
+      "chapter_slug": "bazele-programarii-in-cpp",
+      "lesson_slug": null,
+      "prerequisites": [
+        "bazele_cpp.structuri_de_control"
+      ],
+      "planning_config": {
+        "fundamental": true,
+        "recommended_grade": 9,
+        "bac_importance": 2,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    },
+    {
+      "key": "vectori.parcurgere",
+      "label": "Vectori · Parcurgere",
+      "chapter_slug": "vectori",
+      "lesson_slug": null,
+      "prerequisites": [
+        "bazele_cpp.structuri_de_control"
+      ],
+      "planning_config": {
+        "fundamental": false,
+        "recommended_grade": 9,
+        "bac_importance": 1,
+        "profile_weights": {
+          "MATH_INFO": 1,
+          "MATH_INFO_INTENSIVE": 1,
+          "MILITARY": 1,
+          "NATURAL_SCIENCES": 2
+        }
+      }
+    }
+  ]
+}

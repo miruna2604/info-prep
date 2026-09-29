@@ -4,10 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navigationItems = [
-  { label: "Prezentare generală", href: "/", icon: "⌂" },
+  { label: "Prezentare generală", href: "/dashboard", icon: "⌂" },
   { label: "Capitole", href: "/chapters", icon: "▣" },
   { label: "Harta materiei", href: "/harta-materiei", icon: "⑂" },
-  { label: "Quizuri", href: "/quizzes", icon: "?" },
   { label: "Probleme", href: "/problems", icon: "</>" },
   { label: "Compilator", href: "/compiler", icon: ">_" },
 ];
@@ -15,18 +14,18 @@ const navigationItems = [
 export function Sidebar() {
   const pathname = usePathname();
 
+  if (pathname === "/harta-materiei") return null;
+
   return (
     <aside className="hidden w-60 shrink-0 border-r border-slate-800/80 bg-[#050d18] md:flex md:min-h-screen md:flex-col">
-      <Link href="/" className="flex h-16 items-center gap-3 border-b border-slate-800/70 px-5">
+      <Link href="/dashboard" className="flex h-16 items-center gap-3 border-b border-slate-800/70 px-5">
         <div className="font-mono text-xl font-bold text-emerald-400">{"</>"}</div>
         <span className="font-semibold tracking-tight text-white">InfoPrep</span>
       </Link>
 
       <nav className="flex-1 space-y-2 p-3 pt-5">
         {navigationItems.map((item) => {
-          const isActive = item.href === "/"
-            ? pathname === "/"
-            : pathname.startsWith(item.href);
+          const isActive = pathname.startsWith(item.href);
 
           return (
             <Link

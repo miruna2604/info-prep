@@ -21,4 +21,3 @@ class Lesson(Base):
     display_order: Mapped[int] = mapped_column(nullable=False)
     is_published: Mapped[bool] = mapped_column(default=False, nullable=False)
     chapter: Mapped["Chapter"] = relationship(back_populates="lessons")
-    quiz: Mapped["Quiz | None"] = relationship(back_populates="lesson")

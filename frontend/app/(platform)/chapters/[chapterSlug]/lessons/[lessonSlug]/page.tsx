@@ -16,7 +16,8 @@ import type { FrequencyAlgorithmSlug } from "../../../../../../lib/frequencyVect
 import { ConsecutiveSequenceVisualizer } from "../../../../../../components/lesson/ConsecutiveSequenceVisualizer";
 import type { SequenceAlgorithmSlug } from "../../../../../../lib/consecutiveSequenceAlgorithms";
 import { SortingVisualizer } from "../../../../../../components/lesson/SortingVisualizer";
-import type { SortingAlgorithmSlug } from "../../../../../../lib/sortingAlgorithms";
+import { StructFieldsVisualizer } from "../../../../../../components/lesson/StructFieldsVisualizer";
+import { StructArrayVisualizer } from "../../../../../../components/lesson/StructArrayVisualizer";
 import { SearchMergeVisualizer } from "../../../../../../components/lesson/SearchMergeVisualizer";
 import type { SearchMergeAlgorithmSlug } from "../../../../../../lib/searchMergeAlgorithms";
 import { ApiError } from "../../../../../../services/api";
@@ -107,14 +108,20 @@ export default async function LessonPage({ params }: LessonPageProps) {
   const sequenceAlgorithm = sequenceAlgorithmSlugs.find(
     (slug) => chapter.slug === "algoritmi-elementari" && lesson.slug === slug,
   );
-  const sortingAlgorithmSlugs: SortingAlgorithmSlug[] = [
-    "bubble-sort",
-    "selection-sort",
-    "insertion-sort",
-  ];
-  const sortingAlgorithm = sortingAlgorithmSlugs.find(
-    (slug) => chapter.slug === "algoritmi-elementari" && lesson.slug === slug,
-  );
+  const hasCombinedSortingLesson =
+    chapter.slug === "vectori" && lesson.slug === "sortarea-vectorilor";
+  const hasStructFieldsVisualizer =
+    chapter.slug === "structuri-de-date-struct" && lesson.slug === "campuri";
+  const hasStructArrayVisualizer =
+    chapter.slug === "structuri-de-date-struct" && lesson.slug === "vectori-de-structuri";
+  const structReadingHeading = "# Citirea câmpurilor";
+  const [structFieldsIntro, structFieldsAfterAnimation] = hasStructFieldsVisualizer
+    ? (lesson.content ?? "").split(structReadingHeading)
+    : [lesson.content ?? "", ""];
+  const structArrayReadingHeading = "# Citirea unui vector de structuri";
+  const [structArrayIntro, structArrayAfterAnimation] = hasStructArrayVisualizer
+    ? (lesson.content ?? "").split(structArrayReadingHeading)
+    : [lesson.content ?? "", ""];
   const searchMergeAlgorithmSlugs: SearchMergeAlgorithmSlug[] = [
     "cautare-binara",
     "interclasarea-a-doi-vectori-sortati",
@@ -131,7 +138,9 @@ export default async function LessonPage({ params }: LessonPageProps) {
     Boolean(extremeAlgorithm) ||
     Boolean(frequencyAlgorithm) ||
     Boolean(sequenceAlgorithm) ||
-    Boolean(sortingAlgorithm) ||
+    hasCombinedSortingLesson ||
+    hasStructFieldsVisualizer ||
+    hasStructArrayVisualizer ||
     Boolean(searchMergeAlgorithm);
   const hasOddDigitsPlaceValueVisualizer =
     chapter.slug === "algoritmi-elementari" && lesson.slug === "eliminarea-cifrelor-pare";
@@ -153,12 +162,28 @@ export default async function LessonPage({ params }: LessonPageProps) {
   const [divisionGcdContent, subtractionGcdBody] = hasCombinedCmmdcLesson
     ? (lesson.content ?? "").split(subtractionGcdHeading)
     : [lesson.content ?? "", ""];
+  const bubbleSortHeading = "# Bubble Sort";
+  const selectionSortHeading = "# Selection Sort";
+  const insertionSortHeading = "# Insertion Sort";
+  const sortingComparisonHeading = "# Cum le diferențiezi?";
+  const [sortingIntro, afterBubbleHeading] = hasCombinedSortingLesson
+    ? (lesson.content ?? "").split(bubbleSortHeading)
+    : [lesson.content ?? "", ""];
+  const [bubbleSortBody, afterSelectionHeading] = afterBubbleHeading?.split(selectionSortHeading) ?? ["", ""];
+  const [selectionSortBody, afterInsertionHeading] = afterSelectionHeading?.split(insertionSortHeading) ?? ["", ""];
+  const [insertionSortBody, sortingComparisonBody] = afterInsertionHeading?.split(sortingComparisonHeading) ?? ["", ""];
   const initialLessonContent = hasOddDigitsPlaceValueVisualizer
     ? firstSolutionContent
     : hasCombinedDivisorsLesson
       ? divisorsContentParts[0]
       : hasCombinedCmmdcLesson
         ? divisionGcdContent
+      : hasCombinedSortingLesson
+        ? sortingIntro
+      : hasStructFieldsVisualizer
+        ? structFieldsIntro
+      : hasStructArrayVisualizer
+        ? structArrayIntro
       : lesson.content;
 
   if (lesson.chapter_id !== chapter.id) {
@@ -252,12 +277,6 @@ export default async function LessonPage({ params }: LessonPageProps) {
         </div>
       )}
 
-      {sortingAlgorithm && (
-        <div className="mt-10">
-          <SortingVisualizer algorithm={sortingAlgorithm} />
-        </div>
-      )}
-
       {searchMergeAlgorithm && (
         <div className="mt-10">
           <SearchMergeVisualizer algorithm={searchMergeAlgorithm} />
@@ -292,21 +311,35 @@ export default async function LessonPage({ params }: LessonPageProps) {
         </>
       )}
 
-      {!hasInteractiveVisualizer && (
-        <section className="mt-10 rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-5">
-          <h2 className="font-semibold text-emerald-100">
-            Ai terminat lecția?
-          </h2>
-          <p className="mt-2 text-sm leading-6 text-slate-300">
-            Verifică noțiunile parcurse răspunzând la întrebările quizului.
-          </p>
-          <Link
-            href={`/quizzes/${chapter.slug}/${lesson.slug}`}
-            className="mt-4 inline-flex rounded-lg bg-emerald-400 px-4 py-2 text-sm font-medium text-slate-950 hover:bg-emerald-300"
-          >
-            Începe quizul lecției
-          </Link>
-        </section>
+      {hasCombinedSortingLesson && (
+        <>
+          <div className="mt-12"><LessonContent content={`${bubbleSortHeading}${bubbleSortBody}`} /></div>
+          <div className="mt-8"><SortingVisualizer algorithm="bubble-sort" /></div>
+
+          <div className="mt-14"><LessonContent content={`${selectionSortHeading}${selectionSortBody}`} /></div>
+          <div className="mt-8"><SortingVisualizer algorithm="selection-sort" /></div>
+
+          <div className="mt-14"><LessonContent content={`${insertionSortHeading}${insertionSortBody}`} /></div>
+          <div className="mt-8"><SortingVisualizer algorithm="insertion-sort" /></div>
+
+          {sortingComparisonBody && (
+            <div className="mt-14"><LessonContent content={`${sortingComparisonHeading}${sortingComparisonBody}`} /></div>
+          )}
+        </>
+      )}
+
+      {hasStructFieldsVisualizer && (
+        <>
+          <div className="mt-10"><StructFieldsVisualizer /></div>
+          <div className="mt-12"><LessonContent content={`${structReadingHeading}${structFieldsAfterAnimation}`} /></div>
+        </>
+      )}
+
+      {hasStructArrayVisualizer && (
+        <>
+          <div className="mt-10"><StructArrayVisualizer /></div>
+          <div className="mt-12"><LessonContent content={`${structArrayReadingHeading}${structArrayAfterAnimation}`} /></div>
+        </>
       )}
 
       <footer className="mt-12 border-t border-slate-800 pt-6">
