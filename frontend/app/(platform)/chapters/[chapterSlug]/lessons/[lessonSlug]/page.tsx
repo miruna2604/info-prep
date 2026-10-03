@@ -5,6 +5,8 @@ import { ApiError } from "../../../../../../services/api";
 import { getChapter } from "../../../../../../services/chapterService";
 import { getLesson } from "../../../../../../services/lessonService";
 
+export const dynamic = "force-dynamic";
+
 type LessonPageProps = {
   params: Promise<{ chapterSlug: string; lessonSlug: string }>;
 };

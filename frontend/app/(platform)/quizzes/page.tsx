@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getChapters } from "../../../services/chapterService";
 import { getChapterQuizzes } from "../../../services/quizService";
 
+export const dynamic = "force-dynamic";
+
 export default async function QuizzesPage() {
   const chapters = await getChapters();
   const chaptersWithQuizzes = await Promise.all(

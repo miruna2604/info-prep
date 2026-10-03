@@ -3,6 +3,8 @@ import { LessonItem } from "../../../../components/chapter/LessonItem";
 import { getChapter, getChapterLessons } from "../../../../services/chapterService";
 import { ApiError } from "../../../../services/api";
 
+export const dynamic = "force-dynamic";
+
 type ChapterPageProps = { params: Promise<{ chapterSlug: string }> };
 
 async function loadChapterPageData(chapterSlug: string) {

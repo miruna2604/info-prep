@@ -5,6 +5,8 @@ import { QuizPlayer } from "../../../../../components/quiz/QuizPlayer";
 import { ApiError } from "../../../../../services/api";
 import { getQuiz } from "../../../../../services/quizService";
 
+export const dynamic = "force-dynamic";
+
 type QuizPageProps = {
   params: Promise<{ chapterSlug: string; lessonSlug: string }>;
 };
