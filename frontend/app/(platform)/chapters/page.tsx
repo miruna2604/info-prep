@@ -1,5 +1,6 @@
 import { ChapterCard } from "../../../components/chapter/ChapterCard";
 import { getChapterLessons, getChapters, } from "../../../services/chapterService";
+export const dynamic = "force-dynamic";
 
 export default async function ChaptersPage() {
     const chapterResponses = await getChapters();

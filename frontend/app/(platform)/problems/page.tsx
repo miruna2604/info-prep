@@ -1,5 +1,6 @@
 import { ProblemTable } from "../../../components/problem/ProblemTable";
 import { getProblems } from "../../../services/problemService"
+export const dynamic = "force-dynamic";
 
 export default async function ProblemsPage() {
     const problems = await getProblems();

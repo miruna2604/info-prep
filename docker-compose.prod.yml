@@ -1,0 +1,92 @@
+services:
+  caddy:
+    image: caddy:2
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+      - frontend
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: https://${DOMAIN}/api
+    restart: unless-stopped
+
+  api:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --root-path /api --proxy-headers --forwarded-allow-ips "*"
+    environment:
+      JUDGE0_URL: http://server:2358
+      LANGUAGE_ID: "54"
+      DATABASE_URL: postgresql+psycopg2://${APP_DB_USER}:${APP_DB_PASSWORD}@api_database:5432/${APP_DB_NAME}
+      AUTH_SECRET_KEY: ${AUTH_SECRET_KEY}
+      AUTH_TOKEN_EXPIRE_MINUTES: "30"
+    depends_on:
+      - api_database
+      - server
+    restart: unless-stopped
+
+  api_database:
+    image: postgres:16.2
+    environment:
+      POSTGRES_DB: ${APP_DB_NAME}
+      POSTGRES_USER: ${APP_DB_USER}
+      POSTGRES_PASSWORD: ${APP_DB_PASSWORD}
+    volumes:
+      - appdb:/var/lib/postgresql/data/
+    restart: unless-stopped
+
+  server:
+    image: judge0/judge0:1.13.1
+    volumes:
+      - ./judge0/judge0.conf:/judge0.conf:ro
+    env_file:
+      - ./judge0/judge0.conf
+    privileged: true
+    restart: unless-stopped
+
+  worker:
+    image: judge0/judge0:1.13.1
+    command: ["./scripts/workers"]
+    volumes:
+      - ./judge0/judge0.conf:/judge0.conf:ro
+    env_file:
+      - ./judge0/judge0.conf
+    privileged: true
+    restart: unless-stopped
+
+  db:
+    image: postgres:16.2
+    env_file:
+      - ./judge0/judge0.conf
+    volumes:
+      - judge0db:/var/lib/postgresql/data/
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2.4
+    command:
+      [
+        "bash",
+        "-c",
+        "docker-entrypoint.sh --appendonly no --requirepass \"$$REDIS_PASSWORD\""
+      ]
+    env_file:
+      - ./judge0/judge0.conf
+    restart: unless-stopped
+
+volumes:
+  appdb:
+  judge0db:
+  caddy_data:
+  caddy_config:

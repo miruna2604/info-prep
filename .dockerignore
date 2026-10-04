@@ -1,0 +1,9 @@
+.git
+.env
+.env.*
+.venv
+.idea
+.pytest_cache
+__pycache__
+frontend
+judge0/judge0.conf
